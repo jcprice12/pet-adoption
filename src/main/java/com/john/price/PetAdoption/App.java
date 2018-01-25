@@ -1,4 +1,4 @@
-package com.john.price.TestProject;
+package com.john.price.PetAdoption;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

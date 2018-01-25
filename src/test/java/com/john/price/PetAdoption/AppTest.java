@@ -1,4 +1,4 @@
-package com.john.price.TestProject;
+package com.john.price.PetAdoption;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
