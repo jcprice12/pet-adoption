@@ -12,6 +12,14 @@ public class Pet {
     private Integer id;
 
     private String name;
+    
+    public Pet() {
+    	
+    }
+    
+    public Pet(String name) {
+    	this.name = name;
+    }
 
 	public Integer getId() {
 		return id;
