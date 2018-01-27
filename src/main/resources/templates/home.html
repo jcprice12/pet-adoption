@@ -11,10 +11,14 @@
 	        <tr>
 	            <th>Id</th>
 	            <th>Name</th>
+	            <th>Breed</th>
 	        </tr>
 	        <tr th:each="pet : ${pets}">
-	            <td th:text="${pet.id}"></td>
+	            <td th:text="${pet.petId}"></td>
 	            <td th:text="${pet.name}"></td>
+	            <td>
+	            	<span th:each="breed : ${pet.breeds}" th:text="${breed.name}"></span>
+	            </td>
 	        </tr>
 	    </table>
 	</div>

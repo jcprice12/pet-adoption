@@ -2,31 +2,37 @@ package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
 public class Breed {
 	
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;	
+    private Integer breedId;	
 	private String name;
 	private Set<Pet> pets;
 	
 	public Breed() {}
 	
-	public Integer getId() {
-		return id;
+	public Breed(String name) {
+		this.name = name;
+	}
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "breed_id")
+	public Integer getBreedId() {
+		return breedId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setBreedId(Integer breedId) {
+		this.breedId = breedId;
 	}
 
 	public String getName() {
@@ -37,12 +43,14 @@ public class Breed {
 		this.name = name;
 	}
 	
+	@ManyToMany
+	@JoinTable(name = "breed_pet",
+				joinColumns = @JoinColumn(name = "breed_id"),
+				inverseJoinColumns = @JoinColumn(name = "pet_id"))
 	public Set<Pet> getPets(){
 		return this.pets;
 	}
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable
 	public void setPets(Set<Pet> pets) {
 		this.pets = pets;
 	}

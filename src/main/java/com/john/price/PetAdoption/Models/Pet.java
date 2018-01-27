@@ -2,35 +2,36 @@ package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Pet {
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+
+    private Integer petId;
     private String name;
     private Set<Breed> breeds;
     
-    public Pet() {
-    	
-    }
+    public Pet() {}
     
-    public Pet(String name) {
+    public Pet(String name, Set<Breed> breeds) {
     	this.name = name;
+    	this.breeds = breeds;
     }
 
-	public Integer getId() {
-		return id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "pet_id")
+	public Integer getPetId() {
+		return petId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPetId(Integer petId) {
+		this.petId = petId;
 	}
 
 	public String getName() {
@@ -41,8 +42,7 @@ public class Pet {
 		this.name = name;
 	}
 	
-	@ManyToMany(mappedBy = "breeds")
-    @JoinTable
+	@ManyToMany(mappedBy = "pets")
 	public Set<Breed> getBreeds() {
 		return this.breeds;
 	}
