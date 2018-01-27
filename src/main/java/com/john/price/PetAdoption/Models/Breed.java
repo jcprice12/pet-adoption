@@ -2,6 +2,7 @@ package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,22 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-@Entity // This tells Hibernate to make a table out of this class
-public class Pet {
+@Entity
+public class Breed {
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
-    private String name;
-    private Set<Breed> breeds;
-    
-    public Pet() {
-    	
-    }
-    
-    public Pet(String name) {
-    	this.name = name;
-    }
-
+    private Integer id;	
+	private String name;
+	private Set<Pet> pets;
+	
+	public Breed() {}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -41,13 +37,13 @@ public class Pet {
 		this.name = name;
 	}
 	
-	@ManyToMany(mappedBy = "breeds")
-    @JoinTable
-	public Set<Breed> getBreeds() {
-		return this.breeds;
+	public Set<Pet> getPets(){
+		return this.pets;
 	}
 	
-	public void setBreeds(Set<Breed> breeds) {
-		this.breeds = breeds;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable
+	public void setPets(Set<Pet> pets) {
+		this.pets = pets;
 	}
 }
