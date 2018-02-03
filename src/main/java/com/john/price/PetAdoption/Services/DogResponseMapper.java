@@ -13,19 +13,19 @@ import com.john.price.PetAdoption.Responses.DogResponse;
 @Component
 public class DogResponseMapper {
 	@Autowired 
-	private DogRepository petRepository;
+	private DogRepository dogRepository;
 	
 	public Iterable<DogResponse> mapPets() {
-		Iterable<Dog> data = petRepository.findAll();
+		Iterable<Dog> data = dogRepository.findAll();
 		List<DogResponse> dogs = new ArrayList<DogResponse>();
 		for(Dog dog : data) {
-			dogs.add(new DogResponse(dog.getDogId(), dog.getName(), dog.getDogBreeds()));
+			dogs.add(new DogResponse(dog.getId(), dog.getName(), dog.getBreeds()));
 		}
 		return dogs;
 	}
 	
 	public DogResponse mapPet(Integer id) {
-		Dog data = petRepository.findOne(id);
-		return new DogResponse(data.getDogId(), data.getName(), data.getDogBreeds());
+		Dog data = dogRepository.findOne(id);
+		return new DogResponse(data.getId(), data.getName(), data.getBreeds());
 	}
 }

@@ -16,7 +16,7 @@ public class DogResponse {
 		this.setName(name);
 		this.breeds = new ArrayList<DogBreedStruct>();
 		for(DogBreed breed : breeds) {
-			this.breeds.add(new DogBreedStruct(breed.getDogBreedId(), breed.getName()));
+			this.breeds.add(new DogBreedStruct(breed.getId(), breed.getName()));
 		}
 	}
 
