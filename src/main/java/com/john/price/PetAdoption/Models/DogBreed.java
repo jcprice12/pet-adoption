@@ -10,29 +10,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
-public class Breed {
+@Table(name="dogbreed")
+public class DogBreed {
 	
-    private Integer breedId;	
+    private Integer dogBreedId;	
 	private String name;
-	private Set<Pet> pets;
+	private Set<Dog> dogs;
 	
-	public Breed() {}
+	public DogBreed() {}
 	
-	public Breed(String name) {
+	public DogBreed(String name) {
 		this.name = name;
 	}
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "breed_id")
-	public Integer getBreedId() {
-		return breedId;
+	@Column(name = "dogbreed_id")
+	public Integer getDogBreedId() {
+		return dogBreedId;
 	}
 
-	public void setBreedId(Integer breedId) {
-		this.breedId = breedId;
+	public void setDogBreedId(Integer dogBreedId) {
+		this.dogBreedId = dogBreedId;
 	}
 
 	public String getName() {
@@ -44,14 +46,14 @@ public class Breed {
 	}
 	
 	@ManyToMany
-	@JoinTable(name = "breed_pet",
-				joinColumns = @JoinColumn(name = "breed_id"),
-				inverseJoinColumns = @JoinColumn(name = "pet_id"))
-	public Set<Pet> getPets(){
-		return this.pets;
+	@JoinTable(name = "dogbreed_dog",
+				joinColumns = @JoinColumn(name = "dogbreed_id"),
+				inverseJoinColumns = @JoinColumn(name = "dog_id"))
+	public Set<Dog> getDogs(){
+		return this.dogs;
 	}
 	
-	public void setPets(Set<Pet> pets) {
-		this.pets = pets;
+	public void setDogs(Set<Dog> dogs) {
+		this.dogs = dogs;
 	}
 }

@@ -6,25 +6,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.john.price.PetAdoption.Response.PetResponse;
-import com.john.price.PetAdoption.Service.PetResponseMapper;
+import com.john.price.PetAdoption.Responses.DogResponse;
+import com.john.price.PetAdoption.Services.DogResponseMapper;
 
 
 @RestController
-@RequestMapping(path = "/pets", produces = "application/json")
-public class PetController {
+@RequestMapping(path = "/dogs", produces = "application/json")
+public class DogController {
 
 	@Autowired
-	PetResponseMapper mapper;
+	DogResponseMapper mapper;
 	
 	@GetMapping(path = "")
-    public Iterable<PetResponse> allPets() {
+    public Iterable<DogResponse> allDogs() {
 		return mapper.mapPets();
     }
     
-    @GetMapping(path = "/{petId}")
-    public PetResponse petById(@PathVariable("petId") Integer petId) {
-    	return mapper.mapPet(petId);
+    @GetMapping(path = "/{dogId}")
+    public DogResponse dogById(@PathVariable("dogId") Integer dogId) {
+    	return mapper.mapPet(dogId);
     }
 
 }

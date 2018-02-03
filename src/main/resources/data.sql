@@ -1,8 +1,8 @@
-INSERT INTO `pet` (`name`) VALUES
+INSERT INTO `dog` (`name`) VALUES
 ('spot');
 
-INSERT INTO `breed` (`name`) VALUES
+INSERT INTO `dogbreed` (`name`) VALUES
 ('Dalmation');
 
-INSERT INTO `breed_pet` (`breed_id`, `pet_id`) VALUES
+INSERT INTO `dogbreed_dog` (`dogbreed_id`, `dog_id`) VALUES
 (1,1);

@@ -10,28 +10,28 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class Pet {
+public class Dog {
 
-    private Integer petId;
+    private Integer dogId;
     private String name;
-    private Set<Breed> breeds;
+    private Set<DogBreed> dogBreeds;
     
-    public Pet() {}
+    public Dog() {}
     
-    public Pet(String name, Set<Breed> breeds) {
+    public Dog(String name, Set<DogBreed> dogBreeds) {
     	this.name = name;
-    	this.breeds = breeds;
+    	this.dogBreeds = dogBreeds;
     }
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "pet_id")
-	public Integer getPetId() {
-		return petId;
+    @Column(name = "dog_id")
+	public Integer getDogId() {
+		return dogId;
 	}
 
-	public void setPetId(Integer petId) {
-		this.petId = petId;
+	public void setDogId(Integer dogId) {
+		this.dogId = dogId;
 	}
 
 	public String getName() {
@@ -42,12 +42,12 @@ public class Pet {
 		this.name = name;
 	}
 	
-	@ManyToMany(mappedBy = "pets")
-	public Set<Breed> getBreeds() {
-		return this.breeds;
+	@ManyToMany(mappedBy = "dogs")
+	public Set<DogBreed> getDogBreeds() {
+		return this.dogBreeds;
 	}
 	
-	public void setBreeds(Set<Breed> breeds) {
-		this.breeds = breeds;
+	public void setDogBreeds(Set<DogBreed> dogBreeds) {
+		this.dogBreeds = dogBreeds;
 	}
 }
