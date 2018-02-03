@@ -9,23 +9,25 @@ import org.springframework.stereotype.Component;
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Repositories.DogRepository;
 import com.john.price.PetAdoption.Responses.DogResponse;
+import com.john.price.PetAdoption.Responses.PetResponse;
 
-@Component
-public class DogResponseMapper {
+@Component("DogResponseMapper")
+public class DogResponseMapper implements PetResponseMapper{
 	@Autowired 
 	private DogRepository dogRepository;
 	
-	public Iterable<DogResponse> mapPets() {
+	public Iterable<PetResponse> mapPets() {
 		Iterable<Dog> data = dogRepository.findAll();
-		List<DogResponse> dogs = new ArrayList<DogResponse>();
+		List<PetResponse> dogs = new ArrayList<PetResponse>();
 		for(Dog dog : data) {
 			dogs.add(new DogResponse(dog.getId(), dog.getName(), dog.getBreeds()));
 		}
 		return dogs;
 	}
 	
-	public DogResponse mapPet(Integer id) {
+	public PetResponse mapPet(Integer id) {
 		Dog data = dogRepository.findOne(id);
 		return new DogResponse(data.getId(), data.getName(), data.getBreeds());
 	}
+
 }

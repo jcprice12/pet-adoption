@@ -3,37 +3,18 @@ package com.john.price.PetAdoption.Responses;
 import java.util.ArrayList;
 
 import com.john.price.PetAdoption.Models.DogBreed;
+import com.john.price.PetAdoption.Responses.Structs.DogBreedStruct;
 
-public class DogResponse {
-	private String name;
-	private Integer id;
+public class DogResponse extends PetResponse{
 	private ArrayList<DogBreedStruct> breeds;
 	
-	public DogResponse() {}
-	
 	public DogResponse(Integer id, String name, Iterable<DogBreed> breeds) {
-		this.setId(id);
-		this.setName(name);
+		setId(id);
+		setName(name);
 		this.breeds = new ArrayList<DogBreedStruct>();
 		for(DogBreed breed : breeds) {
 			this.breeds.add(new DogBreedStruct(breed.getId(), breed.getName()));
 		}
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	
 	public ArrayList<DogBreedStruct> getBreeds(){

@@ -1,4 +1,4 @@
-package com.john.price.PetAdoption.Responses;
+package com.john.price.PetAdoption.Responses.Structs;
 
 public class DogBreedStruct {
 	public String name;

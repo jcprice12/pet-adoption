@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Pet {
+public abstract class Pet {
 	protected Integer id;
 	protected String name;
 	protected String image;
