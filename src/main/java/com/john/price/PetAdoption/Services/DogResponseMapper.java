@@ -8,26 +8,25 @@ import org.springframework.stereotype.Component;
 
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Repositories.DogRepository;
-import com.john.price.PetAdoption.Responses.DogResponse;
-import com.john.price.PetAdoption.Responses.PetResponse;
+import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 
 @Component("DogResponseMapper")
-public class DogResponseMapper implements PetResponseMapper{
+public class DogResponseMapper implements PetWithBreedsResponseMapper{
 	@Autowired 
-	private DogRepository dogRepository;
+	private DogRepository repository;
 	
-	public Iterable<PetResponse> mapPets() {
-		Iterable<Dog> data = dogRepository.findAll();
-		List<PetResponse> dogs = new ArrayList<PetResponse>();
+	public Iterable<PetWithBreedsResponse> mapPets() {
+		Iterable<Dog> data = repository.findAll();
+		List<PetWithBreedsResponse> dogs = new ArrayList<PetWithBreedsResponse>();
 		for(Dog dog : data) {
-			dogs.add(new DogResponse(dog.getId(), dog.getName(), dog.getBreeds()));
+			dogs.add(new PetWithBreedsResponse(dog, dog.getBreeds()));
 		}
 		return dogs;
 	}
 	
-	public PetResponse mapPet(Integer id) {
-		Dog data = dogRepository.findOne(id);
-		return new DogResponse(data.getId(), data.getName(), data.getBreeds());
+	public PetWithBreedsResponse mapPet(Integer id) {
+		Dog data = repository.findOne(id);
+		return new PetWithBreedsResponse(data, data.getBreeds());
 	}
 
 }

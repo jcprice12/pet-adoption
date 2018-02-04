@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 
-
 @RestController
-@RequestMapping(path = "/dogs", produces = "application/json")
-public class DogController extends PetWithBreedsController{
+@RequestMapping(path = "/cats", produces = "application/json")
+public class CatController extends PetWithBreedsController{
 	
 	@Autowired
-	@Qualifier("DogResponseMapper")
+	@Qualifier("CatResponseMapper")
 	PetWithBreedsResponseMapper mapper;
 	
 	@Override
 	PetWithBreedsResponseMapper getMapper() {
 		return mapper;
 	}
+    
 }

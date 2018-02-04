@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Models;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ public abstract class Breed {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "breed_id")
 	public Integer getId() {
 		return id;
 	}	

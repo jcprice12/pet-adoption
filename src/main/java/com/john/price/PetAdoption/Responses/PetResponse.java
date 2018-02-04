@@ -1,25 +1,10 @@
 package com.john.price.PetAdoption.Responses;
 
-public abstract class PetResponse {
-	private Integer id;
-	private String name;
-	private String image;
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
+import com.john.price.PetAdoption.Models.Pet;
+
+public abstract class PetResponse extends Pet{
+	public PetResponse(Integer id, String name) {
 		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
 		this.name = name;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
 	}
 }

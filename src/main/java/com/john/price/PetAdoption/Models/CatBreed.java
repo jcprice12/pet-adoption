@@ -9,20 +9,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="dogbreed")
-public class DogBreed extends Breed{
-	
-	private Set<Dog> dogs;
+@Table(name="catbreed")
+public class CatBreed extends Breed {
+	private Set<Cat> cats;
 	
 	@ManyToMany
-	@JoinTable(name = "dogbreed_dog",
+	@JoinTable(name = "catbreed_cat",
 				joinColumns = @JoinColumn(name = "breed_id"),
-				inverseJoinColumns = @JoinColumn(name = "dog_id"))
-	public Set<Dog> getDogs(){
-		return this.dogs;
+				inverseJoinColumns = @JoinColumn(name = "cat_id"))
+	public Set<Cat> getCats(){
+		return cats;
 	}
 	
-	public void setDogs(Set<Dog> dogs) {
-		this.dogs = dogs;
+	public void setCats(Set<Cat> cats) {
+		this.cats = cats;
 	}
 }

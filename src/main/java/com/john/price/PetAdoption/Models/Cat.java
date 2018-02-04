@@ -7,21 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Dog extends Pet{
-
-    private Set<DogBreed> breeds;
+public class Cat extends Pet {
+	private Set<CatBreed> breeds;
     
-    @Column(name = "dog_id")
+    @Column(name = "cat_id")
     public Integer getId() {
     	return super.getId();
     }
 	
-	@ManyToMany(mappedBy = "dogs")
-	public Set<DogBreed> getBreeds() {
+	@ManyToMany(mappedBy = "cats")
+	public Set<CatBreed> getBreeds() {
 		return breeds;
 	}
 	
-	public void setBreeds(Set<DogBreed> breeds) {
+	public void setBreeds(Set<CatBreed> breeds) {
 		this.breeds = breeds;
 	}
 }
