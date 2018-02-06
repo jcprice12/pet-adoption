@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.john.price</groupId>
-	<artifactId>TestProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
@@ -53,4 +52,5 @@
             </plugin>
         </plugins>
     </build>
+	<artifactId>PetAdoption</artifactId>
 </project>

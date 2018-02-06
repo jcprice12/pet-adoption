@@ -1,32 +1,27 @@
 package com.john.price.PetAdoption.Services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.john.price.PetAdoption.Models.Dog;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Repositories.DogRepository;
-import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 
 @Component("DogResponseMapper")
-public class DogResponseMapper implements PetWithBreedsResponseMapper{
-	@Autowired 
+public class DogResponseMapper extends PetWithBreedsResponseMapper{
+	@Autowired
+	@Qualifier("DogRepository")
 	private DogRepository repository;
-	
-	public Iterable<PetWithBreedsResponse> mapPets() {
-		Iterable<Dog> data = repository.findAll();
-		List<PetWithBreedsResponse> dogs = new ArrayList<PetWithBreedsResponse>();
-		for(Dog dog : data) {
-			dogs.add(new PetWithBreedsResponse(dog, dog.getBreeds()));
-		}
-		return dogs;
+
+	@Override
+	protected Iterable<Dog> getAllPets() {
+		return repository.findAll();
 	}
-	
-	public PetWithBreedsResponse mapPet(Integer id) {
-		Dog data = repository.findOne(id);
-		return new PetWithBreedsResponse(data, data.getBreeds());
+
+	@Override
+	protected PetWithBreeds gePet(Integer id) {
+		return repository.findOne(id);
 	}
 
 }

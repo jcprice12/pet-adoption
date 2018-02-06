@@ -3,7 +3,6 @@ package com.john.price.PetAdoption.Controllers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.john.price.PetAdoption.Responses.PetResponse;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 
