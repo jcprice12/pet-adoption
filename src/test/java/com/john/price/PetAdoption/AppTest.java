@@ -11,7 +11,7 @@ public class AppTest{
 	
 	@Test
     public void checkApp()
-    {
+    {		
         assertTrue( true );
     }
 }
