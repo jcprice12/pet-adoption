@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +18,35 @@ import com.john.price.PetAdoption.Models.Cat;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class CatRepositoryTest {
+	private Cat daisy = new Cat();
 	
 	@Autowired
-	TestEntityManager entityManager;
+	private TestEntityManager entityManager;
 	
 	@Autowired
-	CatRepository catRepository;
+	private CatRepository catRepository;
 	
-	@Test
-	public void findAllCatsTest() {
-		Cat daisy = new Cat();
+	@Before
+	public void initDb() {
 		daisy.setName("daisy");
 		entityManager.persist(daisy);
 		entityManager.flush();
-		
+	}
+	
+	@After
+	public void tearDownDb() {
+		entityManager.remove(daisy);
+	}
+	
+	@Test
+	public void findAllCatsTest() {		
 		ArrayList<Cat> cats = (ArrayList<Cat>)catRepository.findAll();
 		assertTrue(cats.get(0).getName().equals(daisy.getName()));
+	}
+	
+	@Test
+	public void findCatByIdTest() {
+		Cat cat = catRepository.findOne(1);
+		assertTrue(cat.getName().equals(daisy.getName()));
 	}
 }
