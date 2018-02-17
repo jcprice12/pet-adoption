@@ -8,7 +8,7 @@ import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 
 public abstract class PetWithBreedsResponseMapper {
 	protected abstract Iterable<? extends PetWithBreeds> getAllPets();
-	protected abstract PetWithBreeds gePet(Integer id);
+	protected abstract PetWithBreeds getPet(Integer id);
 	
 	public Iterable<PetWithBreedsResponse> mapPets() {
 		Iterable<? extends PetWithBreeds> data = getAllPets();
@@ -20,7 +20,7 @@ public abstract class PetWithBreedsResponseMapper {
 	}
 
 	public PetWithBreedsResponse mapPet(Integer id) {
-		PetWithBreeds data = gePet(id);
+		PetWithBreeds data = getPet(id);
 		return new PetWithBreedsResponse(data.getId(), data.getName(), data.getBreeds());
 	}
 }

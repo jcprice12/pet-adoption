@@ -27,14 +27,14 @@ public class CatRepositoryTest {
 	private CatRepository catRepository;
 	
 	@Before
-	public void initDb() {
+	public void initData() {
 		daisy.setName("daisy");
 		entityManager.persist(daisy);
 		entityManager.flush();
 	}
 	
 	@After
-	public void tearDownDb() {
+	public void removeData() {
 		entityManager.remove(daisy);
 	}
 	
