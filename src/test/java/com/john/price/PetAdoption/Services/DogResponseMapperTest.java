@@ -14,50 +14,49 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.john.price.PetAdoption.Models.Breed;
-import com.john.price.PetAdoption.Models.Cat;
-import com.john.price.PetAdoption.Models.CatBreed;
+import com.john.price.PetAdoption.Models.Dog;
+import com.john.price.PetAdoption.Models.DogBreed;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.TestHelpers.Comparisons;
 
-public class CatResponseMapperTest {
-	
-	private static List<Cat> cats;
-	private static Cat daisy;
-	private static PetWithBreedsResponse daisyResponse;
-	private static List<PetWithBreedsResponse> catsResponse;
-	private static CatResponseMapper responseMapper;
+public class DogResponseMapperTest {
+	private static List<Dog> dogs;
+	private static Dog labby;
+	private static PetWithBreedsResponse labbyResponse;
+	private static List<PetWithBreedsResponse> dogsResponse;
+	private static DogResponseMapper responseMapper;
 	
 	private static void makePets() {
-		daisy = new Cat();
-		daisy.setId(1);
-		daisy.setName("Daisy");
+		labby = new Dog();
+		labby.setId(1);
+		labby.setName("Labby");
 		
-		CatBreed amShort = new CatBreed();
-		amShort.setId(1);
-		amShort.setName("American Shorthair");
-		Set<Cat> catSet = new HashSet<Cat>();
-		catSet.add(daisy);
-		amShort.setCats(catSet);
+		DogBreed lab = new DogBreed();
+		lab.setId(1);
+		lab.setName("Labrador Retriever");
+		Set<Dog> dogSet = new HashSet<Dog>();
+		dogSet.add(labby);
+		lab.setDogs(dogSet);
 		
 		Set<Breed> breeds = new HashSet<Breed>();
-		breeds.add(amShort);		
-		daisy.setBreeds(breeds);
+		breeds.add(lab);		
+		labby.setBreeds(breeds);
 		
-		cats = new ArrayList<Cat>();
-		cats.add(daisy);
+		dogs = new ArrayList<Dog>();
+		dogs.add(labby);
 	}
 	
 	private static void makePetResponses() {
-		daisyResponse = new PetWithBreedsResponse(daisy.getId(), daisy.getName(), daisy.getBreeds());
-		catsResponse = new ArrayList<PetWithBreedsResponse>();
-		catsResponse.add(daisyResponse);
+		labbyResponse = new PetWithBreedsResponse(labby.getId(), labby.getName(), labby.getBreeds());
+		dogsResponse = new ArrayList<PetWithBreedsResponse>();
+		dogsResponse.add(labbyResponse);
 	}
 	
 	private static void mockMapper() {
-		responseMapper = mock(CatResponseMapper.class);
-		when(responseMapper.getAllPets()).thenReturn(cats);
+		responseMapper = mock(DogResponseMapper.class);
+		when(responseMapper.getAllPets()).thenReturn(dogs);
 		when(responseMapper.mapPets()).thenCallRealMethod();
-		when(responseMapper.getPet(1)).thenReturn(daisy);
+		when(responseMapper.getPet(1)).thenReturn(labby);
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
 	}
 	
@@ -69,22 +68,20 @@ public class CatResponseMapperTest {
 	}
 		
 	@Test
-	public void getCatsResponse() {
+	public void getDogsResponse() {
 		List<PetWithBreedsResponse> petsResponse = (List<PetWithBreedsResponse>) responseMapper.mapPets();
-		assertEquals(petsResponse.size(), catsResponse.size());
+		assertEquals(petsResponse.size(), dogsResponse.size());
 		PetWithBreedsResponse tempPet1, tempPet2;
 		for(int i = 0; i < petsResponse.size(); i++) {
 			tempPet1 = petsResponse.get(i);
-			tempPet2 = catsResponse.get(i);
+			tempPet2 = dogsResponse.get(i);
 			assertTrue(Comparisons.comparePetResponses(tempPet1, tempPet2));
 		}
 	}
 	
 	@Test
-	public void getCatResponse() {
+	public void getDogResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
-		assertTrue(Comparisons.comparePetResponses(petResponse, daisyResponse));
+		assertTrue(Comparisons.comparePetResponses(petResponse, labbyResponse));
 	}
-	
-	
 }

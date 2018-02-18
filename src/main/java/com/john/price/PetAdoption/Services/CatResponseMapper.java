@@ -21,4 +21,5 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	protected Cat getPet(Integer id) {
 		return repository.findOne(id);
 	}
+
 }
