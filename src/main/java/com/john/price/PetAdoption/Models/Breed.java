@@ -22,6 +22,7 @@ public abstract class Breed {
 		this.id = id;
 	}
 	
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}

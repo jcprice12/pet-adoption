@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Models;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ public abstract class Pet {
 		this.id = id;
 	}
 	
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}

@@ -3,6 +3,8 @@ package com.john.price.PetAdoption.Repositories;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +15,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
+import com.john.price.PetAdoption.Models.CatBreed;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -29,6 +33,9 @@ public class CatRepositoryTest {
 	@Before
 	public void initData() {
 		daisy.setName("daisy");
+		Set<Breed> breeds = new HashSet<Breed>();
+		breeds.add(new CatBreed());
+		daisy.setBreeds(breeds);
 		entityManager.persist(daisy);
 		entityManager.flush();
 	}

@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="catbreed")
@@ -17,6 +18,7 @@ public class CatBreed extends Breed {
 	@JoinTable(name = "catbreed_cat",
 				joinColumns = @JoinColumn(name = "breed_id"),
 				inverseJoinColumns = @JoinColumn(name = "cat_id"))
+	@NotNull
 	public Set<Cat> getCats(){
 		return cats;
 	}

@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
 import com.john.price.PetAdoption.Models.Dog;
@@ -37,7 +38,6 @@ public class DevDataConfiguration implements ApplicationRunner{
 	private void addDogs() {
 		Dog labby = new Dog();
 		labby.setName("Labby");
-		dogRepo.save(labby);
 		
 		DogBreed lab = new DogBreed();
 		lab.setName("LabradorRetriever");
@@ -46,13 +46,17 @@ public class DevDataConfiguration implements ApplicationRunner{
 		labDogs.add(labby);		
 		lab.setDogs(labDogs);
 		
+		Set<Breed> labbyBreeds = new HashSet<Breed>();
+		labbyBreeds.add(lab);
+		labby.setBreeds(labbyBreeds);
+		
+		dogRepo.save(labby);
 		dogBreedRepo.save(lab);
 	}
 	
 	private void addCats() {
 		Cat daisy = new Cat();
 		daisy.setName("Daisy");
-		catRepo.save(daisy);
 		
 		CatBreed amShort = new CatBreed();
 		amShort.setName("American Shorthair");
@@ -61,6 +65,11 @@ public class DevDataConfiguration implements ApplicationRunner{
 		amShortCats.add(daisy);		
 		amShort.setCats(amShortCats);
 		
+		Set<Breed> daisyBreeds = new HashSet<Breed>();
+		daisyBreeds.add(amShort);
+		daisy.setBreeds(daisyBreeds);
+		
+		catRepo.save(daisy);
 		catBreedRepo.save(amShort);
 	}
 	
