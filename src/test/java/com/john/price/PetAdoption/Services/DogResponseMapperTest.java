@@ -1,7 +1,5 @@
 package com.john.price.PetAdoption.Services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -70,18 +68,12 @@ public class DogResponseMapperTest {
 	@Test
 	public void getDogsResponse() {
 		List<PetWithBreedsResponse> petsResponse = (List<PetWithBreedsResponse>) responseMapper.mapPets();
-		assertEquals(petsResponse.size(), dogsResponse.size());
-		PetWithBreedsResponse tempPet1, tempPet2;
-		for(int i = 0; i < petsResponse.size(); i++) {
-			tempPet1 = petsResponse.get(i);
-			tempPet2 = dogsResponse.get(i);
-			assertTrue(Comparisons.comparePetResponses(tempPet1, tempPet2));
-		}
+		Comparisons.comparePetsResponses(petsResponse, dogsResponse);
 	}
 	
 	@Test
 	public void getDogResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
-		assertTrue(Comparisons.comparePetResponses(petResponse, labbyResponse));
+		Comparisons.comparePetResponses(petResponse, labbyResponse);
 	}
 }
