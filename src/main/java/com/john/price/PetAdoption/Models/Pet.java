@@ -11,6 +11,22 @@ public abstract class Pet {
 	protected Integer id;
 	protected String name;
 	protected String image;
+	protected String description;
+	
+	public Pet() {}
+	
+	public Pet(String name, String image, String description) {
+		this.name = name;
+		this.image = image;
+		this.description = description;
+	}
+	
+	public Pet(Integer id, String name, String image, String description) {
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.description = description;
+	}
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -34,5 +50,12 @@ public abstract class Pet {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

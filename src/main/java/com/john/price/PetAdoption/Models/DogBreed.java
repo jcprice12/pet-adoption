@@ -15,6 +15,18 @@ public class DogBreed extends Breed{
 	
 	private Set<Dog> dogs;
 	
+	public DogBreed() {}
+	
+	public DogBreed(String name, Set<Dog> dogs) {
+		super(name);
+		this.dogs = dogs;
+	}
+	
+	public DogBreed(Integer id, String name, Set<Dog> dogs) {
+		super(id, name);
+		this.dogs = dogs;
+	}
+	
 	@ManyToMany
 	@JoinTable(name = "dogbreed_dog",
 				joinColumns = @JoinColumn(name = "breed_id"),

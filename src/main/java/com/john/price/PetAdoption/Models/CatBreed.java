@@ -14,6 +14,18 @@ import javax.validation.constraints.NotNull;
 public class CatBreed extends Breed {
 	private Set<Cat> cats;
 	
+	public CatBreed() {}
+	
+	public CatBreed(String name, Set<Cat> cats){
+		super(name);
+		this.cats = cats;
+	}
+	
+	public CatBreed(Integer id, String name, Set<Cat> cats) {
+		super(id, name);
+		this.cats = cats;
+	}
+	
 	@ManyToMany
 	@JoinTable(name = "catbreed_cat",
 				joinColumns = @JoinColumn(name = "breed_id"),
