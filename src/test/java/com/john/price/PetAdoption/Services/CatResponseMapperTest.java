@@ -26,21 +26,16 @@ public class CatResponseMapperTest {
 	private static CatResponseMapper responseMapper;
 	
 	private static void makePets() {
-		daisy = new Cat();
-		daisy.setId(1);
-		daisy.setName("Daisy");
 		
-		CatBreed amShort = new CatBreed();
-		amShort.setId(1);
-		amShort.setName("American Shorthair");
+		daisy = new Cat(1, "Daisy", "url", "A very friendly pet");	
+		CatBreed amShort = new CatBreed(1, "American Shorthair");
+		
 		Set<Cat> catSet = new HashSet<Cat>();
 		catSet.add(daisy);
-		amShort.setCats(catSet);
-		
+		amShort.setCats(catSet);	
 		Set<Breed> breeds = new HashSet<Breed>();
 		breeds.add(amShort);		
-		daisy.setBreeds(breeds);
-		
+		daisy.setBreeds(breeds);	
 		cats = new ArrayList<Cat>();
 		cats.add(daisy);
 	}

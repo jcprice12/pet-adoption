@@ -16,6 +16,14 @@ public class CatBreed extends Breed {
 	
 	public CatBreed() {}
 	
+	public CatBreed(String name) {
+		super(name);
+	}
+	
+	public CatBreed(Integer id, String name) {
+		super(id, name);
+	}
+	
 	public CatBreed(String name, Set<Cat> cats){
 		super(name);
 		this.cats = cats;

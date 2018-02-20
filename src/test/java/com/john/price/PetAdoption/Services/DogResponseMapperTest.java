@@ -25,21 +25,16 @@ public class DogResponseMapperTest {
 	private static DogResponseMapper responseMapper;
 	
 	private static void makePets() {
-		labby = new Dog();
-		labby.setId(1);
-		labby.setName("Labby");
 		
-		DogBreed lab = new DogBreed();
-		lab.setId(1);
-		lab.setName("Labrador Retriever");
+		labby = new Dog(1, "Labby", "url", "A very friendly pet");	
+		DogBreed lab = new DogBreed(1, "Labrador Retriever");
+		
 		Set<Dog> dogSet = new HashSet<Dog>();
 		dogSet.add(labby);
-		lab.setDogs(dogSet);
-		
+		lab.setDogs(dogSet);	
 		Set<Breed> breeds = new HashSet<Breed>();
 		breeds.add(lab);		
-		labby.setBreeds(breeds);
-		
+		labby.setBreeds(breeds);	
 		dogs = new ArrayList<Dog>();
 		dogs.add(labby);
 	}

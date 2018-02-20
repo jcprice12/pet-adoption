@@ -17,6 +17,14 @@ public class DogBreed extends Breed{
 	
 	public DogBreed() {}
 	
+	public DogBreed(String name) {
+		super(name);
+	}
+	
+	public DogBreed(Integer id, String name) {
+		super(id, name);
+	}
+	
 	public DogBreed(String name, Set<Dog> dogs) {
 		super(name);
 		this.dogs = dogs;
