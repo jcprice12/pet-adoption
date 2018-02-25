@@ -17,28 +17,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
-import com.john.price.PetAdoption.Services.CatResponseMapper;
+import com.john.price.PetAdoption.Services.DogResponseMapper;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 import com.john.price.PetAdoption.TestHelpers.Builders;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CatControllerTest {
+public class DogControllerTest {
 	
 	@Autowired
-	CatController controller;
+	DogController controller;
 	
 	@Test
-	public void getMapperShouldReturnCatResponseMapper(){
+	public void getMapperShouldReturnDogResponseMapper(){
 		PetWithBreedsResponseMapper mapper = controller.getMapper();
-		assertTrue(mapper instanceof CatResponseMapper);
+		assertTrue(mapper instanceof DogResponseMapper);
 	}
 	
 	@Test
-	public void allShouldReturnCats() {
-		CatResponseMapper mapper = mock(CatResponseMapper.class);
-		when(mapper.mapPets()).thenReturn(Builders.buildPetsWithBreedsResponse(1, "cat"));
-		CatController controller = spy(CatController.class);
+	public void allShouldReturnDogs() {
+		DogResponseMapper mapper = mock(DogResponseMapper.class);
+		when(mapper.mapPets()).thenReturn(Builders.buildPetsWithBreedsResponse(1, "dog"));
+		DogController controller = spy(DogController.class);
 		when(controller.getMapper()).thenReturn(mapper);
 		List<PetWithBreedsResponse> pets = (List<PetWithBreedsResponse>) controller.all();
 		verify(mapper, times(1)).mapPets();
