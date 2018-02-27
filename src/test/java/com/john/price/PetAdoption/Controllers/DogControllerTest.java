@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,22 @@ public class DogControllerTest {
 	@Autowired
 	DogController controller;
 	
+	private static final int ID = 1;
+	private static final int LENGTH = 1;
+	
+	DogResponseMapper dogResponseMapper;
+	DogController dogController;
+	
+	@Before
+	public void setUp() {
+		dogResponseMapper = mock(DogResponseMapper.class);
+		when(dogResponseMapper.mapPets()).thenReturn(Builders.buildPetsWithBreedsResponse(LENGTH, "dog"));
+		when(dogResponseMapper.mapPet(ID)).thenReturn(Builders.buildPetWithBreedsResponse("dog", ID));
+		
+		dogController = spy(DogController.class);
+		when(dogController.getMapper()).thenReturn(dogResponseMapper);
+	}
+	
 	@Test
 	public void getMapperShouldReturnDogResponseMapper(){
 		PetWithBreedsResponseMapper mapper = controller.getMapper();
@@ -36,12 +53,15 @@ public class DogControllerTest {
 	
 	@Test
 	public void allShouldReturnDogs() {
-		DogResponseMapper mapper = mock(DogResponseMapper.class);
-		when(mapper.mapPets()).thenReturn(Builders.buildPetsWithBreedsResponse(1, "dog"));
-		DogController controller = spy(DogController.class);
-		when(controller.getMapper()).thenReturn(mapper);
-		List<PetWithBreedsResponse> pets = (List<PetWithBreedsResponse>) controller.all();
-		verify(mapper, times(1)).mapPets();
-		assertEquals(pets.size(), 1);
+		List<PetWithBreedsResponse> pets = (List<PetWithBreedsResponse>) dogController.all();
+		verify(dogResponseMapper, times(1)).mapPets();
+		assertEquals(pets.size(), LENGTH);
+	}
+	
+	@Test
+	public void byIdShouldReturnADog() {
+		PetWithBreedsResponse pet = dogController.byId(ID);
+		verify(dogResponseMapper, times(1)).mapPet(ID);
+		assertEquals(pet.getId(), (Integer)ID);
 	}
 }
