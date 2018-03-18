@@ -41,7 +41,7 @@ public class CatResponseMapperTest {
 	}
 	
 	private static void makePetResponses() {
-		daisyResponse = new PetWithBreedsResponse(daisy.getId(), daisy.getName(), daisy.getBreeds());
+		daisyResponse = new PetWithBreedsResponse(daisy);
 		catsResponse = new ArrayList<PetWithBreedsResponse>();
 		catsResponse.add(daisyResponse);
 	}

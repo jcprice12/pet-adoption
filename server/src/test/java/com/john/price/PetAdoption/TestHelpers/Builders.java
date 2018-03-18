@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.john.price.PetAdoption.Models.Breed;
+import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
+import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Models.DogBreed;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 
@@ -16,10 +18,11 @@ public abstract class Builders {
 		Set<Breed> breeds = new HashSet<Breed>();
 		if(petType.equals("cat")) {
 			breeds.add(new CatBreed());
+			return new PetWithBreedsResponse(new Cat(id, ("name" + id), "imageUrl", "descrip", breeds));
 		} else {
 			breeds.add(new DogBreed());
+			return new PetWithBreedsResponse(new Dog(id, ("name" + id), "imageUrl", "descrip", breeds));
 		}
-		return new PetWithBreedsResponse(id, ("name" + id), breeds);
 	}
 	
 	public static Iterable<PetWithBreedsResponse> buildPetsWithBreedsResponse(int length, String petType){

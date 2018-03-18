@@ -3,7 +3,10 @@ package com.john.price.PetAdoption.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
+import com.john.price.PetAdoption.Models.DogBreed;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Repositories.CatRepository;
 
 @Component("CatResponseMapper")
@@ -20,6 +23,21 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	@Override
 	protected Cat getPet(Integer id) {
 		return repository.findOne(id);
+	}
+	
+	@Override
+	protected PetWithBreeds instantiatePetWithBreeds() {
+		return new Cat();
+	}
+	
+	@Override
+	protected Breed instantiateBreed() {
+		return new DogBreed();
+	}
+	
+	@Override
+	protected PetWithBreeds savePetWithBreeds(PetWithBreeds petWithBreeds) {
+		return repository.save((Cat)petWithBreeds);
 	}
 
 }

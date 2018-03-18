@@ -40,7 +40,7 @@ public class DogResponseMapperTest {
 	}
 	
 	private static void makePetResponses() {
-		labbyResponse = new PetWithBreedsResponse(labby.getId(), labby.getName(), labby.getBreeds());
+		labbyResponse = new PetWithBreedsResponse(labby);
 		dogsResponse = new ArrayList<PetWithBreedsResponse>();
 		dogsResponse.add(labbyResponse);
 	}
