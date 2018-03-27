@@ -25,11 +25,9 @@ public class CatResponseMapperTest {
 	private static List<PetWithBreedsResponse> catsResponse;
 	private static CatResponseMapper responseMapper;
 	
-	private static void makePets() {
-		
+	private static void makePets() {	
 		daisy = new Cat(1, "Daisy", "url", "A very friendly pet");	
-		CatBreed amShort = new CatBreed(1, "American Shorthair");
-		
+		CatBreed amShort = new CatBreed(1, "American Shorthair");		
 		Set<Cat> catSet = new HashSet<Cat>();
 		catSet.add(daisy);
 		amShort.setCats(catSet);	
@@ -64,13 +62,13 @@ public class CatResponseMapperTest {
 	@Test
 	public void getCatsResponse() {
 		List<PetWithBreedsResponse> petsResponse = (List<PetWithBreedsResponse>) responseMapper.mapPets();
-		Comparisons.comparePetsResponses(petsResponse, catsResponse);
+		Comparisons.comparePetsWithBreedsResponses(petsResponse, catsResponse);
 	}
 	
 	@Test
 	public void getCatResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
-		Comparisons.comparePetResponses(petResponse, daisyResponse);
+		Comparisons.comparePetWithBreedsResponses(petResponse, daisyResponse);
 	}
 	
 	

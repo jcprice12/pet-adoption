@@ -8,6 +8,10 @@ import com.john.price.PetAdoption.Models.PetWithBreeds;
 public class PetWithBreedsResponse extends PetResponse{
 	private ArrayList<BreedResponse> breeds;
 	
+	public PetWithBreedsResponse() {
+		super();
+	}
+	
 	public <T extends Breed> PetWithBreedsResponse(PetWithBreeds petWithBreeds) {
 		super(petWithBreeds.getId(), petWithBreeds.getName());
 		this.breeds = new ArrayList<BreedResponse>();

@@ -18,17 +18,16 @@ import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.TestHelpers.Comparisons;
 
 public class DogResponseMapperTest {
+	
 	private static List<Dog> dogs;
 	private static Dog labby;
 	private static PetWithBreedsResponse labbyResponse;
 	private static List<PetWithBreedsResponse> dogsResponse;
 	private static DogResponseMapper responseMapper;
 	
-	private static void makePets() {
-		
+	private static void makePets() {	
 		labby = new Dog(1, "Labby", "url", "A very friendly pet");	
-		DogBreed lab = new DogBreed(1, "Labrador Retriever");
-		
+		DogBreed lab = new DogBreed(1, "Labrador Retriever");		
 		Set<Dog> dogSet = new HashSet<Dog>();
 		dogSet.add(labby);
 		lab.setDogs(dogSet);	
@@ -63,12 +62,13 @@ public class DogResponseMapperTest {
 	@Test
 	public void getDogsResponse() {
 		List<PetWithBreedsResponse> petsResponse = (List<PetWithBreedsResponse>) responseMapper.mapPets();
-		Comparisons.comparePetsResponses(petsResponse, dogsResponse);
+		Comparisons.comparePetsWithBreedsResponses(petsResponse, dogsResponse);
 	}
 	
 	@Test
 	public void getDogResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
-		Comparisons.comparePetResponses(petResponse, labbyResponse);
+		Comparisons.comparePetWithBreedsResponses(petResponse, labbyResponse);
 	}
+	
 }
