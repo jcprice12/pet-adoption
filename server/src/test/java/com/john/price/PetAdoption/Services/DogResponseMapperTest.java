@@ -1,7 +1,9 @@
 package com.john.price.PetAdoption.Services;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,10 +12,12 @@ import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Models.DogBreed;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.TestHelpers.Comparisons;
 
@@ -50,6 +54,9 @@ public class DogResponseMapperTest {
 		when(responseMapper.mapPets()).thenCallRealMethod();
 		when(responseMapper.getPet(1)).thenReturn(labby);
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
+		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Dog());
+		when(responseMapper.instantiateBreed()).thenReturn(new DogBreed());
+		when(responseMapper.createPetWithBreeds(labbyResponse)).thenCallRealMethod();
 	}
 	
 	@BeforeClass
@@ -69,6 +76,15 @@ public class DogResponseMapperTest {
 	public void getDogResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
 		Comparisons.comparePetWithBreedsResponses(petResponse, labbyResponse);
+	}
+	
+	@Test
+	public void createDog() {
+		responseMapper.createPetWithBreeds(labbyResponse);
+		
+		ArgumentCaptor<PetWithBreeds> argument = ArgumentCaptor.forClass(PetWithBreeds.class);
+		verify(responseMapper).savePetWithBreeds(argument.capture());
+		assertEquals("Labby",argument.getValue().getName());
 	}
 	
 }

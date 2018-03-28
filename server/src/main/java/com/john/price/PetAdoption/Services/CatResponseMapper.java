@@ -39,5 +39,4 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	protected PetWithBreeds savePetWithBreeds(PetWithBreeds petWithBreeds) {
 		return repository.save((Cat)petWithBreeds);
 	}
-
 }

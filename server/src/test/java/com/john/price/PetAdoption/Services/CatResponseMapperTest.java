@@ -1,6 +1,8 @@
 package com.john.price.PetAdoption.Services;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -10,10 +12,12 @@ import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.TestHelpers.Comparisons;
 
@@ -50,6 +54,9 @@ public class CatResponseMapperTest {
 		when(responseMapper.mapPets()).thenCallRealMethod();
 		when(responseMapper.getPet(1)).thenReturn(daisy);
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
+		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Cat());
+		when(responseMapper.instantiateBreed()).thenReturn(new CatBreed());
+		when(responseMapper.createPetWithBreeds(daisyResponse)).thenCallRealMethod();
 	}
 	
 	@BeforeClass
@@ -71,5 +78,12 @@ public class CatResponseMapperTest {
 		Comparisons.comparePetWithBreedsResponses(petResponse, daisyResponse);
 	}
 	
-	
+	@Test
+	public void createCat() {
+		responseMapper.createPetWithBreeds(daisyResponse);
+		
+		ArgumentCaptor<PetWithBreeds> argument = ArgumentCaptor.forClass(PetWithBreeds.class);
+		verify(responseMapper).savePetWithBreeds(argument.capture());
+		assertEquals("Daisy",argument.getValue().getName());
+	}
 }

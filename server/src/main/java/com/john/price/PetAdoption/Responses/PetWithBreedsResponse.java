@@ -1,12 +1,13 @@
 package com.john.price.PetAdoption.Responses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 
 public class PetWithBreedsResponse extends PetResponse{
-	private ArrayList<BreedResponse> breeds;
+	private List<BreedResponse> breeds;
 	
 	public PetWithBreedsResponse() {
 		super();
@@ -20,11 +21,11 @@ public class PetWithBreedsResponse extends PetResponse{
 		}
 	}
 	
-	public ArrayList<BreedResponse> getBreeds() {
+	public List<BreedResponse> getBreeds() {
 		return breeds;
 	}
 	
-	public void setBreeds(ArrayList<BreedResponse> breeds) {
+	public void setBreeds(List<BreedResponse> breeds) {
 		this.breeds = breeds;
 	}
 }
