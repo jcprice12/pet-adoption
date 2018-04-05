@@ -6,20 +6,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
-import com.john.price.PetAdoption.TestHelpers.Comparisons;
+import com.john.price.PetAdoption.TestHelpers.Assertions;
+import com.john.price.PetAdoption.TestHelpers.Builders;
 
 public class CatResponseMapperTest {
 	
@@ -29,15 +27,8 @@ public class CatResponseMapperTest {
 	private static List<PetWithBreedsResponse> catsResponse;
 	private static CatResponseMapper responseMapper;
 	
-	private static void makePets() {	
-		daisy = new Cat(1, "Daisy", "url", "A very friendly pet");	
-		CatBreed amShort = new CatBreed(1, "American Shorthair");		
-		Set<Cat> catSet = new HashSet<Cat>();
-		catSet.add(daisy);
-		amShort.setCats(catSet);	
-		Set<Breed> breeds = new HashSet<Breed>();
-		breeds.add(amShort);		
-		daisy.setBreeds(breeds);	
+	private static void makePets() {
+		daisy = Builders.buildPlainCat();
 		cats = new ArrayList<Cat>();
 		cats.add(daisy);
 	}
@@ -69,13 +60,13 @@ public class CatResponseMapperTest {
 	@Test
 	public void getCatsResponse() {
 		List<PetWithBreedsResponse> petsResponse = (List<PetWithBreedsResponse>) responseMapper.mapPets();
-		Comparisons.comparePetsWithBreedsResponses(petsResponse, catsResponse);
+		Assertions.assertPetsWithBreedsListsAreEqual(petsResponse, catsResponse);
 	}
 	
 	@Test
 	public void getCatResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
-		Comparisons.comparePetWithBreedsResponses(petResponse, daisyResponse);
+		Assertions.assertPetsWithBreedsAreEqual(petResponse, daisyResponse);
 	}
 	
 	@Test

@@ -2,24 +2,22 @@ package com.john.price.PetAdoption.Services;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Models.DogBreed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
-import com.john.price.PetAdoption.TestHelpers.Comparisons;
+import com.john.price.PetAdoption.TestHelpers.Assertions;
+import com.john.price.PetAdoption.TestHelpers.Builders;
 
 public class DogResponseMapperTest {
 	
@@ -30,14 +28,7 @@ public class DogResponseMapperTest {
 	private static DogResponseMapper responseMapper;
 	
 	private static void makePets() {	
-		labby = new Dog(1, "Labby", "url", "A very friendly pet");	
-		DogBreed lab = new DogBreed(1, "Labrador Retriever");		
-		Set<Dog> dogSet = new HashSet<Dog>();
-		dogSet.add(labby);
-		lab.setDogs(dogSet);	
-		Set<Breed> breeds = new HashSet<Breed>();
-		breeds.add(lab);		
-		labby.setBreeds(breeds);	
+		labby = Builders.buildPlainDog();	
 		dogs = new ArrayList<Dog>();
 		dogs.add(labby);
 	}
@@ -69,13 +60,13 @@ public class DogResponseMapperTest {
 	@Test
 	public void getDogsResponse() {
 		List<PetWithBreedsResponse> petsResponse = (List<PetWithBreedsResponse>) responseMapper.mapPets();
-		Comparisons.comparePetsWithBreedsResponses(petsResponse, dogsResponse);
+		Assertions.assertPetsWithBreedsListsAreEqual(petsResponse, dogsResponse);
 	}
 	
 	@Test
 	public void getDogResponse() {
 		PetWithBreedsResponse petResponse = responseMapper.mapPet(1);
-		Comparisons.comparePetWithBreedsResponses(petResponse, labbyResponse);
+		Assertions.assertPetsWithBreedsAreEqual(petResponse, labbyResponse);
 	}
 	
 	@Test

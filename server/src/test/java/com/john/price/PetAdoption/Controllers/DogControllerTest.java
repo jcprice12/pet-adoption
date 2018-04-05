@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
@@ -23,7 +24,7 @@ import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 import com.john.price.PetAdoption.TestHelpers.Builders;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class DogControllerTest {
 	
 	@Autowired

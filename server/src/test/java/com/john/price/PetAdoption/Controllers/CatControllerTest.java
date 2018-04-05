@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
@@ -23,17 +24,17 @@ import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 import com.john.price.PetAdoption.TestHelpers.Builders;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 public class CatControllerTest {
 	
 	@Autowired
-	CatController controller;
+	private CatController controller;
 	
 	private static final int ID = 1;
 	private static final int LENGTH = 1;
 	
-	CatResponseMapper catResponseMapper;
-	CatController catController;
+	private CatResponseMapper catResponseMapper;
+	private CatController catController;
 	
 	@Before
 	public void setUp() {

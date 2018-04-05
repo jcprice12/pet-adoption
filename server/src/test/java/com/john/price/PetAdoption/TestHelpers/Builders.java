@@ -14,6 +14,46 @@ import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 
 public abstract class Builders {
 	
+	public static Cat buildPlainCat() {
+		CatBreed catBreed = new CatBreed(1, "American Shorthair");
+		Cat cat = new Cat(1, "Daisy", "cat.jpg", "a nice cat");
+		
+		Set<Breed> breeds = new HashSet<Breed>();
+		Set<Cat> cats = new HashSet<Cat>();
+		
+		cats.add(cat);
+		breeds.add(catBreed);
+		
+		catBreed.setCats(cats);
+		cat.setBreeds(breeds);
+		
+		return cat;
+	}
+	
+	public static Dog buildPlainDog() {
+		DogBreed dogBreed = new DogBreed(1, "Labrador Retriever");
+		Dog dog = new Dog(1, "Labby", "dog.jpg", "a nice dog");
+		
+		Set<Breed> breeds = new HashSet<Breed>();
+		Set<Dog> dogs = new HashSet<Dog>();
+		
+		dogs.add(dog);
+		breeds.add(dogBreed);
+		
+		dogBreed.setDogs(dogs);
+		dog.setBreeds(breeds);
+		
+		return dog;
+	}
+	
+	public static PetWithBreedsResponse buildPlainDogResponse() {
+		return new PetWithBreedsResponse(buildPlainDog());
+	}
+	
+	public static PetWithBreedsResponse buildPainCatResponse() {
+		return new PetWithBreedsResponse(buildPlainCat());
+	}
+	
 	public static PetWithBreedsResponse buildPetWithBreedsResponse(String petType, int id) {
 		Set<Breed> breeds = new HashSet<Breed>();
 		if(petType.equals("cat")) {
