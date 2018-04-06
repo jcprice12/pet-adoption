@@ -3,6 +3,9 @@ package com.john.price.PetAdoption.Services;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
@@ -14,8 +17,9 @@ public abstract class PetWithBreedsResponseMapper {
 	protected abstract Iterable<? extends PetWithBreeds> getAllPets();
 	protected abstract PetWithBreeds getPet(Integer id);
 	protected abstract PetWithBreeds instantiatePetWithBreeds();
-	protected abstract Breed instantiateBreed();
 	protected abstract PetWithBreeds savePetWithBreeds(PetWithBreeds petWithBreeds);
+	protected abstract List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds);
+	protected abstract void saveBreeds(List<? extends Breed> breeds);
 	
 	public Iterable<PetWithBreedsResponse> mapPets() {
 		Iterable<? extends PetWithBreeds> data = getAllPets();
@@ -27,26 +31,32 @@ public abstract class PetWithBreedsResponseMapper {
 	}
 
 	public PetWithBreedsResponse mapPet(Integer id) {
-		PetWithBreeds data = getPet(id);
-		return new PetWithBreedsResponse(data);
+		return new PetWithBreedsResponse(getPet(id));
 	}
 	
+	@Transactional
 	public PetWithBreeds createPetWithBreeds(PetWithBreedsResponse petWithBreedsResponse) {
 		PetWithBreeds petWithBreeds = instantiatePetWithBreeds();
-		
-		petWithBreeds.setName(petWithBreedsResponse.getName());
+    	
+    	List<Integer> breedIds = new ArrayList<Integer>();
+    	for(BreedResponse breedResponse : petWithBreedsResponse.getBreeds()) {
+    		breedIds.add(breedResponse.getId());
+    	}
+    	
+    	List<? extends Breed> breeds = getBreedsFromListOfIds(breedIds, petWithBreeds);  	
+    	Set<Breed> breedsSet = new HashSet<Breed>();
+    	for(Breed breed : breeds) {
+    		breedsSet.add(breed);
+    	}
+    	
+    	petWithBreeds.setBreeds(breedsSet);
+    	petWithBreeds.setName(petWithBreedsResponse.getName());
     	petWithBreeds.setDescription(petWithBreedsResponse.getDescription());
     	petWithBreeds.setImage(petWithBreedsResponse.getImage());
-    	petWithBreeds.setBreeds(new HashSet<Breed>());
     	
-    	Breed tempBreed;
-    	for(BreedResponse breedResponse : petWithBreedsResponse.getBreeds()) {
-    		tempBreed = instantiateBreed();
-    		tempBreed.setName(breedResponse.getName());
-    		tempBreed.setId(breedResponse.getId());
-    		petWithBreeds.getBreeds().add(tempBreed);
-    	}
-
-    	return savePetWithBreeds(petWithBreeds);
+    	petWithBreeds = savePetWithBreeds(petWithBreeds);
+    	saveBreeds(breeds);
+    	
+    	return petWithBreeds;
 	}
 }

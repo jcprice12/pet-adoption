@@ -46,7 +46,7 @@ public class CatResponseMapperTest {
 		when(responseMapper.getPet(1)).thenReturn(daisy);
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
 		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Cat());
-		when(responseMapper.instantiateBreed()).thenReturn(new CatBreed());
+		//when(responseMapper.instantiateBreed()).thenReturn(new CatBreed());
 		when(responseMapper.createPetWithBreeds(daisyResponse)).thenCallRealMethod();
 	}
 	

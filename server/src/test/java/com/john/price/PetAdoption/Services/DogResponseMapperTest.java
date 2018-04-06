@@ -46,7 +46,7 @@ public class DogResponseMapperTest {
 		when(responseMapper.getPet(1)).thenReturn(labby);
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
 		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Dog());
-		when(responseMapper.instantiateBreed()).thenReturn(new DogBreed());
+		//when(responseMapper.instantiateBreed()).thenReturn(new DogBreed());
 		when(responseMapper.createPetWithBreeds(labbyResponse)).thenCallRealMethod();
 	}
 	
