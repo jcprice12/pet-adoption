@@ -22,6 +22,7 @@ import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.Services.CatResponseMapper;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 import com.john.price.PetAdoption.TestHelpers.Builders;
+import com.john.price.PetAdoption.TestHelpers.Constants;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
@@ -30,17 +31,14 @@ public class CatControllerTest {
 	@Autowired
 	private CatController controller;
 	
-	private static final int ID = 1;
-	private static final int LENGTH = 1;
-	
 	private CatResponseMapper catResponseMapper;
 	private CatController catController;
 	
 	@Before
 	public void setUp() {
 		catResponseMapper = mock(CatResponseMapper.class);
-		when(catResponseMapper.mapPets()).thenReturn(Builders.buildPetsWithBreedsResponse(LENGTH, "cat"));
-		when(catResponseMapper.mapPet(ID)).thenReturn(Builders.buildPetWithBreedsResponse("cat", ID));
+		when(catResponseMapper.mapPets()).thenReturn(Builders.buildCatsResponse());
+		when(catResponseMapper.mapPet(Constants.ONE_ID)).thenReturn(Builders.buildPainCatResponse());
 		
 		catController = spy(CatController.class);
 		when(catController.getMapper()).thenReturn(catResponseMapper);
@@ -56,13 +54,13 @@ public class CatControllerTest {
 	public void allShouldReturnCats() {
 		List<PetWithBreedsResponse> pets = (List<PetWithBreedsResponse>) catController.all();
 		verify(catResponseMapper, times(1)).mapPets();
-		assertEquals(pets.size(), LENGTH);
+		assertEquals(1, pets.size());
 	}
 	
 	@Test
 	public void byIdShouldReturnACat() {
-		PetWithBreedsResponse pet = catController.byId(ID);
-		verify(catResponseMapper, times(1)).mapPet(ID);
-		assertEquals(pet.getId(), (Integer)ID);
+		PetWithBreedsResponse pet = catController.byId(Constants.ONE_ID);
+		verify(catResponseMapper, times(1)).mapPet(Constants.ONE_ID);
+		assertEquals((Integer)Constants.ONE_ID,pet.getId());
 	}
 }

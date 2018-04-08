@@ -43,16 +43,19 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 
 	@Override
 	protected List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds) {
-		List<CatBreed> breeds = catBreedRepository.findByIdIn(ids);
-		for(CatBreed catBreed : breeds) {
-			catBreed.getCats().add((Cat) petWithBreeds);
-		}
-		return breeds;
+		return catBreedRepository.findByIdIn(ids);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void saveBreeds(List<? extends Breed> breeds) {
 		catBreedRepository.save((List<CatBreed>)breeds);		
+	}
+
+	@Override
+	protected Breed addPetWithBreedsToBreed(PetWithBreeds petWithBreeds, Breed breed) {
+		CatBreed catBreed = (CatBreed) breed;
+		catBreed.getCats().add((Cat)petWithBreeds);
+		return catBreed;
 	}
 }

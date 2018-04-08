@@ -19,6 +19,7 @@ public abstract class PetWithBreedsResponseMapper {
 	protected abstract PetWithBreeds instantiatePetWithBreeds();
 	protected abstract PetWithBreeds savePetWithBreeds(PetWithBreeds petWithBreeds);
 	protected abstract List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds);
+	protected abstract Breed addPetWithBreedsToBreed(PetWithBreeds petWithBreeds, Breed breed);
 	protected abstract void saveBreeds(List<? extends Breed> breeds);
 	
 	public Iterable<PetWithBreedsResponse> mapPets() {
@@ -46,6 +47,7 @@ public abstract class PetWithBreedsResponseMapper {
     	List<? extends Breed> breeds = getBreedsFromListOfIds(breedIds, petWithBreeds);  	
     	Set<Breed> breedsSet = new HashSet<Breed>();
     	for(Breed breed : breeds) {
+    		breed = addPetWithBreedsToBreed(petWithBreeds, breed);
     		breedsSet.add(breed);
     	}
     	

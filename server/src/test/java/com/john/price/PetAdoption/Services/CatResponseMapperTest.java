@@ -1,6 +1,9 @@
 package com.john.price.PetAdoption.Services;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,7 +16,6 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import com.john.price.PetAdoption.Models.Cat;
-import com.john.price.PetAdoption.Models.CatBreed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.TestHelpers.Assertions;
@@ -39,6 +41,7 @@ public class CatResponseMapperTest {
 		catsResponse.add(daisyResponse);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void mockMapper() {
 		responseMapper = mock(CatResponseMapper.class);
 		when(responseMapper.getAllPets()).thenReturn(cats);
@@ -46,7 +49,7 @@ public class CatResponseMapperTest {
 		when(responseMapper.getPet(1)).thenReturn(daisy);
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
 		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Cat());
-		//when(responseMapper.instantiateBreed()).thenReturn(new CatBreed());
+		doReturn(Builders.buildCatBreedsWithoutCats()).when(responseMapper).getBreedsFromListOfIds(anyList(), (PetWithBreeds) any());
 		when(responseMapper.createPetWithBreeds(daisyResponse)).thenCallRealMethod();
 	}
 	

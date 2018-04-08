@@ -14,9 +14,29 @@ import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 
 public abstract class Builders {
 	
+	public static CatBreed buildCatBreedWithoutCats(){
+		return new CatBreed(Constants.ONE_ID, "American Shorthair");
+	}
+	
+	public static DogBreed buildDogBreedWithoutDogs() {
+		return new DogBreed(Constants.ONE_ID, "Labrador Retriever");
+	}
+	
+	public static List<CatBreed> buildCatBreedsWithoutCats() {
+		List<CatBreed> catBreeds = new ArrayList<CatBreed>();
+		catBreeds.add(buildCatBreedWithoutCats());
+		return catBreeds;
+	}
+	
+	public static List<DogBreed> buildDogBreedsWithoutDogs() {
+		List<DogBreed> dogBreeds = new ArrayList<DogBreed>();
+		dogBreeds.add(buildDogBreedWithoutDogs());
+		return dogBreeds;
+	}
+	
 	public static Cat buildPlainCat() {
-		CatBreed catBreed = new CatBreed(1, "American Shorthair");
-		Cat cat = new Cat(1, "Daisy", "cat.jpg", "a nice cat");
+		CatBreed catBreed = buildCatBreedWithoutCats();
+		Cat cat = new Cat(Constants.ONE_ID, "Daisy", "cat.jpg", "a nice cat");
 		
 		Set<Breed> breeds = new HashSet<Breed>();
 		Set<Cat> cats = new HashSet<Cat>();
@@ -31,8 +51,8 @@ public abstract class Builders {
 	}
 	
 	public static Dog buildPlainDog() {
-		DogBreed dogBreed = new DogBreed(1, "Labrador Retriever");
-		Dog dog = new Dog(1, "Labby", "dog.jpg", "a nice dog");
+		DogBreed dogBreed = buildDogBreedWithoutDogs();
+		Dog dog = new Dog(Constants.ONE_ID, "Labby", "dog.jpg", "a nice dog");
 		
 		Set<Breed> breeds = new HashSet<Breed>();
 		Set<Dog> dogs = new HashSet<Dog>();
@@ -54,22 +74,15 @@ public abstract class Builders {
 		return new PetWithBreedsResponse(buildPlainCat());
 	}
 	
-	public static PetWithBreedsResponse buildPetWithBreedsResponse(String petType, int id) {
-		Set<Breed> breeds = new HashSet<Breed>();
-		if(petType.equals("cat")) {
-			breeds.add(new CatBreed());
-			return new PetWithBreedsResponse(new Cat(id, ("name" + id), "imageUrl", "descrip", breeds));
-		} else {
-			breeds.add(new DogBreed());
-			return new PetWithBreedsResponse(new Dog(id, ("name" + id), "imageUrl", "descrip", breeds));
-		}
+	public static Iterable<PetWithBreedsResponse> buildDogsResponse() {
+		List<PetWithBreedsResponse> pets = new ArrayList<PetWithBreedsResponse>();
+		pets.add(buildPlainDogResponse());
+		return pets;
 	}
 	
-	public static Iterable<PetWithBreedsResponse> buildPetsWithBreedsResponse(int length, String petType){
+	public static Iterable<PetWithBreedsResponse> buildCatsResponse() {
 		List<PetWithBreedsResponse> pets = new ArrayList<PetWithBreedsResponse>();
-		for(int i = 0; i < length; i++) {
-			pets.add(buildPetWithBreedsResponse(petType, i));
-		}
+		pets.add(buildPainCatResponse());
 		return pets;
 	}
 }

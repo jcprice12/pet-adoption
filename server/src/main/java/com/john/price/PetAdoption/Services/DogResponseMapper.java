@@ -43,16 +43,19 @@ public class DogResponseMapper extends PetWithBreedsResponseMapper{
 
 	@Override
 	protected List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds) {
-		List<DogBreed> breeds = dogBreedRepository.findByIdIn(ids);
-		for(DogBreed dogBreed : breeds) {
-			dogBreed.getDogs().add((Dog) petWithBreeds);
-		}
-		return breeds;
+		return dogBreedRepository.findByIdIn(ids);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void saveBreeds(List<? extends Breed> breeds) {
 		dogBreedRepository.save((List<DogBreed>)breeds);	
+	}
+
+	@Override
+	protected Breed addPetWithBreedsToBreed(PetWithBreeds petWithBreeds, Breed breed) {
+		DogBreed dogBreed = (DogBreed) breed;
+		dogBreed.getDogs().add((Dog)petWithBreeds);
+		return dogBreed;
 	}
 }

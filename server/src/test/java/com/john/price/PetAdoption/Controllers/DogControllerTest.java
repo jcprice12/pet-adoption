@@ -22,6 +22,7 @@ import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.Services.DogResponseMapper;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 import com.john.price.PetAdoption.TestHelpers.Builders;
+import com.john.price.PetAdoption.TestHelpers.Constants;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
@@ -30,17 +31,14 @@ public class DogControllerTest {
 	@Autowired
 	DogController controller;
 	
-	private static final int ID = 1;
-	private static final int LENGTH = 1;
-	
 	DogResponseMapper dogResponseMapper;
 	DogController dogController;
 	
 	@Before
 	public void setUp() {
 		dogResponseMapper = mock(DogResponseMapper.class);
-		when(dogResponseMapper.mapPets()).thenReturn(Builders.buildPetsWithBreedsResponse(LENGTH, "dog"));
-		when(dogResponseMapper.mapPet(ID)).thenReturn(Builders.buildPetWithBreedsResponse("dog", ID));
+		when(dogResponseMapper.mapPets()).thenReturn(Builders.buildDogsResponse());
+		when(dogResponseMapper.mapPet(Constants.ONE_ID)).thenReturn(Builders.buildPlainDogResponse());
 		
 		dogController = spy(DogController.class);
 		when(dogController.getMapper()).thenReturn(dogResponseMapper);
@@ -56,13 +54,13 @@ public class DogControllerTest {
 	public void allShouldReturnDogs() {
 		List<PetWithBreedsResponse> pets = (List<PetWithBreedsResponse>) dogController.all();
 		verify(dogResponseMapper, times(1)).mapPets();
-		assertEquals(pets.size(), LENGTH);
+		assertEquals(1, pets.size());
 	}
 	
 	@Test
 	public void byIdShouldReturnADog() {
-		PetWithBreedsResponse pet = dogController.byId(ID);
-		verify(dogResponseMapper, times(1)).mapPet(ID);
-		assertEquals(pet.getId(), (Integer)ID);
+		PetWithBreedsResponse pet = dogController.byId(Constants.ONE_ID);
+		verify(dogResponseMapper, times(1)).mapPet(Constants.ONE_ID);
+		assertEquals((Integer)Constants.ONE_ID, pet.getId());
 	}
 }

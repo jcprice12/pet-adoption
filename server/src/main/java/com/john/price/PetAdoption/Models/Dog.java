@@ -16,7 +16,7 @@ public class Dog extends PetWithBreeds{
 	}
 	
 	public Dog(Integer id, String name, String image, String description) {
-		super(name, image, description);
+		super(id, name, image, description);
 	}
 	
 	public Dog(String name, String image, String description, Set<Breed> breeds) {
