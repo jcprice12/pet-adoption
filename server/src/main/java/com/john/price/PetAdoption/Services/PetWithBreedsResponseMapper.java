@@ -79,7 +79,8 @@ public abstract class PetWithBreedsResponseMapper {
 		for(Breed breed : breedsToRemovePetFrom) {
 			removePetWithBreedsFromBreed(petWithBreedsResponse.getId(), breed);
 		}
-		
-		return createPetWithBreeds(petWithBreedsResponse);
+		saveBreeds(breedsToRemovePetFrom);
+		createPetWithBreeds(petWithBreedsResponse);
+		return petWithBreedsResponse;
 	}
 }
