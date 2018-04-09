@@ -15,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
@@ -30,7 +31,7 @@ public class DogResponseMapperTest {
 	private static DogResponseMapper responseMapper;
 	
 	private static void makePets() {	
-		labby = Builders.buildPlainDog();	
+		labby = Builders.buildDogWithBreedsWithoutDogs();	
 		dogs = new ArrayList<Dog>();
 		dogs.add(labby);
 	}
@@ -50,6 +51,8 @@ public class DogResponseMapperTest {
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
 		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Dog());
 		doReturn(Builders.buildDogBreedsWithoutDogs()).when(responseMapper).getBreedsFromListOfIds(anyList(), (PetWithBreeds) any());
+		when(responseMapper.addPetWithBreedsToBreed((PetWithBreeds)any(), (Breed)any())).thenCallRealMethod();
+		when(responseMapper.savePetWithBreeds((PetWithBreeds) any())).thenReturn((PetWithBreeds)Builders.buildDogWithBreedsWithDogs());
 		when(responseMapper.createPetWithBreeds(labbyResponse)).thenCallRealMethod();
 	}
 	

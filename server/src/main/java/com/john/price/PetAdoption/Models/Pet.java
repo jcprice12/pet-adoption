@@ -15,12 +15,6 @@ public abstract class Pet {
 	
 	public Pet() {}
 	
-	public Pet(String name, String image, String description) {
-		this.name = name;
-		this.image = image;
-		this.description = description;
-	}
-	
 	public Pet(Integer id, String name, String image, String description) {
 		this.id = id;
 		this.name = name;

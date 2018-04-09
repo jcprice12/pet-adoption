@@ -4,28 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.john.price.PetAdoption.Models.Breed;
+import com.john.price.PetAdoption.Models.Pet;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 
-public class PetWithBreedsResponse extends PetResponse{
-	private List<BreedResponse> breeds;
+public class PetWithBreedsResponse extends Pet{
+	private List<Breed> breeds;
 	
 	public PetWithBreedsResponse() {
 		super();
 	}
 	
 	public <T extends Breed> PetWithBreedsResponse(PetWithBreeds petWithBreeds) {
-		super(petWithBreeds.getId(), petWithBreeds.getName());
-		this.breeds = new ArrayList<BreedResponse>();
+		super(petWithBreeds.getId(), petWithBreeds.getName(), petWithBreeds.getImage(), petWithBreeds.getDescription());
+		this.breeds = new ArrayList<Breed>();
 		for(Breed breed : petWithBreeds.getBreeds()) {
-			this.breeds.add(new BreedResponse(breed.getId(), breed.getName()));
+			this.breeds.add(new Breed(breed.getId(), breed.getName()));
 		}
 	}
-	
-	public List<BreedResponse> getBreeds() {
+
+	public List<Breed> getBreeds() {
 		return breeds;
 	}
-	
-	public void setBreeds(List<BreedResponse> breeds) {
+
+	public void setBreeds(List<Breed> breeds) {
 		this.breeds = breeds;
 	}
 }

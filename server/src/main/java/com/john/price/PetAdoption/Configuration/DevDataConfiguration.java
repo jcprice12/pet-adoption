@@ -40,18 +40,26 @@ public class DevDataConfiguration implements ApplicationRunner{
 		labby.setName("Labby");
 		
 		DogBreed lab = new DogBreed();
-		lab.setName("LabradorRetriever");
+		lab.setName("Labrador Retriever");
+		
+		DogBreed retriever = new DogBreed("Retriever");
 		
 		Set<Dog> labDogs = new HashSet<Dog>();
 		labDogs.add(labby);		
 		lab.setDogs(labDogs);
 		
+		Set<Dog> retrieverDogs = new HashSet<Dog>();
+		retrieverDogs.add(labby);
+		retriever.setDogs(retrieverDogs);
+		
 		Set<Breed> labbyBreeds = new HashSet<Breed>();
 		labbyBreeds.add(lab);
+		labbyBreeds.add(retriever);
 		labby.setBreeds(labbyBreeds);
 		
 		dogRepo.save(labby);
 		dogBreedRepo.save(lab);
+		dogBreedRepo.save(retriever);
 	}
 	
 	private void addCats() {
@@ -60,6 +68,8 @@ public class DevDataConfiguration implements ApplicationRunner{
 		
 		CatBreed amShort = new CatBreed();
 		amShort.setName("American Shorthair");
+		
+		CatBreed britShort = new CatBreed("British Shorthair");
 		
 		Set<Cat> amShortCats = new HashSet<Cat>();
 		amShortCats.add(daisy);		
@@ -71,6 +81,7 @@ public class DevDataConfiguration implements ApplicationRunner{
 		
 		catRepo.save(daisy);
 		catBreedRepo.save(amShort);
+		catBreedRepo.save(britShort);
 	}
 	
 	@Override

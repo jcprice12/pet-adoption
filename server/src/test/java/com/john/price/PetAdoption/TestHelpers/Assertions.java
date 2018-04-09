@@ -13,9 +13,7 @@ public abstract class Assertions {
 		assertEquals(petResp1.getImage(), petResp2.getImage());
 		assertEquals(petResp1.getBreeds().size(), petResp2.getBreeds().size());
 		assertEquals(petResp1.getDescription(), petResp2.getDescription());
-		for(int i = 0; i < petResp1.getBreeds().size(); i++) {
-			assertEquals(petResp1.getBreeds().get(i).getId(),petResp2.getBreeds().get(i).getId());
-		}
+		assertEquals(petResp1.getBreeds().size(), petResp2.getBreeds().size());
 	}
 	
 	public static final void assertPetsWithBreedsListsAreEqual(List<PetWithBreedsResponse> petsResponse1, List<PetWithBreedsResponse> petsResponse2) {	

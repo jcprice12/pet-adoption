@@ -15,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
@@ -30,7 +31,7 @@ public class CatResponseMapperTest {
 	private static CatResponseMapper responseMapper;
 	
 	private static void makePets() {
-		daisy = Builders.buildPlainCat();
+		daisy = Builders.buildCatWithBreedsWithoutCats();
 		cats = new ArrayList<Cat>();
 		cats.add(daisy);
 	}
@@ -50,6 +51,8 @@ public class CatResponseMapperTest {
 		when(responseMapper.mapPet(1)).thenCallRealMethod();
 		when(responseMapper.instantiatePetWithBreeds()).thenReturn(new Cat());
 		doReturn(Builders.buildCatBreedsWithoutCats()).when(responseMapper).getBreedsFromListOfIds(anyList(), (PetWithBreeds) any());
+		when(responseMapper.addPetWithBreedsToBreed((PetWithBreeds)any(), (Breed)any())).thenCallRealMethod();
+		when(responseMapper.savePetWithBreeds((PetWithBreeds) any())).thenReturn((PetWithBreeds)Builders.buildCatWithBreedsWithCats());
 		when(responseMapper.createPetWithBreeds(daisyResponse)).thenCallRealMethod();
 	}
 	

@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Services;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class DogResponseMapper extends PetWithBreedsResponseMapper{
 	protected List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds) {
 		return dogBreedRepository.findByIdIn(ids);
 	}
+	
+	@Override
+	protected List<? extends Breed> getBreedsThatHavePetWithBreeds(Integer id) {
+		return dogBreedRepository.findByDogsId(id);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -57,5 +63,18 @@ public class DogResponseMapper extends PetWithBreedsResponseMapper{
 		DogBreed dogBreed = (DogBreed) breed;
 		dogBreed.getDogs().add((Dog)petWithBreeds);
 		return dogBreed;
+	}
+
+	@Override
+	protected void removePetWithBreedsFromBreed(Integer petWithBreedsId, Breed breed) {
+		DogBreed dogBreed = (DogBreed) breed;
+		Iterator<Dog> iterator = dogBreed.getDogs().iterator();
+		while(iterator.hasNext()) {
+			Dog dog = iterator.next();
+			if(dog.getId() == petWithBreedsId) {
+				iterator.remove();
+				break;
+			}
+		}
 	}
 }

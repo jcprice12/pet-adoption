@@ -10,4 +10,6 @@ public interface DogBreedRepository extends CrudRepository<DogBreed, Integer> {
 
 	public List<DogBreed> findByIdIn(List<Integer> ids);
 	
+	public List<DogBreed> findByDogsId(Integer id);
+	
 }
