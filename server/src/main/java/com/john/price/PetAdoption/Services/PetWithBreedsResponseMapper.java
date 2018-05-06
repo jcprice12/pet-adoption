@@ -12,7 +12,7 @@ import com.john.price.PetAdoption.Models.PetWithBreeds;
 
 public abstract class PetWithBreedsResponseMapper {
 	
-	protected abstract Iterable<? extends PetWithBreeds> getAllPets();
+	protected abstract List<? extends PetWithBreeds> getAllPets();
 	protected abstract PetWithBreeds getPet(Integer id);
 	protected abstract PetWithBreeds savePetWithBreeds(PetWithBreeds petWithBreeds);
 	protected abstract List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds);
@@ -23,29 +23,25 @@ public abstract class PetWithBreedsResponseMapper {
 	protected abstract void nullifyPetsInBreed(Breed breed);
 	
 	private List<Integer> getBreedIdsFromPetWithBreeds(PetWithBreeds petWithBreeds){
-		List<Integer> breedIds = new ArrayList<Integer>();
-		
+		List<Integer> breedIds = new ArrayList<Integer>();	
     	for(Breed breed : petWithBreeds.getBreeds()) {
     		breedIds.add(breed.getId());
-    	}
-    	
+    	}  	
     	return breedIds;
 	}
 	
 	private void removePetsFromBreeds(PetWithBreeds petWithBreeds) {
-		Set<Breed> breeds = petWithBreeds.getBreeds();
+		Set<Breed> breeds = petWithBreeds.getBreeds();		
 		for(Breed breed : breeds) {
 			nullifyPetsInBreed(breed);
 		}
 	}
 	
-	public Iterable<? extends PetWithBreeds> mapPets() {
-		Iterable<? extends PetWithBreeds> data = getAllPets();
-		
+	public List<? extends PetWithBreeds> mapPets() {
+		List<? extends PetWithBreeds> data = getAllPets();		
 		for(PetWithBreeds petWithBreeds : data) {
 			removePetsFromBreeds(petWithBreeds);
-		}
-		
+		}	
 		return data;
 	}
 
@@ -58,33 +54,26 @@ public abstract class PetWithBreedsResponseMapper {
 	@Transactional
 	public PetWithBreeds createPetWithBreeds(PetWithBreeds petWithBreeds) { 	
     	List<Integer> breedIds = getBreedIdsFromPetWithBreeds(petWithBreeds);   	
-    	List<? extends Breed> breeds = getBreedsFromListOfIds(breedIds, petWithBreeds);
-    	
+    	List<? extends Breed> breeds = getBreedsFromListOfIds(breedIds, petWithBreeds); 	
     	Set<Breed> breedsSet = new HashSet<Breed>();
     	for(Breed breed : breeds) {
     		breed = addPetWithBreedsToBreed(petWithBreeds, breed);
     		breedsSet.add(breed);
-    	}
-    	
+    	}  	
     	petWithBreeds.setBreeds(breedsSet);  	
     	petWithBreeds = savePetWithBreeds(petWithBreeds);
-    	saveBreeds(breeds);
-    	
-    	removePetsFromBreeds(petWithBreeds);
-    	
+    	saveBreeds(breeds);    	
+    	removePetsFromBreeds(petWithBreeds);    	
     	return petWithBreeds;
 	}
 	
 	@Transactional
 	public PetWithBreeds editPetWithBreeds(PetWithBreeds petWithBreeds) {		
-		List<? extends Breed> breedsToRemovePetFrom = getBreedsThatHavePetWithBreeds(petWithBreeds.getId());
-		
+		List<? extends Breed> breedsToRemovePetFrom = getBreedsThatHavePetWithBreeds(petWithBreeds.getId());		
 		for(Breed breed : breedsToRemovePetFrom) {
 			removePetWithBreedsFromBreed(petWithBreeds.getId(), breed);
-		}
-		
-		saveBreeds(breedsToRemovePetFrom);
-		
+		}		
+		saveBreeds(breedsToRemovePetFrom);		
 		return createPetWithBreeds(petWithBreeds);
 	}
 }

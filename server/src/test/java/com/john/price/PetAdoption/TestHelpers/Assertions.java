@@ -4,25 +4,22 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 
 public abstract class Assertions {
-	public static final void assertPetsWithBreedsAreEqual(PetWithBreedsResponse petResp1, PetWithBreedsResponse petResp2) {
-		assertEquals(petResp1.getId(), petResp2.getId());
-		assertEquals(petResp1.getName(), petResp2.getName());
-		assertEquals(petResp1.getImage(), petResp2.getImage());
-		assertEquals(petResp1.getBreeds().size(), petResp2.getBreeds().size());
-		assertEquals(petResp1.getDescription(), petResp2.getDescription());
-		assertEquals(petResp1.getBreeds().size(), petResp2.getBreeds().size());
+	public static final void assertPetsWithBreedsAreEqual(PetWithBreeds pet1, PetWithBreeds pet2) {
+		assertEquals(pet1.getId(), pet2.getId());
+		assertEquals(pet1.getName(), pet2.getName());
+		assertEquals(pet1.getImage(), pet2.getImage());
+		assertEquals(pet1.getBreeds().size(), pet2.getBreeds().size());
+		assertEquals(pet1.getDescription(), pet2.getDescription());
+		assertEquals(pet1.getBreeds().size(), pet2.getBreeds().size());
 	}
 	
-	public static final void assertPetsWithBreedsListsAreEqual(List<PetWithBreedsResponse> petsResponse1, List<PetWithBreedsResponse> petsResponse2) {	
-		PetWithBreedsResponse tempPet1, tempPet2;
-		assertEquals(petsResponse1.size(), petsResponse2.size());
-		for(int i = 0; i < petsResponse1.size(); i++) {
-			tempPet1 = petsResponse1.get(i);
-			tempPet2 = petsResponse2.get(i);
-			assertPetsWithBreedsAreEqual(tempPet1, tempPet2);
+	public static final void assertPetsWithBreedsListsAreEqual(List<? extends PetWithBreeds> pets1, List<? extends PetWithBreeds> pets2) {	
+		assertEquals(pets1.size(), pets2.size());
+		for(int i = 0; i < pets1.size(); i++) {
+			assertPetsWithBreedsAreEqual(pets1.get(i), pets2.get(i));
 		}
 	}
 }

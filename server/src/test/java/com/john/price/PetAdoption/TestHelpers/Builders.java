@@ -5,13 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Models.DogBreed;
-import com.john.price.PetAdoption.Models.PetWithBreeds;
 
 public abstract class Builders {
 	
@@ -117,25 +115,5 @@ public abstract class Builders {
 		Dog dog = buildDogWithBreedsWithoutDogs();
 		dog.setBreeds(buildDogBreedsWithDogs());
 		return dog;
-	}
-	
-	public static PetWithBreeds buildPlainDogResponse() {
-		return new PetWithBreedsResponse(buildDogWithBreedsWithoutDogs());
-	}
-	
-	public static PetWithBreeds buildPainCatResponse() {
-		return new PetWithBreedsResponse(buildCatWithBreedsWithoutCats());
-	}
-	
-	public static Iterable<PetWithBreeds> buildDogsResponse() {
-		List<PetWithBreedsResponse> pets = new ArrayList<PetWithBreedsResponse>();
-		pets.add(buildPlainDogResponse());
-		return pets;
-	}
-	
-	public static Iterable<PetWithBreeds> buildCatsResponse() {
-		List<PetWithBreedsResponse> pets = new ArrayList<PetWithBreedsResponse>();
-		pets.add(buildPainCatResponse());
-		return pets;
 	}
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
-import com.john.price.PetAdoption.Models.DogBreed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Repositories.CatBreedRepository;
 import com.john.price.PetAdoption.Repositories.CatRepository;
@@ -24,8 +23,8 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	private CatBreedRepository catBreedRepository;
 
 	@Override
-	protected Iterable<? extends PetWithBreeds> getAllPets() {
-		return catRepository.findAll();
+	protected List<? extends PetWithBreeds> getAllPets() {
+		return (List<Cat>)catRepository.findAll();
 	}
 
 	@Override

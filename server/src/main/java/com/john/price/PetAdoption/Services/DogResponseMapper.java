@@ -23,8 +23,8 @@ public class DogResponseMapper extends PetWithBreedsResponseMapper{
 	private DogBreedRepository dogBreedRepository;
 
 	@Override
-	protected Iterable<? extends PetWithBreeds> getAllPets() {
-		return dogRrepository.findAll();
+	protected List<? extends PetWithBreeds> getAllPets() {
+		return (List<Dog>)dogRrepository.findAll();
 	}
 
 	@Override
