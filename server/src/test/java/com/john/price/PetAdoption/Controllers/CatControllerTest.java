@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Services.CatResponseMapper;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 import com.john.price.PetAdoption.TestHelpers.Builders;
@@ -52,14 +52,14 @@ public class CatControllerTest {
 	
 	@Test
 	public void allShouldReturnCats() {
-		List<PetWithBreedsResponse> pets = (List<PetWithBreedsResponse>) catController.all();
+		List<PetWithBreeds> pets = (List<PetWithBreeds>) catController.all();
 		verify(catResponseMapper, times(1)).mapPets();
 		assertEquals(1, pets.size());
 	}
 	
 	@Test
 	public void byIdShouldReturnACat() {
-		PetWithBreedsResponse pet = catController.byId(Constants.ONE_ID);
+		PetWithBreeds pet = catController.byId(Constants.ONE_ID);
 		verify(catResponseMapper, times(1)).mapPet(Constants.ONE_ID);
 		assertEquals((Integer)Constants.ONE_ID,pet.getId());
 	}

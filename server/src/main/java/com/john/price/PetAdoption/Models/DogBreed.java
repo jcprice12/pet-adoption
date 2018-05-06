@@ -8,8 +8,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name="dogbreed")
+@JsonInclude(Include.NON_NULL)
 public class DogBreed extends Breed{
 	
 	private Set<Dog> dogs;

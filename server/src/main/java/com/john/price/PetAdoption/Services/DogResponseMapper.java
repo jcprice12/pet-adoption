@@ -23,18 +23,13 @@ public class DogResponseMapper extends PetWithBreedsResponseMapper{
 	private DogBreedRepository dogBreedRepository;
 
 	@Override
-	protected Iterable<Dog> getAllPets() {
+	protected Iterable<? extends PetWithBreeds> getAllPets() {
 		return dogRrepository.findAll();
 	}
 
 	@Override
 	protected Dog getPet(Integer id) {
 		return dogRrepository.findOne(id);
-	}
-	
-	@Override
-	protected PetWithBreeds instantiatePetWithBreeds() {
-		return new Dog();
 	}
 	
 	@Override
@@ -76,5 +71,11 @@ public class DogResponseMapper extends PetWithBreedsResponseMapper{
 				break;
 			}
 		}
+	}
+
+	@Override
+	protected void nullifyPetsInBreed(Breed breed) {
+		DogBreed dogBreed = (DogBreed) breed;
+		dogBreed.setDogs(null);
 	}
 }

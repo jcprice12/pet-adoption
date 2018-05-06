@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.john.price.PetAdoption.Responses.PetWithBreedsResponse;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 
 public abstract class PetWithBreedsController {
@@ -14,22 +14,22 @@ public abstract class PetWithBreedsController {
 	abstract PetWithBreedsResponseMapper getMapper();
 	
 	@GetMapping(path = "")
-    public Iterable<PetWithBreedsResponse> all() {
+    public Iterable<? extends PetWithBreeds> all() {
 		return getMapper().mapPets();
     }
     
     @GetMapping(path = "/{petId}")
-    public PetWithBreedsResponse byId(@PathVariable("petId") Integer petId) {
+    public PetWithBreeds byId(@PathVariable("petId") Integer petId) {
     	return getMapper().mapPet(petId);
     }
     
     @PostMapping(path = "")
-    public PetWithBreedsResponse createPet(@RequestBody PetWithBreedsResponse petWithBreedsResponse) {
-    	return getMapper().createPetWithBreeds(petWithBreedsResponse);
+    public PetWithBreeds createPet(@RequestBody PetWithBreeds petWithBreeds) {
+    	return getMapper().createPetWithBreeds(petWithBreeds);
     }
     
     @PutMapping(path = "")
-    public PetWithBreedsResponse editPet(@RequestBody PetWithBreedsResponse petWithBreedsResponse) {
-    	return getMapper().editPetWithBreeds(petWithBreedsResponse);
+    public PetWithBreeds editPet(@RequestBody PetWithBreeds petWithBreeds) {
+    	return getMapper().editPetWithBreeds(petWithBreeds);
     }
 }
