@@ -16,10 +16,13 @@ public abstract class Assertions {
 		assertEquals(pet1.getBreeds().size(), pet2.getBreeds().size());
 	}
 	
-	public static final void assertPetsWithBreedsListsAreEqual(List<? extends PetWithBreeds> pets1, List<? extends PetWithBreeds> pets2) {	
-		assertEquals(pets1.size(), pets2.size());
-		for(int i = 0; i < pets1.size(); i++) {
-			assertPetsWithBreedsAreEqual(pets1.get(i), pets2.get(i));
+	@SuppressWarnings("unchecked")
+	public static final void assertPetsWithBreedsListsAreEqual(Iterable<? extends PetWithBreeds> pets1, Iterable<? extends PetWithBreeds> pets2) {
+		List<PetWithBreeds> pets1List = (List<PetWithBreeds>)pets1;
+		List<PetWithBreeds> pets2List = (List<PetWithBreeds>)pets2;
+		assertEquals(pets1List.size(), pets2List.size());
+		for(int i = 0; i < pets1List.size(); i++) {
+			assertPetsWithBreedsAreEqual(pets1List.get(i), pets2List.get(i));
 		}
 	}
 }

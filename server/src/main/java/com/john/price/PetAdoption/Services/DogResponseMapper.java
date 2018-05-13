@@ -1,7 +1,7 @@
 package com.john.price.PetAdoption.Services;
 
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,40 +17,40 @@ import com.john.price.PetAdoption.Repositories.DogRepository;
 public class DogResponseMapper extends PetWithBreedsResponseMapper{
 	
 	@Autowired
-	private DogRepository dogRrepository;
+	private DogRepository dogRepository;
 	
 	@Autowired
 	private DogBreedRepository dogBreedRepository;
 
 	@Override
-	protected List<? extends PetWithBreeds> getAllPets() {
-		return (List<Dog>)dogRrepository.findAll();
+	protected Iterable<? extends PetWithBreeds> getAllPets() {
+		return dogRepository.findAll();
 	}
 
 	@Override
 	protected Dog getPet(Integer id) {
-		return dogRrepository.findOne(id);
+		return dogRepository.findOne(id);
 	}
 	
 	@Override
 	protected PetWithBreeds savePetWithBreeds(PetWithBreeds petWithBreeds) {
-		return dogRrepository.save((Dog)petWithBreeds);
+		return dogRepository.save((Dog)petWithBreeds);
 	}
 
 	@Override
-	protected List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds) {
+	protected Set<? extends Breed> getBreedsFromListOfIds(Set<Integer> ids, PetWithBreeds petWithBreeds) {
 		return dogBreedRepository.findByIdIn(ids);
 	}
 	
 	@Override
-	protected List<? extends Breed> getBreedsThatHavePetWithBreeds(Integer id) {
+	protected Set<? extends Breed> getBreedsThatHavePetWithBreeds(Integer id) {
 		return dogBreedRepository.findByDogsId(id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void saveBreeds(List<? extends Breed> breeds) {
-		dogBreedRepository.save((List<DogBreed>)breeds);	
+	protected void saveBreeds(Set<? extends Breed> breeds) {
+		dogBreedRepository.save((Set<DogBreed>)breeds);	
 	}
 
 	@Override

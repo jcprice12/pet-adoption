@@ -28,9 +28,11 @@ public class Cat extends PetWithBreeds{
 	@ManyToMany(targetEntity=CatBreed.class, mappedBy="cats")
 	public Set<Breed> getBreeds() {
 		return breeds;
-	}	
+	}
+    
     @Override
 	public void setBreeds(Set<Breed> breeds) {
 		this.breeds = breeds;
 	}
+    
 }

@@ -1,7 +1,7 @@
 package com.john.price.PetAdoption.Services;
 
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,8 +23,8 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	private CatBreedRepository catBreedRepository;
 
 	@Override
-	protected List<? extends PetWithBreeds> getAllPets() {
-		return (List<Cat>)catRepository.findAll();
+	protected Iterable<? extends PetWithBreeds> getAllPets() {
+		return catRepository.findAll();
 	}
 
 	@Override
@@ -38,19 +38,19 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	}
 
 	@Override
-	protected List<? extends Breed> getBreedsFromListOfIds(List<Integer> ids, PetWithBreeds petWithBreeds) {
+	protected Set<? extends Breed> getBreedsFromListOfIds(Set<Integer> ids, PetWithBreeds petWithBreeds) {
 		return catBreedRepository.findByIdIn(ids);
 	}
 	
 	@Override
-	protected List<? extends Breed> getBreedsThatHavePetWithBreeds(Integer id) {
+	protected Set<? extends Breed> getBreedsThatHavePetWithBreeds(Integer id) {
 		return catBreedRepository.findByCatsId(id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void saveBreeds(List<? extends Breed> breeds) {
-		catBreedRepository.save((List<CatBreed>)breeds);		
+	protected void saveBreeds(Set<? extends Breed> breeds) {
+		catBreedRepository.save((Set<CatBreed>)breeds);		
 	}
 
 	@Override

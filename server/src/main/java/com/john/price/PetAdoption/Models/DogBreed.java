@@ -20,10 +20,6 @@ public class DogBreed extends Breed{
 	
 	public DogBreed() {}
 	
-	public DogBreed(String name) {
-		super(name);
-	}
-	
 	public DogBreed(Integer id, String name) {
 		super(id, name);
 	}

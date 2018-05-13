@@ -1,11 +1,12 @@
 package com.john.price.PetAdoption.Services;
 
-import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,9 +49,11 @@ public class CatResponseMapperTest {
 		when(catRepository.findAll()).thenReturn(cats);
 		when(catRepository.findOne(Constants.ONE_ID)).thenReturn(daisy);
 		when(catRepository.save(daisy)).thenReturn(daisy);
-		when(catBreedRepository.findByIdIn(Arrays.asList(Constants.ONE_ID))).thenReturn(Builders.buildCatBreedsWithoutCats());
+		Set<Integer> ids = new HashSet<Integer>();
+		ids.add(Constants.ONE_ID);
+		when(catBreedRepository.findByIdIn(ids)).thenReturn(Builders.buildCatBreedsWithCats());
 		when(catBreedRepository.findByCatsId(Constants.ONE_ID)).thenReturn(Builders.buildCatBreedsWithoutCats());
-		when(catBreedRepository.save(anyListOf(CatBreed.class))).thenReturn(new ArrayList<CatBreed>());
+		when(catBreedRepository.save(anySetOf(CatBreed.class))).thenReturn(new HashSet<CatBreed>());
 	}
 	
 	@Before

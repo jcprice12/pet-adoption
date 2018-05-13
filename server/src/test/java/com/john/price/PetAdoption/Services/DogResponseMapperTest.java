@@ -1,11 +1,12 @@
 package com.john.price.PetAdoption.Services;
 
-import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,9 +49,11 @@ public class DogResponseMapperTest {
 		when(dogRepository.findAll()).thenReturn(dogs);
 		when(dogRepository.findOne(Constants.ONE_ID)).thenReturn(labby);
 		when(dogRepository.save(labby)).thenReturn(labby);
-		when(dogBreedRepository.findByIdIn(Arrays.asList(Constants.ONE_ID))).thenReturn(Builders.buildDogBreedsWithoutDogs());
+		Set<Integer> ids = new HashSet<Integer>();
+		ids.add(Constants.ONE_ID);
+		when(dogBreedRepository.findByIdIn(ids)).thenReturn(Builders.buildDogBreedsWithoutDogs());
 		when(dogBreedRepository.findByDogsId(Constants.ONE_ID)).thenReturn(Builders.buildDogBreedsWithoutDogs());
-		when(dogBreedRepository.save(anyListOf(DogBreed.class))).thenReturn(new ArrayList<DogBreed>());
+		when(dogBreedRepository.save(anySetOf(DogBreed.class))).thenReturn(new HashSet<DogBreed>());
 	}
 	
 	@Before

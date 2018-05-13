@@ -1,8 +1,6 @@
 package com.john.price.PetAdoption.TestHelpers;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.john.price.PetAdoption.Models.Breed;
@@ -25,14 +23,14 @@ public abstract class Builders {
 		return dogBreed;
 	}
 	
-	public static List<CatBreed> buildCatBreedsWithoutCats() {
-		List<CatBreed> catBreeds = new ArrayList<CatBreed>();
+	public static Set<CatBreed> buildCatBreedsWithoutCats() {
+		Set<CatBreed> catBreeds = new HashSet<CatBreed>();
 		catBreeds.add(buildCatBreedWithoutCats());
 		return catBreeds;
 	}
 	
-	public static List<DogBreed> buildDogBreedsWithoutDogs() {
-		List<DogBreed> dogBreeds = new ArrayList<DogBreed>();
+	public static Set<DogBreed> buildDogBreedsWithoutDogs() {
+		Set<DogBreed> dogBreeds = new HashSet<DogBreed>();
 		dogBreeds.add(buildDogBreedWithoutDogs());
 		return dogBreeds;
 	}
@@ -49,31 +47,27 @@ public abstract class Builders {
 		return dogBreed;
 	}
 	
-	public static Set<Breed> buildCatBreedsWithCats() {
-		Set<Breed> catBreeds = new HashSet<Breed>();
+	public static Set<CatBreed> buildCatBreedsWithCats() {
+		Set<CatBreed> catBreeds = new HashSet<CatBreed>();
 		catBreeds.add(buildCatBreedWithCats());
 		return catBreeds;
 	}
 	
-	public static Set<Breed> buildDogBreedsWithDogs() {
-		Set<Breed> dogBreeds = new HashSet<Breed>();
+	public static Set<DogBreed> buildDogBreedsWithDogs() {
+		Set<DogBreed> dogBreeds = new HashSet<DogBreed>();
 		dogBreeds.add(buildDogBreedWithDogs());
 		return dogBreeds;
 	}
 	
 	public static Cat buildCatWithBreedsWithoutCats() {
 		CatBreed catBreed = buildCatBreedWithoutCats();
-		Cat cat = new Cat(Constants.ONE_ID, "Daisy", "cat.jpg", "a nice cat");
-		
-		Set<Breed> breeds = new HashSet<Breed>();
-		Set<Cat> cats = new HashSet<Cat>();
-		
+		Cat cat = new Cat(Constants.ONE_ID, "Daisy", "cat.jpg", "a nice cat");		
+		Set<Breed> catBreeds = new HashSet<Breed>();
+		Set<Cat> cats = new HashSet<Cat>();	
 		cats.add(cat);
-		breeds.add(catBreed);
-		
+		catBreeds.add(catBreed);		
 		catBreed.setCats(cats);
-		cat.setBreeds(breeds);
-		
+		cat.setBreeds(catBreeds);		
 		return cat;
 	}
 	
@@ -85,17 +79,13 @@ public abstract class Builders {
 	
 	public static Dog buildDogWithBreedsWithoutDogs() {
 		DogBreed dogBreed = buildDogBreedWithoutDogs();
-		Dog dog = new Dog(Constants.ONE_ID, "Labby", "dog.jpg", "a nice dog");
-		
+		Dog dog = new Dog(Constants.ONE_ID, "Labby", "dog.jpg", "a nice dog");		
 		Set<Breed> breeds = new HashSet<Breed>();
-		Set<Dog> dogs = new HashSet<Dog>();
-		
+		Set<Dog> dogs = new HashSet<Dog>();		
 		dogs.add(dog);
-		breeds.add(dogBreed);
-		
+		breeds.add(dogBreed);		
 		dogBreed.setDogs(dogs);
-		dog.setBreeds(breeds);
-		
+		dog.setBreeds(breeds);	
 		return dog;
 	}
 	
@@ -107,13 +97,17 @@ public abstract class Builders {
 	
 	public static Cat buildCatWithBreedsWithCats() {
 		Cat cat = buildCatWithBreedsWithoutCats();
-		cat.setBreeds(buildCatBreedsWithCats());
+		Set<Breed> catBreeds = new HashSet<Breed>();
+		catBreeds.add(buildCatBreedWithCats());
+		cat.setBreeds(catBreeds);
 		return cat;
 	}
 	
 	public static Dog buildDogWithBreedsWithDogs() {
 		Dog dog = buildDogWithBreedsWithoutDogs();
-		dog.setBreeds(buildDogBreedsWithDogs());
+		Set<Breed> dogBreeds = new HashSet<Breed>();
+		dogBreeds.add(buildDogBreedWithDogs());
+		dog.setBreeds(dogBreeds);
 		return dog;
 	}
 }

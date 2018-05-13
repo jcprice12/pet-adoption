@@ -19,10 +19,6 @@ public class CatBreed extends Breed {
 	
 	public CatBreed() {}
 	
-	public CatBreed(String name) {
-		super(name);
-	}
-	
 	public CatBreed(Integer id, String name) {
 		super(id, name);
 	}

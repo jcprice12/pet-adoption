@@ -1,6 +1,6 @@
 package com.john.price.PetAdoption.Repositories;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,8 +8,8 @@ import com.john.price.PetAdoption.Models.CatBreed;
 
 public interface CatBreedRepository extends CrudRepository<CatBreed, Integer> {
 	
-	public List<CatBreed> findByIdIn(List<Integer> ids);
+	public Set<CatBreed> findByIdIn(Set<Integer> ids);
 	
-	public List<CatBreed> findByCatsId(Integer id);
+	public Set<CatBreed> findByCatsId(Integer id);
 	
 }
