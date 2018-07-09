@@ -3,8 +3,6 @@ package com.john.price.PetAdoption.Services;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 
@@ -49,7 +47,6 @@ public abstract class PetWithBreedsResponseMapper {
 		return petWithBreeds;
 	}
 	
-	@Transactional
 	public PetWithBreeds createPetWithBreeds(PetWithBreeds petWithBreeds) { 	
     	Set<Integer> breedIds = getBreedIdsFromPetWithBreeds(petWithBreeds);   	
     	Set<? extends Breed> breeds = getBreedsFromListOfIds(breedIds, petWithBreeds); 	
@@ -65,7 +62,6 @@ public abstract class PetWithBreedsResponseMapper {
     	return petWithBreeds;
 	}
 	
-	@Transactional
 	public PetWithBreeds editPetWithBreeds(PetWithBreeds petWithBreeds) {		
 		Set<? extends Breed> breedsToRemovePetFrom = getBreedsThatHavePetWithBreeds(petWithBreeds.getId());		
 		for(Breed breed : breedsToRemovePetFrom) {
