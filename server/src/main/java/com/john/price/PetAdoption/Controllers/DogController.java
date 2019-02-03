@@ -21,7 +21,7 @@ public class DogController {
 	
 	@Autowired
 	@Qualifier("DogResponseMapper")
-	PetWithBreedsResponseMapper mapper;
+	private PetWithBreedsResponseMapper mapper;
 	
 	@GetMapping(path = "")
     public Iterable<? extends PetWithBreeds> getDogs() {

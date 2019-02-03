@@ -20,7 +20,7 @@ public class CatController{
 	
 	@Autowired
 	@Qualifier("CatResponseMapper")
-	PetWithBreedsResponseMapper mapper;
+	private PetWithBreedsResponseMapper mapper;
 	
 	@GetMapping(path = "")
     public Iterable<? extends PetWithBreeds> getCats() {
@@ -41,5 +41,4 @@ public class CatController{
     public PetWithBreeds editCat(@RequestBody Cat cat) {
     	return mapper.editPetWithBreeds(cat);
     }
-    
 }

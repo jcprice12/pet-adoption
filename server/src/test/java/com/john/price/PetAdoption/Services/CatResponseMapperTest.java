@@ -73,7 +73,7 @@ public class CatResponseMapperTest {
 	}
 	
 	@Test
-	public void createCat() {
+	public void testCreateCat() {
 		PetWithBreeds petWithBreeds = responseMapper.createPetWithBreeds(daisy);		
 		Assertions.assertPetsWithBreedsAreEqual(petWithBreeds, daisy);
 	}
