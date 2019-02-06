@@ -5,13 +5,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @MappedSuperclass
 public abstract class Pet {
+	
+	public interface PetPostValidation{}
+	public interface PetPutValidation{}
+	
+	@NotNull(groups = {PetPutValidation.class})
+	@Null(groups = {PetPostValidation.class})
 	protected Integer id;
+	
+	@NotNull
 	protected String name;
 	protected String image;
 	protected String description;

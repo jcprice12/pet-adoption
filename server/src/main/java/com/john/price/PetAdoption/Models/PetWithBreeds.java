@@ -2,7 +2,13 @@ package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 public abstract class PetWithBreeds extends Pet{
+	
+	@NotNull
+	@Valid
 	protected Set<Breed> breeds;
 	
 	public abstract Set<Breed> getBreeds();

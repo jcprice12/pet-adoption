@@ -2,6 +2,7 @@ package com.john.price.PetAdoption.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.john.price.PetAdoption.Models.Dog;
+import com.john.price.PetAdoption.Models.Pet;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 
@@ -34,12 +36,12 @@ public class DogController {
     }
 
 	@PostMapping(path = "")
-    public PetWithBreeds createDog(@RequestBody Dog dog) {
+    public PetWithBreeds createDog(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class}) Dog dog) {
     	return mapper.createPetWithBreeds(dog);
     }
 
     @PutMapping(path = "")
-    public PetWithBreeds editDog(@RequestBody Dog dog) {
+    public PetWithBreeds editDog(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class}) Dog dog) {
     	return mapper.editPetWithBreeds(dog);
     }
 }
