@@ -1,8 +1,5 @@
 package com.john.price.PetAdoption.Services;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +7,6 @@ import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.Cat;
 import com.john.price.PetAdoption.Models.CatBreed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
-import com.john.price.PetAdoption.Repositories.CatBreedRepository;
 import com.john.price.PetAdoption.Repositories.CatRepository;
 
 @Component("CatResponseMapper")
@@ -18,9 +14,6 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 
 	@Autowired 
 	private CatRepository catRepository;
-	
-	@Autowired 
-	private CatBreedRepository catBreedRepository;
 
 	@Override
 	protected Iterable<? extends PetWithBreeds> getAllPets() {
@@ -38,44 +31,21 @@ public class CatResponseMapper extends PetWithBreedsResponseMapper {
 	}
 
 	@Override
-	protected Set<? extends Breed> getBreedsFromListOfIds(Set<Integer> ids, PetWithBreeds petWithBreeds) {
-		return catBreedRepository.findByIdIn(ids);
-	}
-	
-	@Override
-	protected Set<? extends Breed> getBreedsThatHavePetWithBreeds(Integer id) {
-		return catBreedRepository.findByCatsId(id);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void saveBreeds(Set<? extends Breed> breeds) {
-		catBreedRepository.save((Set<CatBreed>)breeds);		
+	protected String getIntersectionTableInsertionString() {
+		return "INSERT INTO catbreed_cat (breed_id, cat_id) VALUES (?, ?)";
 	}
 
 	@Override
-	protected Breed addPetWithBreedsToBreed(PetWithBreeds petWithBreeds, Breed breed) {
-		CatBreed catBreed = (CatBreed) breed;
-		catBreed.getCats().add((Cat)petWithBreeds);
-		return catBreed;
+	protected String getIntersectionTableDeletionString() {
+		return "DELETE from catbreed_cat where cat_id = ?";
 	}
 
 	@Override
-	protected void removePetWithBreedsFromBreed(Integer petWithBreedsId, Breed breed) {
-		CatBreed catBreed = (CatBreed) breed;
-		Iterator<Cat> iterator = catBreed.getCats().iterator();
-		while(iterator.hasNext()) {
-			Cat cat = iterator.next();
-			if(cat.getId() == petWithBreedsId) {
-				iterator.remove();
-				break;
-			}
-		}
-	}
-
-	@Override
-	protected void nullifyPetsInBreed(Breed breed) {
-		CatBreed catBreed = (CatBreed) breed;
+	protected Breed mapBreed(Breed breed) {
+		CatBreed catBreed = new CatBreed();
 		catBreed.setCats(null);
+		catBreed.setId(breed.getId());
+		catBreed.setName(breed.getName());
+		return catBreed;
 	}
 }

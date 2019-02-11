@@ -37,11 +37,11 @@ public class DogController {
 
 	@PostMapping(path = "")
     public PetWithBreeds createDog(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class}) Dog dog) {
-    	return mapper.createPetWithBreeds(dog);
+    	return mapper.mapNewPet(dog);
     }
 
     @PutMapping(path = "")
     public PetWithBreeds editDog(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class}) Dog dog) {
-    	return mapper.editPetWithBreeds(dog);
+    	return mapper.mapEditedPet(dog);
     }
 }
