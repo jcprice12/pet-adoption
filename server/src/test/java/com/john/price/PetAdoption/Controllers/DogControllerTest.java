@@ -48,10 +48,9 @@ public class DogControllerTest {
 		doReturn(savedDog).when(dogService).editPet(any(Dog.class));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testMapperGetsAllDogsWhenDogsEndpointIsHit() {	
-		Iterable<Dog> dogsResponse = (Iterable<Dog>) dogController.getDogs();
+		Iterable<Dog> dogsResponse = (Iterable<Dog>) dogController.getPets();
 		
 		verify(dogService).getPets();
 		assertEquals(retrievedDogs, dogsResponse);
@@ -59,7 +58,7 @@ public class DogControllerTest {
 	
 	@Test
 	public void testMapperGetsADogWhenDogEndpointIsHitWithAnId() {		
-		Dog dogResponse = (Dog) dogController.getDog(MOCK_ID);
+		Dog dogResponse = (Dog) dogController.getPet(MOCK_ID);
 		
 		verify(dogService).getPet(MOCK_ID);
 		assertEquals(retrievedDog, dogResponse);
@@ -67,7 +66,7 @@ public class DogControllerTest {
 	
 	@Test
 	public void testMapperCreatesADogWhenPostDogsEndpointIsHit() {
-		Dog dogResponse = (Dog) dogController.createDog(dogRequest);
+		Dog dogResponse = (Dog) dogController.createPet(dogRequest);
 		
 		verify(dogService).createPet(retrievedDog);
 		verify(dogService).getPet(MOCK_ID);
@@ -76,7 +75,7 @@ public class DogControllerTest {
 	
 	@Test
 	public void testMapperEditsADogWhenPutDogsEndpointIsHit() {	
-		Dog dogResponse = (Dog) dogController.editDog(dogRequest);
+		Dog dogResponse = (Dog) dogController.editPet(dogRequest);
 		
 		verify(dogService).editPet(retrievedDog);
 		verify(dogService).getPet(MOCK_ID);

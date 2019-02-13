@@ -48,10 +48,9 @@ public class CatControllerTest {
 		doReturn(savedCat).when(catService).editPet(any(Cat.class));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void test_service_is_used_to_get_all_pets() {
-		Iterable<Cat> catsResponses = (Iterable<Cat>) catController.getCats();
+		Iterable<Cat> catsResponses = (Iterable<Cat>) catController.getPets();
 		
 		verify(catService).getPets();
 		assertEquals(retrievedCats, catsResponses);
@@ -59,7 +58,7 @@ public class CatControllerTest {
 	
 	@Test
 	public void test_service_is_used_to_get_a_pet_by_id() {
-		Cat catResponse = (Cat) catController.getCat(1);
+		Cat catResponse = (Cat) catController.getPet(1);
 		
 		verify(catService).getPet(MOCK_ID);
 		assertEquals(retrievedCat, catResponse);
@@ -67,7 +66,7 @@ public class CatControllerTest {
 	
 	@Test
 	public void test_service_is_used_to_create_a_pet_and_then_used_to_retrieve_saved_pet() {
-		Cat catResponse = (Cat) catController.createCat(catRequest);
+		Cat catResponse = (Cat) catController.createPet(catRequest);
 		
 		verify(catService).createPet(catRequest);
 		verify(catService).getPet(MOCK_ID);
@@ -76,7 +75,7 @@ public class CatControllerTest {
 	
 	@Test
 	public void test_service_is_used_to_edit_a_pet_and_then_used_to_retrieve_saved_pet() {
-		Cat catResponse = (Cat) catController.editCat(catRequest);
+		Cat catResponse = (Cat) catController.editPet(catRequest);
 		
 		verify(catService).editPet(catRequest);
 		verify(catService).getPet(MOCK_ID);
