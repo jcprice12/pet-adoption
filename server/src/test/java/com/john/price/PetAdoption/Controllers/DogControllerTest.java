@@ -1,7 +1,9 @@
 package com.john.price.PetAdoption.Controllers;
 
-import static org.mockito.Mockito.doReturn;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
@@ -14,66 +16,70 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.john.price.PetAdoption.Models.Dog;
-import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
+import com.john.price.PetAdoption.Services.DogService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DogControllerTest {
+	
+	private static final int MOCK_ID = 1;
+	
+	private Dog retrievedDog;
+	private Dog savedDog;
+	private Dog dogRequest;
+	private Iterable<Dog> retrievedDogs;
 	
 	@InjectMocks
 	private DogController dogController;
 	
 	@Mock
-	private PetWithBreedsResponseMapper mapper;
-	
-	Dog dog;
-	private Iterable<Dog> dogs;
+	private DogService dogService;
 	
 	@Before
 	public void beforeEachTest() {
-		dog = new Dog();
-		dogs = new ArrayList<Dog>();
+		retrievedDog = new Dog();
+		savedDog = new Dog();
+		savedDog.setId(MOCK_ID);
+		dogRequest = new Dog();
+		retrievedDogs = new ArrayList<Dog>();
+		
+		doReturn(retrievedDogs).when(dogService).getPets();
+		doReturn(retrievedDog).when(dogService).getPet(anyInt());
+		doReturn(savedDog).when(dogService).createPet(any(Dog.class));
+		doReturn(savedDog).when(dogService).editPet(any(Dog.class));
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testMapperGetsAllDogsWhenDogsEndpointIsHit() {
-		doReturn(dogs).when(mapper).mapPets();
-		
+	public void testMapperGetsAllDogsWhenDogsEndpointIsHit() {	
 		Iterable<Dog> dogsResponse = (Iterable<Dog>) dogController.getDogs();
 		
-		verify(mapper).mapPets();
-		assertEquals(dogs, dogsResponse);
+		verify(dogService).getPets();
+		assertEquals(retrievedDogs, dogsResponse);
 	}
 	
 	@Test
-	public void testMapperGetsADogWhenDogEndpointIsHitWithAnId() {
-		doReturn(dog).when(mapper).mapPet(1);
+	public void testMapperGetsADogWhenDogEndpointIsHitWithAnId() {		
+		Dog dogResponse = (Dog) dogController.getDog(MOCK_ID);
 		
-		Dog dogResponse = (Dog) dogController.getDog(1);
-		
-		verify(mapper).mapPet(1);
-		assertEquals(dog, dogResponse);
+		verify(dogService).getPet(MOCK_ID);
+		assertEquals(retrievedDog, dogResponse);
 	}
 	
 	@Test
 	public void testMapperCreatesADogWhenPostDogsEndpointIsHit() {
-		Dog dogRequest = new Dog();
-		doReturn(dog).when(mapper).createPetWithBreeds(dogRequest);
-		
 		Dog dogResponse = (Dog) dogController.createDog(dogRequest);
 		
-		verify(mapper).createPetWithBreeds(dog);
-		assertEquals(dog, dogResponse);
+		verify(dogService).createPet(retrievedDog);
+		verify(dogService).getPet(MOCK_ID);
+		assertEquals(retrievedDog, dogResponse);
 	}
 	
 	@Test
-	public void testMapperEditsADogWhenPutDogsEndpointIsHit() {
-		Dog dogRequest = new Dog();
-		doReturn(dog).when(mapper).editPetWithBreeds(dogRequest);
-		
+	public void testMapperEditsADogWhenPutDogsEndpointIsHit() {	
 		Dog dogResponse = (Dog) dogController.editDog(dogRequest);
 		
-		verify(mapper).editPetWithBreeds(dog);
-		assertEquals(dog, dogResponse);
+		verify(dogService).editPet(retrievedDog);
+		verify(dogService).getPet(MOCK_ID);
+		assertEquals(retrievedDog, dogResponse);
 	}
 }

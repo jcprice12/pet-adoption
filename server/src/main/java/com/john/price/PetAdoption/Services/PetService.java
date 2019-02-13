@@ -2,9 +2,9 @@ package com.john.price.PetAdoption.Services;
 
 import java.util.Collection;
 
-import com.john.price.PetAdoption.Models.PetWithBreeds;
+import com.john.price.PetAdoption.Models.Pet;
 
-public abstract class PetWithBreedsService<T extends PetWithBreeds> {
+public interface PetService<T extends Pet> {
 	
 	public abstract Collection<T> getPets();
 	public abstract T getPet(Integer id);

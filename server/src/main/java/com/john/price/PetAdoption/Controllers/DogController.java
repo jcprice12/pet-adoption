@@ -1,7 +1,6 @@
 package com.john.price.PetAdoption.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.john.price.PetAdoption.Models.Dog;
 import com.john.price.PetAdoption.Models.Pet;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
-import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
+import com.john.price.PetAdoption.Services.DogService;
 
 
 @RestController
@@ -22,26 +21,25 @@ import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
 public class DogController {
 	
 	@Autowired
-	@Qualifier("DogResponseMapper")
-	private PetWithBreedsResponseMapper mapper;
+	private DogService dogService;
 	
 	@GetMapping(path = "")
     public Iterable<? extends PetWithBreeds> getDogs() {
-		return mapper.mapPets();
+		return dogService.getPets();
     }
     
     @GetMapping(path = "/{petId}")
     public PetWithBreeds getDog(@PathVariable("petId") Integer petId) {
-    	return mapper.mapPet(petId);
+    	return dogService.getPet(petId);
     }
 
 	@PostMapping(path = "")
     public PetWithBreeds createDog(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class}) Dog dog) {
-    	return mapper.mapNewPet(dog);
+    	return dogService.getPet(dogService.createPet(dog).getId());
     }
 
     @PutMapping(path = "")
     public PetWithBreeds editDog(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class}) Dog dog) {
-    	return mapper.mapEditedPet(dog);
+    	return dogService.getPet(dogService.editPet(dog).getId());
     }
 }
