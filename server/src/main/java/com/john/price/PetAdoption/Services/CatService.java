@@ -3,10 +3,13 @@ package com.john.price.PetAdoption.Services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.john.price.PetAdoption.Models.Breed;
@@ -17,38 +20,41 @@ import com.john.price.PetAdoption.Repositories.CatRepository;
 @Component
 public class CatService extends PetWithBreedsService<Cat>{
 	
+	private class CatsInCatBreedRemover implements Function<Breed, CatBreed>{
+
+		@Override
+		public CatBreed apply(Breed breed) {
+			CatBreed catBreed = new CatBreed();
+			catBreed.setId(breed.getId());
+			catBreed.setName(breed.getName());
+			catBreed.setCats(null);
+			return catBreed;
+		}
+		
+	}
+	
+	private class CatResponseMapper implements Function<Cat, Cat>{
+
+		@Override
+		public Cat apply(Cat cat) {
+			Cat responseCat = new Cat();
+			responseCat.setDescription(cat.getDescription());
+			responseCat.setId(cat.getId());
+			responseCat.setImage(cat.getImage());
+			responseCat.setName(cat.getName());
+			responseCat.setBreeds(cat.getBreeds().stream().map(catsInCatBreedRemover).collect(Collectors.toSet()));
+			return responseCat;
+		}
+	}
+	
+	private CatsInCatBreedRemover catsInCatBreedRemover = new CatsInCatBreedRemover();
+	private CatResponseMapper catResponseMapper = new CatResponseMapper();
+	
 	@Autowired
 	private CatRepository catRepository;
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
-	@Override
-	public Collection<Cat> getPets() {
-		Collection<Cat> cats = catRepository.findAll();
-		nullifyCatsInCatBreedsForEachCat(cats);
-		return cats;
-	}
-
-	@Override
-	public Cat getPet(Integer id) {
-		Cat cat = catRepository.getOne(id);
-		nullifyPetsInBreedForPetWithBreeds(cat);
-		return cat;
-	}
-
-	@Transactional
-	public Cat editPet(Cat cat) {
-		jdbcTemplate.update("DELETE from catbreed_cat where cat_id = ?", cat.getId());
-		return createNewPet(cat);
-	}
-	
-	@Transactional
-	public Cat createNewPet(Cat cat) {
-		Cat savedCat = catRepository.save(cat);
-		insertIntoIntersectionTable(savedCat);
-		return savedCat;
-	}
 	
 	private void insertIntoIntersectionTable(Cat cat) {
 		List<Object[]> parameters = new ArrayList<Object[]>();
@@ -57,12 +63,29 @@ public class CatService extends PetWithBreedsService<Cat>{
 	    }
 		jdbcTemplate.batchUpdate("INSERT INTO catbreed_cat (breed_id, cat_id) VALUES (?, ?)", parameters);
 	}
-	
-	private void nullifyCatsInCatBreedsForEachCat(Collection<Cat> cats) {
-		cats.forEach(cat -> nullifyPetsInBreedForPetWithBreeds(cat));
+
+	@Override
+	public Collection<Cat> getPets() {		
+		return catRepository.findAll().stream().map(catResponseMapper).collect(Collectors.toList());
+	}
+
+	@Override
+	public Cat getPet(Integer id) {
+		return catResponseMapper.apply(catRepository.findOne(id));
 	}
 	
-	private void nullifyPetsInBreedForPetWithBreeds(Cat cat) {
-		cat.getBreeds().forEach(breed -> ((CatBreed) breed).setCats(null));
+	@Override
+	@Transactional
+	public Cat editPet(Cat cat) {
+		jdbcTemplate.update("DELETE from catbreed_cat where cat_id = ?", cat.getId());
+		return createPet(cat);
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.NESTED)
+	public Cat createPet(Cat cat) {
+		Cat savedCat = catRepository.save(cat);
+		insertIntoIntersectionTable(savedCat);
+		return savedCat;
 	}
 }
