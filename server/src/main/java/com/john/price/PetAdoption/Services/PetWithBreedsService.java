@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.john.price.PetAdoption.Functions.PetToPetMapper;
@@ -44,17 +43,17 @@ public abstract class PetWithBreedsService<T extends PetWithBreeds> implements P
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.NESTED)
+	@Transactional
 	public T createPet(T t) {
 		T savedPetWithBreeds = getRepository().save(t);
 		insertIntoIntersectionTable(savedPetWithBreeds);
-		return savedPetWithBreeds;
+		return getPetToPetMapper().apply(savedPetWithBreeds);
 	}
 
 	@Override
 	@Transactional
 	public T editPet(T t) {
 		jdbcTemplate.update(String.format("DELETE from %s where %s = ?", getIntersectionTableName(), getPetIdColumnName()), t.getId());
-		return createPet(t);
+		return getPetToPetMapper().apply(createPet(t));
 	}
 }

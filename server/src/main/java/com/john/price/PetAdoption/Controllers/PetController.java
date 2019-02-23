@@ -26,11 +26,11 @@ public abstract class PetController<P extends Pet> {
 
 	@PostMapping(path = "")
     public P createPet(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class}) P pet) {
-    	return getService().getPet(getService().createPet(pet).getId());
+    	return getService().createPet(pet);
     }
 
     @PutMapping(path = "")
     public P editPet(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class}) P pet) {
-    	return getService().getPet(getService().editPet(pet).getId());
+    	return getService().editPet(pet);
     }
 }
