@@ -2,6 +2,7 @@ package com.john.price.PetAdoption;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 
 /**
  * Pet Adoption
@@ -15,7 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * - @EnableWebMvc: This flags the application as a web application and activates key behaviors such as setting up a DispatcherServlet
  * - @ComponentScan: Tells Spring to look for other components, configurations, and services in the TestProject package, allowing it to find the controllers.
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class App 
 {
     public static void main( String[] args )
