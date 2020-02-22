@@ -1,6 +1,8 @@
 package com.john.price.PetAdoption.Controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
@@ -14,66 +16,67 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.john.price.PetAdoption.Models.Cat;
-import com.john.price.PetAdoption.Services.PetWithBreedsResponseMapper;
+import com.john.price.PetAdoption.Services.CatService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatControllerTest {
+	
+	private static final int MOCK_ID = 1;
+	
+	private Cat retrievedCat;
+	private Cat savedCat;
+	private Cat catRequest;
+	private Iterable<Cat> retrievedCats;
 	
 	@InjectMocks
 	private CatController catController;
 	
 	@Mock
-	private PetWithBreedsResponseMapper mapper;
-	
-	Cat cat;
-	private Iterable<Cat> cats;
+	private CatService catService;
 	
 	@Before
 	public void beforeEachTest() {
-		cat = new Cat();
-		cats = new ArrayList<Cat>();
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void testMapperGetsAllCatsWhenCatsEndpointIsHit() {
-		doReturn(cats).when(mapper).mapPets();
+		retrievedCat = new Cat();
+		savedCat = new Cat();
+		savedCat.setId(MOCK_ID);
+		catRequest = new Cat();
+		retrievedCats = new ArrayList<Cat>();
 		
-		Iterable<Cat> catsResponses = (Iterable<Cat>) catController.getCats();
-		
-		verify(mapper).mapPets();
-		assertEquals(cats, catsResponses);
+		doReturn(retrievedCats).when(catService).getPets();
+		doReturn(retrievedCat).when(catService).getPet(anyInt());
+		doReturn(savedCat).when(catService).createPet(any(Cat.class));
+		doReturn(savedCat).when(catService).editPet(any(Cat.class));
 	}
 	
 	@Test
-	public void testMapperGetsACatWhenCatEndpointIsHitWithAnId() {
-		doReturn(cat).when(mapper).mapPet(1);
+	public void test_service_is_used_to_get_all_pets() {
+		Iterable<Cat> catsResponses = (Iterable<Cat>) catController.getPets();
 		
-		Cat catResponse = (Cat) catController.getCat(1);
-		
-		verify(mapper).mapPet(1);
-		assertEquals(cat, catResponse);
+		verify(catService).getPets();
+		assertEquals(retrievedCats, catsResponses);
 	}
 	
 	@Test
-	public void testMapperCreatesACatWhenPostCatsEndpointIsHit() {
-		Cat catRequest = new Cat();
-		doReturn(cat).when(mapper).createPetWithBreeds(catRequest);
+	public void test_service_is_used_to_get_a_pet_by_id() {
+		Cat catResponse = (Cat) catController.getPet(1);
 		
-		Cat catResponse = (Cat) catController.createCat(catRequest);
-		
-		verify(mapper).createPetWithBreeds(cat);
-		assertEquals(cat, catResponse);
+		verify(catService).getPet(MOCK_ID);
+		assertEquals(retrievedCat, catResponse);
 	}
 	
 	@Test
-	public void testMapperEditsACatWhenPutCatsEndpointIsHit() {
-		Cat catRequest = new Cat();
-		doReturn(cat).when(mapper).editPetWithBreeds(catRequest);
+	public void test_service_is_used_to_create_a_pet() {
+		Cat catResponse = (Cat) catController.createPet(catRequest);
 		
-		Cat catResponse = (Cat) catController.editCat(catRequest);
+		verify(catService).createPet(catRequest);
+		assertEquals(savedCat, catResponse);
+	}
+	
+	@Test
+	public void test_service_is_used_to_edit_a_pet() {
+		Cat catResponse = (Cat) catController.editPet(catRequest);
 		
-		verify(mapper).editPetWithBreeds(cat);
-		assertEquals(cat, catResponse);
+		verify(catService).editPet(catRequest);
+		assertEquals(savedCat, catResponse);
 	}
 }

@@ -19,10 +19,6 @@ public class CatBreed extends Breed {
 	
 	public CatBreed() {}
 	
-	public CatBreed(Integer id, String name) {
-		super(id, name);
-	}
-	
 	@ManyToMany
 	@JoinTable(name = "catbreed_cat",
 				joinColumns = @JoinColumn(name = "breed_id"),

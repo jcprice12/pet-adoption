@@ -15,8 +15,8 @@ public class Dog extends PetWithBreeds{
 	
 	public Dog() {}
 	
-	public Dog(Integer id, String name, String image, String description) {
-		super(id, name, image, description);
+	public Dog(Dog dog) {
+		super(dog);
 	}
 	
     @Column(name = "dog_id")
