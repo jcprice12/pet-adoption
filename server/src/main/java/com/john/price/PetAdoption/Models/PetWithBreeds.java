@@ -1,6 +1,7 @@
 package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,11 @@ public abstract class PetWithBreeds extends Pet{
 	
 	public PetWithBreeds() {}
 	
-	public PetWithBreeds(Integer id, String name, String image, String description) {
-		super(id, name, image, description);
+	public PetWithBreeds(PetWithBreeds petWithBreeds) {
+		this.id = petWithBreeds.id;
+		this.description = petWithBreeds.description;
+		this.name = petWithBreeds.name;
+		this.image = petWithBreeds.image;
+		this.breeds = petWithBreeds.getBreeds().stream().map(breed -> new Breed(breed)).collect(Collectors.toSet());
 	}
 }

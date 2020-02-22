@@ -18,13 +18,9 @@ public class Breed {
 	
 	public Breed() {}
 	
-	public Breed(String name) {
-		this.name = name;
-	}
-	
-	public Breed(Integer id, String name) {
-		this.id = id;
-		this.name = name;
+	public Breed(Breed breed) {
+		this.id = breed.id;
+		this.name = breed.name;
 	}
 	
 	@Id

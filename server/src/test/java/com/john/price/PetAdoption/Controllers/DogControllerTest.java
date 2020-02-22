@@ -49,7 +49,7 @@ public class DogControllerTest {
 	}
 	
 	@Test
-	public void testMapperGetsAllDogsWhenDogsEndpointIsHit() {	
+	public void test_service_is_used_to_get_all_pets() {	
 		Iterable<Dog> dogsResponse = (Iterable<Dog>) dogController.getPets();
 		
 		verify(dogService).getPets();
@@ -57,7 +57,7 @@ public class DogControllerTest {
 	}
 	
 	@Test
-	public void testMapperGetsADogWhenDogEndpointIsHitWithAnId() {		
+	public void test_service_is_used_to_get_a_pet_by_id() {		
 		Dog dogResponse = (Dog) dogController.getPet(MOCK_ID);
 		
 		verify(dogService).getPet(MOCK_ID);
@@ -65,20 +65,18 @@ public class DogControllerTest {
 	}
 	
 	@Test
-	public void testMapperCreatesADogWhenPostDogsEndpointIsHit() {
+	public void test_service_is_used_to_create_a_pet() {
 		Dog dogResponse = (Dog) dogController.createPet(dogRequest);
 		
 		verify(dogService).createPet(retrievedDog);
-		verify(dogService).getPet(MOCK_ID);
-		assertEquals(retrievedDog, dogResponse);
+		assertEquals(savedDog, dogResponse);
 	}
 	
 	@Test
-	public void testMapperEditsADogWhenPutDogsEndpointIsHit() {	
+	public void test_service_is_used_to_edit_a_pet() {	
 		Dog dogResponse = (Dog) dogController.editPet(dogRequest);
 		
 		verify(dogService).editPet(retrievedDog);
-		verify(dogService).getPet(MOCK_ID);
-		assertEquals(retrievedDog, dogResponse);
+		assertEquals(savedDog, dogResponse);
 	}
 }

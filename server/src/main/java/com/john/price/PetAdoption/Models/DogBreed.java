@@ -20,10 +20,6 @@ public class DogBreed extends Breed{
 	
 	public DogBreed() {}
 	
-	public DogBreed(Integer id, String name) {
-		super(id, name);
-	}
-	
 	@ManyToMany
 	@JoinTable(name = "dogbreed_dog",
 				joinColumns = @JoinColumn(name = "breed_id"),

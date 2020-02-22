@@ -28,13 +28,6 @@ public abstract class Pet {
 	
 	public Pet() {}
 	
-	public Pet(Integer id, String name, String image, String description) {
-		this.id = id;
-		this.name = name;
-		this.image = image;
-		this.description = description;
-	}
-	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer getId() {

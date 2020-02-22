@@ -65,20 +65,18 @@ public class CatControllerTest {
 	}
 	
 	@Test
-	public void test_service_is_used_to_create_a_pet_and_then_used_to_retrieve_saved_pet() {
+	public void test_service_is_used_to_create_a_pet() {
 		Cat catResponse = (Cat) catController.createPet(catRequest);
 		
 		verify(catService).createPet(catRequest);
-		verify(catService).getPet(MOCK_ID);
-		assertEquals(retrievedCat, catResponse);
+		assertEquals(savedCat, catResponse);
 	}
 	
 	@Test
-	public void test_service_is_used_to_edit_a_pet_and_then_used_to_retrieve_saved_pet() {
+	public void test_service_is_used_to_edit_a_pet() {
 		Cat catResponse = (Cat) catController.editPet(catRequest);
 		
 		verify(catService).editPet(catRequest);
-		verify(catService).getPet(MOCK_ID);
-		assertEquals(retrievedCat, catResponse);
+		assertEquals(savedCat, catResponse);
 	}
 }
