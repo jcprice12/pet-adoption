@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Controllers;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +26,13 @@ public abstract class PetController<P extends Pet> {
     }
 
 	@PostMapping(path = "")
+	@Secured("ROLE_ADMIN")
     public P createPet(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class}) P pet) {
     	return getService().createPet(pet);
     }
 
     @PutMapping(path = "")
+    @Secured("ROLE_ADMIN")
     public P editPet(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class}) P pet) {
     	return getService().editPet(pet);
     }
