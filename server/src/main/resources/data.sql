@@ -20,3 +20,9 @@ INSERT INTO `catbreed` (`name`) VALUES
 
 INSERT INTO `catbreed_cat` (`breed_id`, `cat_id`) VALUES
 (1,1); 
+
+INSERT INTO `fishspecies` (`common_name`) VALUES
+('Angel');
+
+INSERT INTO `fish` (`name`, `species_id`) VALUES
+('Angie', 1);
