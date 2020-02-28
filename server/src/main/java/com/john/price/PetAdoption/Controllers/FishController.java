@@ -4,19 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.john.price.PetAdoption.Models.Dog;
-import com.john.price.PetAdoption.Services.DogService;
+import com.john.price.PetAdoption.Models.Fish;
+import com.john.price.PetAdoption.Services.FishService;
 import com.john.price.PetAdoption.Services.PetService;
 
 @RestController
-@RequestMapping(path = "/dogs")
-public class DogController extends PetController<Dog> {
-	
-	@Autowired
-	private DogService dogService;
+@RequestMapping(path = "/fish")
+public class FishController extends PetController<Fish>{
 
+	@Autowired
+	private FishService fishService;
+	
 	@Override
-	protected PetService<Dog> getService() {
-		return dogService;
+	protected PetService<Fish> getService() {
+		return fishService;
 	}
+
 }

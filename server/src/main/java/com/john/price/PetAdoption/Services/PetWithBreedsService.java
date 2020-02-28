@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.john.price.PetAdoption.Functions.PetToPetMapper;
-import com.john.price.PetAdoption.Models.Breed;
 import com.john.price.PetAdoption.Models.PetWithBreeds;
 
 public abstract class PetWithBreedsService<T extends PetWithBreeds> implements PetService<T>{
@@ -26,9 +25,7 @@ public abstract class PetWithBreedsService<T extends PetWithBreeds> implements P
 	
 	private void insertIntoIntersectionTable(T t) {
 		List<Object[]> parameters = new ArrayList<Object[]>();
-	    for (Breed breed : t.getBreeds()) {
-	        parameters.add(new Object[] {breed.getId(), t.getId()});
-	    }
+	    t.getBreeds().forEach(breed -> parameters.add(new Object[] {breed.getId(), t.getId()}));
 		jdbcTemplate.batchUpdate(String.format("INSERT INTO %s (breed_id, %s) VALUES (?, ?)", getIntersectionTableName(), getPetIdColumnName()), parameters);
 	}
 	

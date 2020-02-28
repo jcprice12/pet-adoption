@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Controllers;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,23 +16,23 @@ public abstract class PetController<P extends Pet> {
 	
 	protected abstract PetService<P> getService();
 
-	@GetMapping(path = "")
+	@GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<P> getPets() {
 		return getService().getPets();
     }
     
-    @GetMapping(path = "/{petId}")
+    @GetMapping(path = "/{petId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public P getPet(@PathVariable("petId") Integer petId) {
     	return getService().getPet(petId);
     }
 
-	@PostMapping(path = "")
+	@PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Secured("ROLE_ADMIN")
     public P createPet(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class}) P pet) {
     	return getService().createPet(pet);
     }
 
-    @PutMapping(path = "")
+    @PutMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
     public P editPet(@RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class}) P pet) {
     	return getService().editPet(pet);
