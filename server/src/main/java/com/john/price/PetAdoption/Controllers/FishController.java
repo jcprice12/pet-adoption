@@ -9,7 +9,7 @@ import com.john.price.PetAdoption.Services.FishService;
 import com.john.price.PetAdoption.Services.PetService;
 
 @RestController
-@RequestMapping(path = "/fish", produces = "application/json")
+@RequestMapping(path = "/fish")
 public class FishController extends PetController<Fish>{
 
 	@Autowired

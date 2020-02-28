@@ -4,6 +4,7 @@ import static com.john.price.PetAdoption.Constants.SecurityConstants.AUTHORIZATI
 import static com.john.price.PetAdoption.Constants.SecurityConstants.BEARER;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +22,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/register")
+	@PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void register(@RequestBody @Validated({javax.validation.groups.Default.class, ApplicationUser.ApplicationUserApiValidation.class}) ApplicationUser appUser) {
 		userService.addApplicationUser(appUser);
 	}
 	
-	@PostMapping("/login")
+	@PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> login(@RequestBody @Validated({javax.validation.groups.Default.class, ApplicationUser.ApplicationUserApiValidation.class}) ApplicationUser appUser) {
 		String token = userService.authenticateUser(appUser);
 		return ResponseEntity.ok().header(AUTHORIZATION_HEADER, BEARER + token).build();
