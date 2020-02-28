@@ -1,9 +1,6 @@
 package com.john.price.PetAdoption.Repositories;
 
+import com.john.price.PetAdoption.Models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.john.price.PetAdoption.Models.Role;
-
-public interface RoleRepository extends JpaRepository<Role, Integer>{
-
-}
+public interface RoleRepository extends JpaRepository<Role, Integer> {}

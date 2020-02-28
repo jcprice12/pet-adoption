@@ -1,7 +1,6 @@
 package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,40 +11,43 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Role {
 
-	private static String ROLE_PREFIX = "ROLE_";
-	private Integer id;
-	private Set<ApplicationUser> applicationUsers;
-	private String name;
-	
-	public Role() {}
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "role_id")
-	public Integer getId() {
-		return this.id;
-	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  private static String ROLE_PREFIX = "ROLE_";
+  private Integer id;
+  private Set<ApplicationUser> applicationUsers;
+  private String name;
 
-	@ManyToMany(mappedBy = "roles")
-	public Set<ApplicationUser> getApplicationUsers() {
-		return applicationUsers;
-	}
+  public Role() {}
 
-	public void setApplicationUsers(Set<ApplicationUser> applicationUsers) {
-		this.applicationUsers = applicationUsers;
-	}
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "role_id")
+  public Integer getId() {
+    return this.id;
+  }
 
-	@Column(nullable = false, unique = true)
-	public String getName() {
-		return name;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setName(String name) {
-		String upperCaseRoleName = name.toUpperCase();
-		this.name = upperCaseRoleName.startsWith(ROLE_PREFIX) ? upperCaseRoleName : ROLE_PREFIX + upperCaseRoleName;
-	}
+  @ManyToMany(mappedBy = "roles")
+  public Set<ApplicationUser> getApplicationUsers() {
+    return applicationUsers;
+  }
+
+  public void setApplicationUsers(Set<ApplicationUser> applicationUsers) {
+    this.applicationUsers = applicationUsers;
+  }
+
+  @Column(nullable = false, unique = true)
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    String upperCaseRoleName = name.toUpperCase();
+    this.name =
+        upperCaseRoleName.startsWith(ROLE_PREFIX)
+            ? upperCaseRoleName
+            : ROLE_PREFIX + upperCaseRoleName;
+  }
 }

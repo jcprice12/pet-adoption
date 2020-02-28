@@ -17,35 +17,38 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EndpointsTest {
-	
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@Test
-	public void catsEndpointShouldReturnJson() throws Exception{
-		this.mockMvc.perform(get("/cats"))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));		
-	}
-	
-	@Test
-	public void catsIdEndpointShouldReturnJson() throws Exception{
-		this.mockMvc.perform(get("/cats/1"))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));		
-	}
-	
-	@Test
-	public void dogsEndpointShouldReturnJson() throws Exception{
-		this.mockMvc.perform(get("/dogs"))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));	
-	}
-	
-	@Test
-	public void dogsIdEndpointShouldReturnJson() throws Exception{
-		this.mockMvc.perform(get("/dogs/1"))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));		
-	}
+
+  @Autowired private MockMvc mockMvc;
+
+  @Test
+  public void catsEndpointShouldReturnJson() throws Exception {
+    this.mockMvc
+        .perform(get("/cats"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+  }
+
+  @Test
+  public void catsIdEndpointShouldReturnJson() throws Exception {
+    this.mockMvc
+        .perform(get("/cats/1"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+  }
+
+  @Test
+  public void dogsEndpointShouldReturnJson() throws Exception {
+    this.mockMvc
+        .perform(get("/dogs"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+  }
+
+  @Test
+  public void dogsIdEndpointShouldReturnJson() throws Exception {
+    this.mockMvc
+        .perform(get("/dogs/1"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+  }
 }

@@ -3,10 +3,7 @@ package com.john.price.PetAdoption;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * Pet Adoption
- *
- */
+/** Pet Adoption */
 
 /*
  * @SpringBootApplication is a combination of:
@@ -16,10 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * - @ComponentScan: Tells Spring to look for other components, configurations, and services in the TestProject package, allowing it to find the controllers.
  */
 @SpringBootApplication()
-public class App 
-{
-    public static void main( String[] args )
-    {
-    	SpringApplication.run(App.class, args);
-    }
+public class App {
+  public static void main(String[] args) {
+    SpringApplication.run(App.class, args);
+  }
 }
