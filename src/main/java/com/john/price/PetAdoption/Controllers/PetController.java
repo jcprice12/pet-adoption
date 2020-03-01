@@ -15,20 +15,20 @@ public abstract class PetController<P extends Pet> {
 
   protected abstract PetService<P> getService();
 
-  @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public Iterable<P> getPets() {
     return getService().getPets();
   }
 
-  @GetMapping(path = "/{petId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(path = "/{petId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public P getPet(@PathVariable("petId") Integer petId) {
     return getService().getPet(petId);
   }
 
   @PostMapping(
       path = "",
-      consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
+      consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+      produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @Secured("ROLE_ADMIN")
   public P createPet(
       @RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPostValidation.class})
@@ -38,8 +38,8 @@ public abstract class PetController<P extends Pet> {
 
   @PutMapping(
       path = "",
-      consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
+      consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+      produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @Secured("ROLE_ADMIN")
   public P editPet(
       @RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class})
