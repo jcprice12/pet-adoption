@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class JWTService {
 
-  private static final String SECRET = "HawtSecret";
-  private static final long EXPIRATION_TIME = 864_000_000;
+  private static final String SECRET = System.getenv("JWT_SECRET");
+  private static final long EXPIRATION_TIME = 900000; // 15 minutes
 
   public String createToken(Authentication authentication) {
     return JWT.create()

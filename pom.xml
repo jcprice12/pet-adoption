@@ -17,6 +17,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<start-class>com.john.price.PetAdoption.App</start-class>
+		<maven-git-code-format.version>1.39</maven-git-code-format.version>
 	</properties>
 
 	<parent>
@@ -56,6 +57,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.327</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
@@ -82,24 +88,51 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.7</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cosium.code</groupId>
+			<artifactId>maven-git-code-format</artifactId>
+			<version>${maven-git-code-format.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.john.price.PetAdoption.App</mainClass>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<mainClass>com.john.price.PetAdoption.App</mainClass>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.cosium.code</groupId>
+					<artifactId>maven-git-code-format</artifactId>
+					<version>${maven-git-code-format.version}</version>
+					<executions>
+						<execution>
+							<id>install-formatter-hook</id>
+							<goals>
+								<goal>install-hooks</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>validate-code-format</id>
+							<goals>
+								<goal>validate-code-format</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

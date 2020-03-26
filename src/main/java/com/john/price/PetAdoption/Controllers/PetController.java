@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Controllers;
 
+import com.john.price.PetAdoption.Exceptions.UploadS3FileException;
 import com.john.price.PetAdoption.Models.Pet;
 import com.john.price.PetAdoption.Services.PetService;
 import org.springframework.http.MediaType;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 public abstract class PetController<P extends Pet> {
 
@@ -45,5 +48,15 @@ public abstract class PetController<P extends Pet> {
       @RequestBody @Validated({javax.validation.groups.Default.class, Pet.PetPutValidation.class})
           P pet) {
     return getService().editPet(pet);
+  }
+
+  @PutMapping(
+      path = "/images",
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+      produces = MediaType.TEXT_PLAIN_VALUE)
+  @Secured("ROLE_ADMIN")
+  public String uploadImage(@RequestParam("image") MultipartFile file)
+      throws UploadS3FileException {
+    return getService().uploadFile(file);
   }
 }
