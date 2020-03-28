@@ -19,29 +19,42 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+  @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-	@Bean
-	public JWTAuthenticationFilter jwtAuthenticationFilter() {
-		return new JWTAuthenticationFilter();
-	}
+  @Bean
+  public JWTAuthenticationFilter jwtAuthenticationFilter() {
+    return new JWTAuthenticationFilter();
+  }
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder(12);
-	}
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder(12);
+  }
 
-	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.requiresChannel().requestMatchers(request -> request.getHeader("X-Forwarded-Proto") != null)
-				.requiresSecure().and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/users/**").permitAll().antMatchers(HttpMethod.GET, "/**").permitAll()
-				.anyRequest().authenticated().and()
-				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-	}
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity
+        .requiresChannel()
+        .requestMatchers(request -> request.getHeader("X-Forwarded-Proto") != null)
+        .requiresSecure()
+        .and()
+        .csrf()
+        .disable()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/users/**")
+        .permitAll()
+        .antMatchers(HttpMethod.GET, "/**")
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+  }
 }

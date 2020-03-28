@@ -64,7 +64,7 @@ public class DogControllerTest {
   public void test_service_is_used_to_create_a_pet() {
     Dog dogResponse = (Dog) dogController.createPet(dogRequest);
 
-    verify(dogService).createPet(retrievedDog);
+    verify(dogService).createPet(dogRequest);
     assertEquals(savedDog, dogResponse);
   }
 
@@ -72,7 +72,7 @@ public class DogControllerTest {
   public void test_service_is_used_to_edit_a_pet() {
     Dog dogResponse = (Dog) dogController.editPet(dogRequest);
 
-    verify(dogService).editPet(retrievedDog);
+    verify(dogService).editPet(dogRequest);
     assertEquals(savedDog, dogResponse);
   }
 }

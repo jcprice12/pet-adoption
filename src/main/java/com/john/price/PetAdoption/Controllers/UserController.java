@@ -3,6 +3,8 @@ package com.john.price.PetAdoption.Controllers;
 import static com.john.price.PetAdoption.Constants.SecurityConstants.AUTHORIZATION_HEADER;
 import static com.john.price.PetAdoption.Constants.SecurityConstants.BEARER;
 
+import com.john.price.PetAdoption.Models.ApplicationUser;
+import com.john.price.PetAdoption.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.john.price.PetAdoption.Models.ApplicationUser;
-import com.john.price.PetAdoption.Services.UserService;
 
 @RestController
 @RequestMapping(path = "/users")

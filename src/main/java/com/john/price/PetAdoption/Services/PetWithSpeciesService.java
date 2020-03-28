@@ -1,10 +1,8 @@
 package com.john.price.PetAdoption.Services;
 
-import java.util.Collection;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.john.price.PetAdoption.Models.Pet;
+import java.util.Collection;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public abstract class PetWithSpeciesService<T extends Pet> implements PetService<T> {
 

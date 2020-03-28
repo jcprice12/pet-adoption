@@ -1,5 +1,7 @@
 package com.john.price.PetAdoption.Models;
 
+import com.john.price.PetAdoption.ValidatorGroups.PetPostValidation;
+import com.john.price.PetAdoption.ValidatorGroups.PetPutValidation;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,53 +10,49 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-import com.john.price.PetAdoption.ValidatorGroups.PetPostValidation;
-import com.john.price.PetAdoption.ValidatorGroups.PetPutValidation;
-
 @MappedSuperclass
 public abstract class Pet {
-	@NotNull(groups = { PetPutValidation.class })
-	@Null(groups = { PetPostValidation.class })
-	private Integer id;
+  @NotNull(groups = {PetPutValidation.class})
+  @Null(groups = {PetPostValidation.class})
+  private Integer id;
 
-	@NotNull
-	private String name;
-	private String image;
-	private String description;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pet_id")
-	public Integer getId() {
-		return id;
-	}
+  @NotNull private String name;
+  private String image;
+  private String description;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "pet_id")
+  public Integer getId() {
+    return id;
+  }
 
-	@Column(nullable = false)
-	public String getName() {
-		return name;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  @Column(nullable = false)
+  public String getName() {
+    return name;
+  }
 
-	public String getImage() {
-		return image;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+  public String getImage() {
+    return image;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public void setImage(String image) {
+    this.image = image;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

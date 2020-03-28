@@ -6,17 +6,15 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
+import com.john.price.PetAdoption.Models.Cat;
+import com.john.price.PetAdoption.Services.CatService;
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import com.john.price.PetAdoption.Models.Cat;
-import com.john.price.PetAdoption.Services.CatService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatControllerTest {
