@@ -5,11 +5,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
+import javax.validation.Valid;
 
 @MappedSuperclass
 public abstract class PetWithBreeds<T extends Breed<?>> extends Pet {
 
-  private Set<T> breeds;
+  @Valid private Set<T> breeds;
 
   @ManyToMany(
       mappedBy = "petsWithBreeds",

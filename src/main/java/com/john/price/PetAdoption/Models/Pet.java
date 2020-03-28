@@ -1,5 +1,7 @@
 package com.john.price.PetAdoption.Models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.john.price.PetAdoption.ValidatorGroups.PetPostValidation;
 import com.john.price.PetAdoption.ValidatorGroups.PetPutValidation;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @MappedSuperclass
+@JsonInclude(Include.NON_NULL)
 public abstract class Pet {
   @NotNull(groups = {PetPutValidation.class})
   @Null(groups = {PetPostValidation.class})

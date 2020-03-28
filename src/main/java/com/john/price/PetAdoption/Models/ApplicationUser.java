@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Entity
@@ -22,8 +23,9 @@ public class ApplicationUser {
   @Null(groups = {ApplicationUserApiValidation.class})
   private Integer id;
 
-  private String username;
-  private String password;
+  @NotNull private String username;
+
+  @NotNull private String password;
 
   @Null(groups = {ApplicationUserApiValidation.class})
   private Set<Role> roles;

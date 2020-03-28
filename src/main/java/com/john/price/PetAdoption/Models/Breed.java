@@ -1,5 +1,7 @@
 package com.john.price.PetAdoption.Models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,11 +16,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @MappedSuperclass
+@JsonInclude(Include.NON_NULL)
 public abstract class Breed<T extends PetWithBreeds<?>> {
 
   @NotNull private Integer id;
 
-  @NotNull private String name;
+  private String name;
 
   private Set<T> petsWithBreeds;
 

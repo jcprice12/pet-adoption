@@ -1,7 +1,5 @@
 package com.john.price.PetAdoption.Models;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Entity;
@@ -20,5 +18,4 @@ import javax.persistence.Table;
               joinColumns = @JoinColumn(name = "breed_id"),
               inverseJoinColumns = @JoinColumn(name = "pet_id")))
 })
-@JsonInclude(Include.NON_NULL)
 public class DogBreed extends Breed<Dog> {}

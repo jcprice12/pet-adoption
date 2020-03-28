@@ -1,5 +1,9 @@
 package com.john.price.PetAdoption.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.sun.istack.NotNull;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,10 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Species {
 
-  protected Integer id;
-  protected String commonName;
+  @NotNull protected Integer id;
+
+  @NotNull protected String commonName;
 
   public Species() {}
 
