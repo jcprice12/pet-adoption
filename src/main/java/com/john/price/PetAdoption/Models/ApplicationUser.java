@@ -1,6 +1,7 @@
 package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,9 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Null;
 
 @Entity
+@Table(name = "application_user")
 public class ApplicationUser {
 
   public interface ApplicationUserApiValidation {}
@@ -29,7 +32,7 @@ public class ApplicationUser {
   public ApplicationUser() {}
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "applicationuser_id")
   public Integer getId() {
     return id;

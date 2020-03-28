@@ -1,28 +1,23 @@
 package com.john.price.PetAdoption.Models;
 
 import java.util.Set;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
-public abstract class PetWithBreeds extends Pet {
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 
-  @NotNull @Valid protected Set<Breed> breeds;
+@MappedSuperclass
+public abstract class PetWithBreeds<T extends Breed<?>> extends Pet{
+	
+	private Set<T> breeds;
+	
+	@ManyToMany(mappedBy = "petsWithBreeds", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	public Set<T> getBreeds() {
+		return breeds;
+	}
 
-  public abstract Set<Breed> getBreeds();
-
-  public abstract void setBreeds(Set<Breed> breeds);
-
-  public PetWithBreeds() {}
-
-  public PetWithBreeds(PetWithBreeds petWithBreeds) {
-    this.id = petWithBreeds.id;
-    this.description = petWithBreeds.description;
-    this.name = petWithBreeds.name;
-    this.image = petWithBreeds.image;
-    this.breeds =
-        petWithBreeds.getBreeds().stream()
-            .map(breed -> new Breed(breed))
-            .collect(Collectors.toSet());
-  }
+	public void setBreeds(Set<T> breeds) {
+		this.breeds = breeds;
+	}
 }

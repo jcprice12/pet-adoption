@@ -4,6 +4,8 @@ import com.john.price.PetAdoption.Filters.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,33 +19,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Bean
-  public JWTAuthenticationFilter jwtAuthenticationFilter() {
-    return new JWTAuthenticationFilter();
-  }
+	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-  @Bean
-  public BCryptPasswordEncoder bCryptPasswordEncoder() {
-    return new BCryptPasswordEncoder(12);
-  }
+	@Bean
+	public JWTAuthenticationFilter jwtAuthenticationFilter() {
+		return new JWTAuthenticationFilter();
+	}
 
-  @Override
-  protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
-    	.requiresChannel().requestMatchers(request -> request.getHeader("X-Forwarded-Proto") != null).requiresSecure().and()
-        .csrf()
-        .disable()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/users/**")
-        .permitAll()
-        .antMatchers(HttpMethod.GET, "/**")
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-  }
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder(12);
+	}
+
+	@Override
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.requiresChannel().requestMatchers(request -> request.getHeader("X-Forwarded-Proto") != null)
+				.requiresSecure().and().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/users/**").permitAll().antMatchers(HttpMethod.GET, "/**").permitAll()
+				.anyRequest().authenticated().and()
+				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+	}
 }

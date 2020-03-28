@@ -1,10 +1,12 @@
 package com.john.price.PetAdoption.Services;
 
-import com.john.price.PetAdoption.Models.PetWithSpecies;
 import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract class PetWithSpeciesService<T extends PetWithSpecies> implements PetService<T> {
+import com.john.price.PetAdoption.Models.Pet;
+
+public abstract class PetWithSpeciesService<T extends Pet> implements PetService<T> {
 
   protected abstract JpaRepository<T, Integer> getRepository();
 
@@ -15,7 +17,7 @@ public abstract class PetWithSpeciesService<T extends PetWithSpecies> implements
 
   @Override
   public T getPet(Integer id) {
-    return getRepository().findOne(id);
+    return getRepository().findById(id).get();
   }
 
   @Override

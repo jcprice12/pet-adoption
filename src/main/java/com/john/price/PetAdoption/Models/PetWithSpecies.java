@@ -1,12 +1,20 @@
 package com.john.price.PetAdoption.Models;
 
-public abstract class PetWithSpecies extends Pet {
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 
-  protected Species species;
+@MappedSuperclass
+public abstract class PetWithSpecies extends Pet{
+	private Species species;
 
-  public abstract Species getSpecies();
+	@ManyToOne(targetEntity = FishSpecies.class)
+	@JoinColumn(name = "species_id")
+	public Species getSpecies() {
+		return this.species;
+	}
 
-  public abstract void setSpecies(Species species);
-
-  public PetWithSpecies() {}
+	public void setSpecies(Species species) {
+		this.species = species;
+	}
 }

@@ -1,63 +1,59 @@
 package com.john.price.PetAdoption.Services;
 
-import com.john.price.PetAdoption.Functions.PetToPetMapper;
-import com.john.price.PetAdoption.Models.PetWithBreeds;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
-public abstract class PetWithBreedsService<T extends PetWithBreeds> implements PetService<T> {
+import com.john.price.PetAdoption.Functions.PetToPetMapper;
+import com.john.price.PetAdoption.Models.Breed;
+import com.john.price.PetAdoption.Models.PetWithBreeds;
 
-  @Autowired private JdbcTemplate jdbcTemplate;
+public abstract class PetWithBreedsService<P extends PetWithBreeds<B>, B extends Breed<P>> implements PetService<P> {
 
-  protected abstract PetToPetMapper<T, T> getPetToPetMapper();
+  protected abstract PetToPetMapper<P, P> getApiPetMapper();
 
-  protected abstract JpaRepository<T, Integer> getRepository();
+  protected abstract JpaRepository<P, Integer> getPetRepository();
+  
+  protected abstract JpaRepository<B, Integer> getBreedRepository();
+  
+  protected abstract PetToPetMapper<P, P> getPetWithoutBreedsMapper();
 
-  protected abstract String getIntersectionTableName();
-
-  protected abstract String getPetIdColumnName();
-
-  private void insertIntoIntersectionTable(T t) {
-    List<Object[]> parameters = new ArrayList<Object[]>();
-    t.getBreeds().forEach(breed -> parameters.add(new Object[] {breed.getId(), t.getId()}));
-    jdbcTemplate.batchUpdate(
-        String.format(
-            "INSERT INTO %s (breed_id, %s) VALUES (?, ?)",
-            getIntersectionTableName(), getPetIdColumnName()),
-        parameters);
+  @Override
+  public Collection<P> getPets() {
+    return getPetRepository().findAll().stream().map(getApiPetMapper()).collect(Collectors.toList());
   }
 
   @Override
-  public Collection<T> getPets() {
-    return getRepository().findAll().stream().map(getPetToPetMapper()).collect(Collectors.toList());
+  public P getPet(Integer id) {
+    return getApiPetMapper().apply(getPetRepository().findById(id).get());
   }
 
   @Override
-  public T getPet(Integer id) {
-    return getPetToPetMapper().apply(getRepository().findOne(id));
+  public P createPet(P p) {
+	  P newPet = getPetWithoutBreedsMapper().apply(p);
+	  List<B> breeds = getBreedRepository().findAllById(p.getBreeds().stream().map(Breed::getId).collect(Collectors.toList()));
+	  breeds.forEach(breed -> {
+		  breed.getPetsWithBreeds().add(newPet);
+	  });
+	  newPet.setBreeds(new HashSet<>(breeds));
+	  P savedPet = getPetRepository().save(newPet);
+	  getBreedRepository().saveAll(breeds);
+	  return getApiPetMapper().apply(savedPet);
   }
 
   @Override
-  @Transactional
-  public T createPet(T t) {
-    T savedPetWithBreeds = getRepository().save(t);
-    insertIntoIntersectionTable(savedPetWithBreeds);
-    return getPetToPetMapper().apply(savedPetWithBreeds);
-  }
-
-  @Override
-  @Transactional
-  public T editPet(T t) {
-    jdbcTemplate.update(
-        String.format(
-            "DELETE from %s where %s = ?", getIntersectionTableName(), getPetIdColumnName()),
-        t.getId());
-    return getPetToPetMapper().apply(createPet(t));
+  public P editPet(P p) {
+	  P newPet = getPetWithoutBreedsMapper().apply(p);
+	  List<B> breeds = getBreedRepository().findAllById(p.getBreeds().stream().map(Breed::getId).collect(Collectors.toList()));
+	  breeds.forEach(breed -> {
+		  breed.getPetsWithBreeds().add(newPet);
+	  });
+	  getBreedRepository().saveAll(breeds);
+	  newPet.setBreeds(new HashSet<>(breeds));
+	  P savedPet = getPetRepository().save(newPet);
+	  return getApiPetMapper().apply(savedPet);
   }
 }
