@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @MappedSuperclass
 public abstract class Pet {
@@ -54,5 +56,25 @@ public abstract class Pet {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Pet)) {
+      return false;
+    } else if (o.getClass() != this.getClass()) {
+      return false;
+    } else if (o == this) {
+      return true;
+    }
+
+    Pet pet = (Pet) o;
+
+    return new EqualsBuilder().append(id, pet.id).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).toHashCode();
   }
 }

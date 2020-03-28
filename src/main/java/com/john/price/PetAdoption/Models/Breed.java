@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @MappedSuperclass
 public abstract class Breed<T extends PetWithBreeds<?>> {
@@ -49,5 +51,26 @@ public abstract class Breed<T extends PetWithBreeds<?>> {
 
   public void setPetsWithBreeds(Set<T> petsWithBreeds) {
     this.petsWithBreeds = petsWithBreeds;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Breed<?>)) {
+      return false;
+    } else if (o.getClass() != this.getClass()) {
+      return false;
+    } else if (o == this) {
+      return true;
+    }
+
+    Breed<T> breed = (Breed<T>) o;
+
+    return new EqualsBuilder().append(id, breed.id).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).toHashCode();
   }
 }
