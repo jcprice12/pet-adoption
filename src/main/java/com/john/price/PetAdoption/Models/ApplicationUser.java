@@ -1,5 +1,6 @@
 package com.john.price.PetAdoption.Models;
 
+import com.john.price.PetAdoption.ValidatorGroups.ApplicationUserApiValidation;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,6 @@ import javax.validation.constraints.Null;
 @Entity
 @Table(name = "application_user")
 public class ApplicationUser {
-
-  public interface ApplicationUserApiValidation {}
 
   @Null(groups = {ApplicationUserApiValidation.class})
   private Integer id;
