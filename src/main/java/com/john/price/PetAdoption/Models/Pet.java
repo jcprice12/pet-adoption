@@ -1,5 +1,9 @@
 package com.john.price.PetAdoption.Models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.john.price.PetAdoption.ValidatorGroups.PetPostValidation;
+import com.john.price.PetAdoption.ValidatorGroups.PetPutValidation;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,24 +15,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @MappedSuperclass
+@JsonInclude(Include.NON_NULL)
 public abstract class Pet {
-
-  public interface PetPostValidation {}
-
-  public interface PetPutValidation {}
-
   @NotNull(groups = {PetPutValidation.class})
   @Null(groups = {PetPostValidation.class})
-  protected Integer id;
+  private Integer id;
 
-  @NotNull protected String name;
-  protected String image;
-  protected String description;
-
-  public Pet() {}
+  @NotNull private String name;
+  private String image;
+  private String description;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "pet_id")
   public Integer getId() {
     return id;
   }
@@ -65,6 +64,8 @@ public abstract class Pet {
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Pet)) {
+      return false;
+    } else if (o.getClass() != this.getClass()) {
       return false;
     } else if (o == this) {
       return true;

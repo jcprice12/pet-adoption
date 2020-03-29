@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "role")
 public class Role {
 
   private static String ROLE_PREFIX = "ROLE_";
@@ -19,7 +21,7 @@ public class Role {
   public Role() {}
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "role_id")
   public Integer getId() {
     return this.id;

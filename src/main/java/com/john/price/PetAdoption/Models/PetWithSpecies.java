@@ -1,12 +1,24 @@
 package com.john.price.PetAdoption.Models;
 
-public abstract class PetWithSpecies extends Pet {
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-  protected Species species;
+@MappedSuperclass
+public abstract class PetWithSpecies<S> extends Pet {
 
-  public abstract Species getSpecies();
+  @Valid @NotNull private S species;
 
-  public abstract void setSpecies(Species species);
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "species_id")
+  public S getSpecies() {
+    return this.species;
+  }
 
-  public PetWithSpecies() {}
+  public void setSpecies(S species) {
+    this.species = species;
+  }
 }

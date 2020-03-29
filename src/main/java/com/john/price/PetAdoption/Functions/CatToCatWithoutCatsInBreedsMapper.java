@@ -1,13 +1,31 @@
 package com.john.price.PetAdoption.Functions;
 
 import com.john.price.PetAdoption.Models.Cat;
+import com.john.price.PetAdoption.Models.CatBreed;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CatToCatWithoutCatsInBreedsMapper implements PetToPetMapper<Cat, Cat> {
 
+  @Autowired private CatToCatWithoutBreedsMapper catToCatWithoutBreedsMapper;
+
   @Override
-  public Cat apply(Cat cat) {
-    return new Cat(cat);
+  public Cat apply(Cat originalCat) {
+    Cat newCatWithBreeds = catToCatWithoutBreedsMapper.apply(originalCat);
+
+    newCatWithBreeds.setBreeds(
+        originalCat.getBreeds().stream()
+            .map(
+                breed -> {
+                  CatBreed newBreed = new CatBreed();
+                  newBreed.setId(breed.getId());
+                  newBreed.setName(breed.getName());
+                  return newBreed;
+                })
+            .collect(Collectors.toSet()));
+
+    return newCatWithBreeds;
   }
 }
