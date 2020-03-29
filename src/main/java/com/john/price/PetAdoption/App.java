@@ -2,6 +2,7 @@ package com.john.price.PetAdoption;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /** Pet Adoption */
 
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * - @ComponentScan: Tells Spring to look for other components, configurations, and services in the TestProject package, allowing it to find the controllers.
  */
 @SpringBootApplication()
+@EnableCaching
 public class App {
   public static void main(String[] args) {
     SpringApplication.run(App.class, args);
