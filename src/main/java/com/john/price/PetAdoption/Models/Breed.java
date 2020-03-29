@@ -2,6 +2,8 @@ package com.john.price.PetAdoption.Models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.john.price.PetAdoption.ValidatorGroups.PetPostValidation;
+import com.john.price.PetAdoption.ValidatorGroups.PetPutValidation;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -21,8 +24,9 @@ public abstract class Breed<T extends PetWithBreeds<?>> {
 
   @NotNull private Integer id;
 
-  private String name;
+  @NotNull private String name;
 
+  @Null(groups = {PetPostValidation.class, PetPutValidation.class})
   private Set<T> petsWithBreeds;
 
   @Id

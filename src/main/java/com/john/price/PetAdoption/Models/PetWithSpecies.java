@@ -5,11 +5,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class PetWithSpecies<S> extends Pet {
 
-  @Valid private S species;
+  @Valid @NotNull private S species;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "species_id")
