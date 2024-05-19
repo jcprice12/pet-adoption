@@ -37,7 +37,7 @@ You will need to set the following environment variables:
 | ---------- | ----- |
 | JWT_SECRET | cat   |
 
-### Visual Studio Code
+#### Setup your IDE
 
 I use Visual Studio Code to develop locally (as opposed to STS). I've found that the following Visual Studio Code extensions are helpful:
 
