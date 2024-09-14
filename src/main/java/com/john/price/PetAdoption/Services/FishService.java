@@ -13,7 +13,7 @@ public class FishService extends PetWithSpeciesService<Fish> {
 
   @Autowired private FishRepository fishRepository;
 
-  @Autowired private S3Service s3Service;
+  @Autowired private IS3Service s3Service;
 
   @Override
   protected JpaRepository<Fish, Integer> getRepository() {

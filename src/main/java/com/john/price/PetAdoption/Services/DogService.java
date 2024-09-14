@@ -24,7 +24,7 @@ public class DogService extends PetWithBreedsService<Dog, DogBreed> {
 
   @Autowired private DogBreedRepository dogBreedRepository;
 
-  @Autowired private S3Service s3Service;
+  @Autowired private IS3Service s3Service;
 
   @Override
   protected PetToPetMapper<Dog, Dog> getApiPetMapper() {

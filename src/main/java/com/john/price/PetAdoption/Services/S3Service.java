@@ -17,12 +17,15 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public class S3Service {
+@Profile("!dev")
+public class S3Service implements IS3Service {
 
   private static final String BUCKET_NAME = System.getenv("PETS_S3_BUCKET_NAME");
   private static final String ROLE_ARN = System.getenv("PUT_IMAGES_ROLE");
