@@ -1,3 +1,4 @@
 package com.john.price.PetAdoption.ValidatorGroups;
 
-public interface ApplicationUserApiValidation {}
+public interface ApplicationUserApiValidation {
+}

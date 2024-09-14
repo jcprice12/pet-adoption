@@ -22,62 +22,62 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @JsonInclude(Include.NON_NULL)
 public abstract class Breed<T extends PetWithBreeds<?>> {
 
-  @NotNull private Integer id;
+    @NotNull
+    private Integer id;
 
-  @NotNull private String name;
+    @NotNull
+    private String name;
 
-  @Null(groups = {PetPostValidation.class, PetPutValidation.class})
-  private Set<T> petsWithBreeds;
+    @Null(groups = { PetPostValidation.class, PetPutValidation.class })
+    private Set<T> petsWithBreeds;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "breed_id")
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  @Column(nullable = false, unique = true)
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @ManyToMany(
-      cascade = {CascadeType.PERSIST},
-      fetch = FetchType.LAZY)
-  public Set<T> getPetsWithBreeds() {
-    return this.petsWithBreeds;
-  }
-
-  public void setPetsWithBreeds(Set<T> petsWithBreeds) {
-    this.petsWithBreeds = petsWithBreeds;
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof Breed<?>)) {
-      return false;
-    } else if (o.getClass() != this.getClass()) {
-      return false;
-    } else if (o == this) {
-      return true;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "breed_id")
+    public Integer getId() {
+        return id;
     }
 
-    Breed<T> breed = (Breed<T>) o;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    return new EqualsBuilder().append(id, breed.id).isEquals();
-  }
+    @Column(nullable = false, unique = true)
+    public String getName() {
+        return name;
+    }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).toHashCode();
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    public Set<T> getPetsWithBreeds() {
+        return this.petsWithBreeds;
+    }
+
+    public void setPetsWithBreeds(Set<T> petsWithBreeds) {
+        this.petsWithBreeds = petsWithBreeds;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Breed<?>)) {
+            return false;
+        } else if (o.getClass() != this.getClass()) {
+            return false;
+        } else if (o == this) {
+            return true;
+        }
+
+        Breed<T> breed = (Breed<T>) o;
+
+        return new EqualsBuilder().append(id, breed.id).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(id).toHashCode();
+    }
 }

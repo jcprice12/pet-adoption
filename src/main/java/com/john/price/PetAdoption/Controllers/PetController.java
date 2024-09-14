@@ -18,47 +18,34 @@ import org.springframework.web.multipart.MultipartFile;
 
 public abstract class PetController<P extends Pet> {
 
-  protected abstract PetService<P> getService();
+    protected abstract PetService<P> getService();
 
-  @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<P> getPets() {
-    return getService().getPets();
-  }
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<P> getPets() {
+        return getService().getPets();
+    }
 
-  @GetMapping(path = "/{petId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public P getPet(@PathVariable("petId") Integer petId) {
-    return getService().getPet(petId);
-  }
+    @GetMapping(path = "/{petId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public P getPet(@PathVariable("petId") Integer petId) {
+        return getService().getPet(petId);
+    }
 
-  @PostMapping(
-      path = "",
-      consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  @Secured("ROLE_ADMIN")
-  public P createPet(
-      @RequestBody @Validated({javax.validation.groups.Default.class, PetPostValidation.class})
-          P pet) {
-    return getService().createPet(pet);
-  }
+    @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
+    public P createPet(
+            @RequestBody @Validated({ javax.validation.groups.Default.class, PetPostValidation.class }) P pet) {
+        return getService().createPet(pet);
+    }
 
-  @PutMapping(
-      path = "",
-      consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  @Secured("ROLE_ADMIN")
-  public P editPet(
-      @RequestBody @Validated({javax.validation.groups.Default.class, PetPutValidation.class})
-          P pet) {
-    return getService().editPet(pet);
-  }
+    @PutMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
+    public P editPet(@RequestBody @Validated({ javax.validation.groups.Default.class, PetPutValidation.class }) P pet) {
+        return getService().editPet(pet);
+    }
 
-  @PutMapping(
-      path = "/images",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-      produces = MediaType.TEXT_PLAIN_VALUE)
-  @Secured("ROLE_ADMIN")
-  public String uploadImage(@RequestParam("image") MultipartFile file)
-      throws UploadS3FileException {
-    return getService().uploadFile(file);
-  }
+    @PutMapping(path = "/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+    @Secured("ROLE_ADMIN")
+    public String uploadImage(@RequestParam("image") MultipartFile file) throws UploadS3FileException {
+        return getService().uploadFile(file);
+    }
 }

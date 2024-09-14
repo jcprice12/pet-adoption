@@ -11,17 +11,19 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FishService extends PetWithSpeciesService<Fish> {
 
-  @Autowired private FishRepository fishRepository;
+    @Autowired
+    private FishRepository fishRepository;
 
-  @Autowired private IS3Service s3Service;
+    @Autowired
+    private IS3Service s3Service;
 
-  @Override
-  protected JpaRepository<Fish, Integer> getRepository() {
-    return fishRepository;
-  }
+    @Override
+    protected JpaRepository<Fish, Integer> getRepository() {
+        return fishRepository;
+    }
 
-  @Override
-  public String uploadFile(MultipartFile multipartFile) throws UploadS3FileException {
-    return s3Service.uploadMultipartFileToS3(multipartFile, "fish");
-  }
+    @Override
+    public String uploadFile(MultipartFile multipartFile) throws UploadS3FileException {
+        return s3Service.uploadMultipartFileToS3(multipartFile, "fish");
+    }
 }

@@ -18,31 +18,28 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-  @Autowired private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-  @Autowired private JWTService jwtService;
+    @Autowired
+    private JWTService jwtService;
 
-  @Override
-  protected void doFilterInternal(
-      HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-      throws IOException, ServletException {
-    String authorizationHeaderValue = req.getHeader(AUTHORIZATION_HEADER);
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        String authorizationHeaderValue = req.getHeader(AUTHORIZATION_HEADER);
 
-    if (authorizationHeaderValue == null || !authorizationHeaderValue.startsWith(BEARER)) {
-      chain.doFilter(req, res);
-      return;
+        if (authorizationHeaderValue == null || !authorizationHeaderValue.startsWith(BEARER)) {
+            chain.doFilter(req, res);
+            return;
+        }
+
+        String username = jwtService.getUsernameFromToken(authorizationHeaderValue.replace(BEARER, ""));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        SecurityContextHolder.getContext().setAuthentication(username != null
+                ? new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities()) : null);
+
+        chain.doFilter(req, res);
     }
-
-    String username = jwtService.getUsernameFromToken(authorizationHeaderValue.replace(BEARER, ""));
-    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-    SecurityContextHolder.getContext()
-        .setAuthentication(
-            username != null
-                ? new UsernamePasswordAuthenticationToken(
-                    username, null, userDetails.getAuthorities())
-                : null);
-
-    chain.doFilter(req, res);
-  }
 }

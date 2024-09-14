@@ -13,24 +13,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService {
 
-  @Autowired private ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    private ApplicationUserRepository applicationUserRepository;
 
-  @Autowired private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-  @Autowired private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-  @Autowired private JWTService jwtService;
+    @Autowired
+    private JWTService jwtService;
 
-  public String authenticateUser(ApplicationUser applicationUser) {
-    Authentication authentication =
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
+    public String authenticateUser(ApplicationUser applicationUser) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 applicationUser.getUsername(), applicationUser.getPassword(), new ArrayList<>()));
-    return jwtService.createToken(authentication);
-  }
+        return jwtService.createToken(authentication);
+    }
 
-  public void addApplicationUser(ApplicationUser appUser) {
-    appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-    applicationUserRepository.save(appUser);
-  }
+    public void addApplicationUser(ApplicationUser appUser) {
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+        applicationUserRepository.save(appUser);
+    }
 }

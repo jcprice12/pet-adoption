@@ -17,30 +17,33 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 public class DevDataApplicationRunner implements ApplicationRunner {
 
-  @Autowired private BCryptPasswordEncoder bcryptPasswordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder bcryptPasswordEncoder;
 
-  @Autowired private ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    private ApplicationUserRepository applicationUserRepository;
 
-  @Autowired private RoleRepository roleRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
-  private void addAdminUsers() {
-    Role adminRole = new Role();
-    adminRole.setName("ADMIN");
-    roleRepository.save(adminRole);
+    private void addAdminUsers() {
+        Role adminRole = new Role();
+        adminRole.setName("ADMIN");
+        roleRepository.save(adminRole);
 
-    ApplicationUser admin1 = new ApplicationUser();
-    admin1.setPassword(bcryptPasswordEncoder.encode("password"));
-    admin1.setUsername("mradmin");
+        ApplicationUser admin1 = new ApplicationUser();
+        admin1.setPassword(bcryptPasswordEncoder.encode("password"));
+        admin1.setUsername("mradmin");
 
-    Set<Role> admin1Roles = new HashSet<>();
-    admin1Roles.add(adminRole);
-    admin1.setRoles(admin1Roles);
+        Set<Role> admin1Roles = new HashSet<>();
+        admin1Roles.add(adminRole);
+        admin1.setRoles(admin1Roles);
 
-    applicationUserRepository.save(admin1);
-  }
+        applicationUserRepository.save(admin1);
+    }
 
-  @Override
-  public void run(ApplicationArguments args) throws Exception {
-    addAdminUsers();
-  }
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        addAdminUsers();
+    }
 }

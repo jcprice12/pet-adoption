@@ -10,12 +10,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "dogbreed")
 @AssociationOverrides({
-  @AssociationOverride(
-      name = "petsWithBreeds",
-      joinTable =
-          @JoinTable(
-              name = "dogbreed_dog",
-              joinColumns = @JoinColumn(name = "breed_id"),
-              inverseJoinColumns = @JoinColumn(name = "pet_id")))
-})
-public class DogBreed extends Breed<Dog> {}
+        @AssociationOverride(name = "petsWithBreeds", joinTable = @JoinTable(name = "dogbreed_dog", joinColumns = @JoinColumn(name = "breed_id"), inverseJoinColumns = @JoinColumn(name = "pet_id"))) })
+public class DogBreed extends Breed<Dog> {
+}

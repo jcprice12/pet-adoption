@@ -19,22 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/users")
 public class UserController {
 
-  @Autowired private UserService userService;
+    @Autowired
+    private UserService userService;
 
-  @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void register(
-      @RequestBody
-          @Validated({javax.validation.groups.Default.class, ApplicationUserApiValidation.class})
-          ApplicationUser appUser) {
-    userService.addApplicationUser(appUser);
-  }
+    @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void register(@RequestBody @Validated({ javax.validation.groups.Default.class,
+            ApplicationUserApiValidation.class }) ApplicationUser appUser) {
+        userService.addApplicationUser(appUser);
+    }
 
-  @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> login(
-      @RequestBody
-          @Validated({javax.validation.groups.Default.class, ApplicationUserApiValidation.class})
-          ApplicationUser appUser) {
-    String token = userService.authenticateUser(appUser);
-    return ResponseEntity.ok().header(AUTHORIZATION_HEADER, BEARER + token).build();
-  }
+    @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> login(@RequestBody @Validated({ javax.validation.groups.Default.class,
+            ApplicationUserApiValidation.class }) ApplicationUser appUser) {
+        String token = userService.authenticateUser(appUser);
+        return ResponseEntity.ok().header(AUTHORIZATION_HEADER, BEARER + token).build();
+    }
 }

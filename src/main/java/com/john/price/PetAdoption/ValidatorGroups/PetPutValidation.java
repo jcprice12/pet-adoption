@@ -1,3 +1,4 @@
 package com.john.price.PetAdoption.ValidatorGroups;
 
-public interface PetPutValidation {}
+public interface PetPutValidation {
+}

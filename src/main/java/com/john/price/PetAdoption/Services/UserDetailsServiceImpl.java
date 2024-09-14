@@ -14,25 +14,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Autowired private ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    private ApplicationUserRepository applicationUserRepository;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
-    if (applicationUser == null) {
-      throw new UsernameNotFoundException(username);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+        if (applicationUser == null) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        return User.withUsername(username).accountExpired(false).accountLocked(false)
+                .authorities(applicationUser.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+                        .collect(Collectors.toList()))
+                .credentialsExpired(false).disabled(false).password(applicationUser.getPassword()).build();
     }
-
-    return User.withUsername(username)
-        .accountExpired(false)
-        .accountLocked(false)
-        .authorities(
-            applicationUser.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList()))
-        .credentialsExpired(false)
-        .disabled(false)
-        .password(applicationUser.getPassword())
-        .build();
-  }
 }

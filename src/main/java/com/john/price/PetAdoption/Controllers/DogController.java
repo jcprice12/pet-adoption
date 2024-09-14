@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/dogs")
 public class DogController extends PetController<Dog> {
 
-  @Autowired private DogService dogService;
+    @Autowired
+    private DogService dogService;
 
-  @Override
-  protected PetService<Dog> getService() {
-    return dogService;
-  }
+    @Override
+    protected PetService<Dog> getService() {
+        return dogService;
+    }
 }

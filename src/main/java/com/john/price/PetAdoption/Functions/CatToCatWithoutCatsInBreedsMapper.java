@@ -9,23 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class CatToCatWithoutCatsInBreedsMapper implements PetToPetMapper<Cat, Cat> {
 
-  @Autowired private CatToCatWithoutBreedsMapper catToCatWithoutBreedsMapper;
+    @Autowired
+    private CatToCatWithoutBreedsMapper catToCatWithoutBreedsMapper;
 
-  @Override
-  public Cat apply(Cat originalCat) {
-    Cat newCatWithBreeds = catToCatWithoutBreedsMapper.apply(originalCat);
+    @Override
+    public Cat apply(Cat originalCat) {
+        Cat newCatWithBreeds = catToCatWithoutBreedsMapper.apply(originalCat);
 
-    newCatWithBreeds.setBreeds(
-        originalCat.getBreeds().stream()
-            .map(
-                breed -> {
-                  CatBreed newBreed = new CatBreed();
-                  newBreed.setId(breed.getId());
-                  newBreed.setName(breed.getName());
-                  return newBreed;
-                })
-            .collect(Collectors.toSet()));
+        newCatWithBreeds.setBreeds(originalCat.getBreeds().stream().map(breed -> {
+            CatBreed newBreed = new CatBreed();
+            newBreed.setId(breed.getId());
+            newBreed.setName(breed.getName());
+            return newBreed;
+        }).collect(Collectors.toSet()));
 
-    return newCatWithBreeds;
-  }
+        return newCatWithBreeds;
+    }
 }

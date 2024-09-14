@@ -19,60 +19,62 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class DogControllerTest {
 
-  private static final int MOCK_ID = 1;
+    private static final int MOCK_ID = 1;
 
-  private Dog retrievedDog;
-  private Dog savedDog;
-  private Dog dogRequest;
-  private Iterable<Dog> retrievedDogs;
+    private Dog retrievedDog;
+    private Dog savedDog;
+    private Dog dogRequest;
+    private Iterable<Dog> retrievedDogs;
 
-  @InjectMocks private DogController dogController;
+    @InjectMocks
+    private DogController dogController;
 
-  @Mock private DogService dogService;
+    @Mock
+    private DogService dogService;
 
-  @Before
-  public void beforeEachTest() {
-    retrievedDog = new Dog();
-    savedDog = new Dog();
-    savedDog.setId(MOCK_ID);
-    dogRequest = new Dog();
-    retrievedDogs = new ArrayList<Dog>();
+    @Before
+    public void beforeEachTest() {
+        retrievedDog = new Dog();
+        savedDog = new Dog();
+        savedDog.setId(MOCK_ID);
+        dogRequest = new Dog();
+        retrievedDogs = new ArrayList<Dog>();
 
-    doReturn(retrievedDogs).when(dogService).getPets();
-    doReturn(retrievedDog).when(dogService).getPet(anyInt());
-    doReturn(savedDog).when(dogService).createPet(any(Dog.class));
-    doReturn(savedDog).when(dogService).editPet(any(Dog.class));
-  }
+        doReturn(retrievedDogs).when(dogService).getPets();
+        doReturn(retrievedDog).when(dogService).getPet(anyInt());
+        doReturn(savedDog).when(dogService).createPet(any(Dog.class));
+        doReturn(savedDog).when(dogService).editPet(any(Dog.class));
+    }
 
-  @Test
-  public void test_service_is_used_to_get_all_pets() {
-    Iterable<Dog> dogsResponse = (Iterable<Dog>) dogController.getPets();
+    @Test
+    public void test_service_is_used_to_get_all_pets() {
+        Iterable<Dog> dogsResponse = (Iterable<Dog>) dogController.getPets();
 
-    verify(dogService).getPets();
-    assertEquals(retrievedDogs, dogsResponse);
-  }
+        verify(dogService).getPets();
+        assertEquals(retrievedDogs, dogsResponse);
+    }
 
-  @Test
-  public void test_service_is_used_to_get_a_pet_by_id() {
-    Dog dogResponse = (Dog) dogController.getPet(MOCK_ID);
+    @Test
+    public void test_service_is_used_to_get_a_pet_by_id() {
+        Dog dogResponse = (Dog) dogController.getPet(MOCK_ID);
 
-    verify(dogService).getPet(MOCK_ID);
-    assertEquals(retrievedDog, dogResponse);
-  }
+        verify(dogService).getPet(MOCK_ID);
+        assertEquals(retrievedDog, dogResponse);
+    }
 
-  @Test
-  public void test_service_is_used_to_create_a_pet() {
-    Dog dogResponse = (Dog) dogController.createPet(dogRequest);
+    @Test
+    public void test_service_is_used_to_create_a_pet() {
+        Dog dogResponse = (Dog) dogController.createPet(dogRequest);
 
-    verify(dogService).createPet(dogRequest);
-    assertEquals(savedDog, dogResponse);
-  }
+        verify(dogService).createPet(dogRequest);
+        assertEquals(savedDog, dogResponse);
+    }
 
-  @Test
-  public void test_service_is_used_to_edit_a_pet() {
-    Dog dogResponse = (Dog) dogController.editPet(dogRequest);
+    @Test
+    public void test_service_is_used_to_edit_a_pet() {
+        Dog dogResponse = (Dog) dogController.editPet(dogRequest);
 
-    verify(dogService).editPet(dogRequest);
-    assertEquals(savedDog, dogResponse);
-  }
+        verify(dogService).editPet(dogRequest);
+        assertEquals(savedDog, dogResponse);
+    }
 }

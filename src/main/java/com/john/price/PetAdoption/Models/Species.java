@@ -12,31 +12,34 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @JsonInclude(Include.NON_NULL)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Species {
 
-  @NotNull protected Integer id;
+    @NotNull
+    protected Integer id;
 
-  @NotNull protected String commonName;
+    @NotNull
+    protected String commonName;
 
-  public Species() {}
+    public Species() {
+    }
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  public Integer getId() {
-    return id;
-  }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  @Column(name = "common_name", nullable = false, unique = true)
-  public String getCommonName() {
-    return commonName;
-  }
+    @Column(name = "common_name", nullable = false, unique = true)
+    public String getCommonName() {
+        return commonName;
+    }
 
-  public void setCommonName(String commonName) {
-    this.commonName = commonName;
-  }
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
 }

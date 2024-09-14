@@ -16,38 +16,43 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class DogService extends PetWithBreedsService<Dog, DogBreed> {
 
-  @Autowired private DogToDogWithoutDogsInBreedsMapper dogToDogWithoutDogsInBreedsMapper;
+    @Autowired
+    private DogToDogWithoutDogsInBreedsMapper dogToDogWithoutDogsInBreedsMapper;
 
-  @Autowired private DogToDogWithoutBreedsMapper dogToDogWithoutBreedsMapper;
+    @Autowired
+    private DogToDogWithoutBreedsMapper dogToDogWithoutBreedsMapper;
 
-  @Autowired private DogRepository dogRepository;
+    @Autowired
+    private DogRepository dogRepository;
 
-  @Autowired private DogBreedRepository dogBreedRepository;
+    @Autowired
+    private DogBreedRepository dogBreedRepository;
 
-  @Autowired private IS3Service s3Service;
+    @Autowired
+    private IS3Service s3Service;
 
-  @Override
-  protected PetToPetMapper<Dog, Dog> getApiPetMapper() {
-    return dogToDogWithoutDogsInBreedsMapper;
-  }
+    @Override
+    protected PetToPetMapper<Dog, Dog> getApiPetMapper() {
+        return dogToDogWithoutDogsInBreedsMapper;
+    }
 
-  @Override
-  protected JpaRepository<Dog, Integer> getPetRepository() {
-    return dogRepository;
-  }
+    @Override
+    protected JpaRepository<Dog, Integer> getPetRepository() {
+        return dogRepository;
+    }
 
-  @Override
-  protected JpaRepository<DogBreed, Integer> getBreedRepository() {
-    return dogBreedRepository;
-  }
+    @Override
+    protected JpaRepository<DogBreed, Integer> getBreedRepository() {
+        return dogBreedRepository;
+    }
 
-  @Override
-  public String uploadFile(MultipartFile multipartFile) throws UploadS3FileException {
-    return s3Service.uploadMultipartFileToS3(multipartFile, "dogs");
-  }
+    @Override
+    public String uploadFile(MultipartFile multipartFile) throws UploadS3FileException {
+        return s3Service.uploadMultipartFileToS3(multipartFile, "dogs");
+    }
 
-  @Override
-  public PetToPetMapper<Dog, Dog> getPetWithoutBreedsMapper() {
-    return dogToDogWithoutBreedsMapper;
-  }
+    @Override
+    public PetToPetMapper<Dog, Dog> getPetWithoutBreedsMapper() {
+        return dogToDogWithoutBreedsMapper;
+    }
 }

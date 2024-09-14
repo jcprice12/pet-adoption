@@ -5,4 +5,5 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "cat")
-public class Cat extends PetWithBreeds<CatBreed> {}
+public class Cat extends PetWithBreeds<CatBreed> {
+}

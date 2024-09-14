@@ -13,43 +13,41 @@ import javax.persistence.Table;
 @Table(name = "role")
 public class Role {
 
-  private static String ROLE_PREFIX = "ROLE_";
-  private Integer id;
-  private Set<ApplicationUser> applicationUsers;
-  private String name;
+    private static String ROLE_PREFIX = "ROLE_";
+    private Integer id;
+    private Set<ApplicationUser> applicationUsers;
+    private String name;
 
-  public Role() {}
+    public Role() {
+    }
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "role_id")
-  public Integer getId() {
-    return this.id;
-  }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
+    public Integer getId() {
+        return this.id;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  @ManyToMany(mappedBy = "roles")
-  public Set<ApplicationUser> getApplicationUsers() {
-    return applicationUsers;
-  }
+    @ManyToMany(mappedBy = "roles")
+    public Set<ApplicationUser> getApplicationUsers() {
+        return applicationUsers;
+    }
 
-  public void setApplicationUsers(Set<ApplicationUser> applicationUsers) {
-    this.applicationUsers = applicationUsers;
-  }
+    public void setApplicationUsers(Set<ApplicationUser> applicationUsers) {
+        this.applicationUsers = applicationUsers;
+    }
 
-  @Column(nullable = false, unique = true)
-  public String getName() {
-    return name;
-  }
+    @Column(nullable = false, unique = true)
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    String upperCaseRoleName = name.toUpperCase();
-    this.name =
-        upperCaseRoleName.startsWith(ROLE_PREFIX)
-            ? upperCaseRoleName
-            : ROLE_PREFIX + upperCaseRoleName;
-  }
+    public void setName(String name) {
+        String upperCaseRoleName = name.toUpperCase();
+        this.name = upperCaseRoleName.startsWith(ROLE_PREFIX) ? upperCaseRoleName : ROLE_PREFIX + upperCaseRoleName;
+    }
 }
