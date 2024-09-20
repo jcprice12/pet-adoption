@@ -1,11 +1,11 @@
 package com.john.price.PetAdoption.Models;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class PetWithSpecies<S> extends Pet {

@@ -31,12 +31,12 @@ public abstract class PetController<P extends Pet> {
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public P createPet(
-            @RequestBody @Validated({ javax.validation.groups.Default.class, PetPostValidation.class }) P pet) {
+            @RequestBody @Validated({ jakarta.validation.groups.Default.class, PetPostValidation.class }) P pet) {
         return getService().createPet(pet);
     }
 
     @PutMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public P editPet(@RequestBody @Validated({ javax.validation.groups.Default.class, PetPutValidation.class }) P pet) {
+    public P editPet(@RequestBody @Validated({ jakarta.validation.groups.Default.class, PetPutValidation.class }) P pet) {
         return getService().editPet(pet);
     }
 
