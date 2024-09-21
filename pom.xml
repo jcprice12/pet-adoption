@@ -46,6 +46,21 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -60,24 +75,14 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<classifier>jakarta</classifier>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>com.giffing.bucket4j.spring.boot.starter</groupId>
+			<artifactId>bucket4j-spring-boot-starter</artifactId>
+			<version>0.12.7</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

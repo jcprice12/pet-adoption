@@ -36,7 +36,8 @@ public abstract class PetController<P extends Pet> {
     }
 
     @PutMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public P editPet(@RequestBody @Validated({ jakarta.validation.groups.Default.class, PetPutValidation.class }) P pet) {
+    public P editPet(
+            @RequestBody @Validated({ jakarta.validation.groups.Default.class, PetPutValidation.class }) P pet) {
         return getService().editPet(pet);
     }
 
