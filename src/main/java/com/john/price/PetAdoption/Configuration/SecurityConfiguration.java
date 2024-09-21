@@ -10,10 +10,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http
-        .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-        .build();
-  }
+    // TODO: Figure out how to call state change endpoints (E.G. POST dogs/) with csrf enabled
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http.csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()).build();
+    }
 }
