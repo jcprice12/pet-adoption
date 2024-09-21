@@ -1,19 +1,36 @@
 package com.john.price.PetAdoption.Configuration;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    // TODO: Figure out how to call state change endpoints (E.G. POST dogs/) with csrf enabled
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    String jwkSetUri;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()).build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((authorize) -> authorize.requestMatchers(HttpMethod.POST)
+                .hasAuthority("SCOPE_jcpets:pets:write").requestMatchers(HttpMethod.PUT)
+                .hasAuthority("SCOPE_jcpets:pets:write").requestMatchers(HttpMethod.DELETE)
+                .hasAuthority("SCOPE_jcpets:pets:write").anyRequest().permitAll())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
     }
 }
