@@ -6,7 +6,6 @@ import com.john.price.PetAdoption.Services.PetService;
 import com.john.price.PetAdoption.ValidatorGroups.PetPostValidation;
 import com.john.price.PetAdoption.ValidatorGroups.PetPutValidation;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,20 +30,18 @@ public abstract class PetController<P extends Pet> {
     }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured("ROLE_ADMIN")
     public P createPet(
-            @RequestBody @Validated({ javax.validation.groups.Default.class, PetPostValidation.class }) P pet) {
+            @RequestBody @Validated({ jakarta.validation.groups.Default.class, PetPostValidation.class }) P pet) {
         return getService().createPet(pet);
     }
 
     @PutMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured("ROLE_ADMIN")
-    public P editPet(@RequestBody @Validated({ javax.validation.groups.Default.class, PetPutValidation.class }) P pet) {
+    public P editPet(
+            @RequestBody @Validated({ jakarta.validation.groups.Default.class, PetPutValidation.class }) P pet) {
         return getService().editPet(pet);
     }
 
     @PutMapping(path = "/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-    @Secured("ROLE_ADMIN")
     public String uploadImage(@RequestParam("image") MultipartFile file) throws UploadS3FileException {
         return getService().uploadFile(file);
     }

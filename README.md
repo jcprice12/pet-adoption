@@ -15,7 +15,9 @@ You must download and install the Java JDK (the latest version *should* work). Y
 
 #### Maven
 
-You must download and install Apache Maven (the latest version *should* work). You can find Maven downloads [here](https://maven.apache.org/download.cgi). After downloading the archive/zip, you will need to install it. You can install it anywhere on your system as long as you update your `PATH` environment variable to point to the **bin** folder of your Maven installation.
+I have included the Maven wrapper (`./mvnw`), so you shouldn't have to worry about installing Maven yourself.
+
+If you don't want to use the Maven wrapper, you'll need to download and install Maven yourself (the latest version *should* work, but if you want to be precise, use the version of Maven defined in `./.mvn/wrapper/maven-wrapper.properties`). You can find Maven downloads [here](https://maven.apache.org/download.cgi). After downloading the archive/zip, you will need to install it. You can install it anywhere on your system as long as you update your `PATH` environment variable to point to the **bin** folder of your Maven installation.
 
 #### PostgreSQL
 
@@ -29,24 +31,24 @@ Optionally, you can install pgAdmin - a free GUI for PostgreSQL. You can find do
 
 However you decide to interface with your local PostgreSQL server (E.G. pgAdmin), you will need to create the `pet_adoption_db` database. Just use the defaults and you should be fine.
 
-#### Environment variables
-
-You will need to set the following environment variables:
-
-| Variable   | Value |
-| ---------- | ----- |
-| JWT_SECRET | cat   |
-
 #### Setup your IDE
 
 I use Visual Studio Code to develop locally (as opposed to STS). I've found that the following Visual Studio Code extensions are helpful:
 
-- Extension Pack for Java
-- Spring Boot Extension Pack
-- XML
+- Extension Pack for Java (by Microsoft)
+- Spring Boot Extension Pack (by VMWare)
+- XML (by Red Hat)
+
+#### Download dependencies Running the app
+
+You will need to download the dependencies defined in the `pom.xml` file before you can run the app. If you're using Visual Studio Code and installed the extensions listed above, this should happen automatically for you. Otherwise, you can install dependencies manually by running `./mvnw dependency:resolve`.
 
 ### Running the app
 
-You will need to download the dependencies defined in the `pom.xml` file before you can run the app. If you're using Visual Studio Code and installed the extensions listed above, this should happen automatically for you. Otherwise, you can install dependencies manually by running `mvn dependency:resolve`.
+Simply run the app as a Spring Boot application with the `dev` Spring profile. Use whatever IDE tool you want to help you with this. Note, I used to simply run `./mvnw spring-boot:run -Dspring-boot.run.profiles=dev -Dspring-boot.run.fork=false`; however `spring-boot.run.fork` was removed in spring boot 3. Now, I use the Spring Boot Dashboard extension in VSCode to run my app with the `dev` profile.
 
-Simply run the app as a Spring Boot application with the `dev` Spring profile. Use whatever IDE tool you want to help you with this, or simply run it with the mvn CLI: `mvn spring-boot:run -Dspring-boot.run.profiles=dev -Dspring-boot.run.fork=false`. Note, the `-Dspring-boot.run.fork=false` addition is because I develop on Windows and I run into this issue described [here](https://github.com/spring-projects/spring-boot/issues/17766).
+### Helpful tips
+
+#### Formatting
+
+Use `formatter-maven-plugin` to format code consistently. Run it via `./mvnw formatter:format`
