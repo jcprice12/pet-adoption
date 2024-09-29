@@ -32,3 +32,4 @@ buildNumber.properties
 
 # Local
 /src/main/resources/static/local-images/
+/pgstorage/
