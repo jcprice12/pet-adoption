@@ -1,0 +1,24 @@
+services: 
+  mypg:
+    image: postgres:16
+    container_name: mypg
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pet_adoption_db
+    volumes:
+      - ./pgstorage:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+  petadoption:
+    image: jcpets.com/petadoption/pets
+    container_name: pet-adoption-service
+    depends_on:
+      - mypg
+    links: 
+      - mypg
+    restart: on-failure # heavy-handed way to wait for postgres to start accepting connections
+    environment:
+      SPRING_PROFILES_ACTIVE: dev,docker
+    ports:
+      - "8080:8080"

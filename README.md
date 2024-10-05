@@ -52,3 +52,29 @@ Simply run the app as a Spring Boot application with the `dev` Spring profile. U
 #### Formatting
 
 Use `formatter-maven-plugin` to format code consistently. Run it via `./mvnw formatter:format`
+
+### Docker
+
+You can use Docker to run the app locally. A lot of the instructions above still apply (E.G. installing Maven and pgAdmin); however, using Docker means that other developers (or future me) can come in and run the app without having to worry so much about installing the necessary software.
+
+I mostly followed [this guide](https://spring.io/guides/gs/spring-boot-docker) to setup my Docker environment. Also shoutout to the [spring-boot-maven-plugin documentation](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/maven-plugin/reference/html/#build-image). 
+
+#### Prerequisites
+
+In order to run the app with Docker, you will, of course, [need to install it](https://docs.docker.com/desktop/install/windows-install/).
+
+#### Running the app with Docker
+
+1. Build the application image by running `./mvnw verify`.
+2. Run `docker compose up`
+3. When you are finished testing your changes, run `docker compose down`
+
+#### Current quirks/disadvantages
+
+It is quite cumbersome to test changes with my current Docker setup. This is because the application's docker image has to be rebuilt every time a change is made.
+
+Also, `spring-boot-maven-plugin` comes with a `build-image` goal that creates the docker image for me (hence no `Dockerfile`). As convenient as that is, it's difficult to customize.
+
+The `build-image` goal is incredibly slow. If you don't want to use it while packaging the app (in favor of the more traditional `repackage` goal), run `./mvnw verify "-DskipBuildImage=true"`.
+
+I have to use `restart: on-failure` in my `docker-compose.yaml` file for my `petadoption` service because it takes a bit of time for PostgreSQL to start accepting connections. Typically the app will fail to start the first time because it tried to establish a connection with PostgreSQL before it was ready.
