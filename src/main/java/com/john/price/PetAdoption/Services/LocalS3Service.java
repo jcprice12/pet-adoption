@@ -30,7 +30,7 @@ public class LocalS3Service implements IS3Service {
             File file = absolutePath.toFile();
             file.getParentFile().mkdirs();
             multipartFile.transferTo(file);
-            return String.format("%s:%s/%s", InetAddress.getLoopbackAddress().getHostName(),
+            return String.format("http://%s:%s/%s", InetAddress.getLoopbackAddress().getHostName(),
                     environment.getProperty("local.server.port"), filePath);
         } catch (Exception e) {
             throw new UploadS3FileException(e);
