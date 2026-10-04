@@ -10,15 +10,26 @@ services:
       - ./pgstorage:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d pet_adoption_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   petadoption:
-    image: jcpets.com/petadoption/pets
+    build: .
+    image: petadoption-app:latest
     container_name: pet-adoption-service
     depends_on:
-      - mypg
-    links: 
-      - mypg
-    restart: on-failure # heavy-handed way to wait for postgres to start accepting connections
+      mypg:
+        condition: service_healthy
+    volumes:
+      - ./src/main/resources/static/local-images:/app/src/main/resources/static/local-images
     environment:
-      SPRING_PROFILES_ACTIVE: dev,docker
+      - SPRING_PROFILES_ACTIVE=dev,docker
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://host.docker.internal:3000/keys
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://mypg:5432/pet_adoption_db?verifyServerCertificate=false&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
     ports:
       - "8080:8080"

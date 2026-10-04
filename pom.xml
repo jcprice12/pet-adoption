@@ -120,18 +120,6 @@
 							<goal>repackage</goal>
 						</goals>
 					</execution>
-					<execution>
-						<id>build-image-execution</id>
-						<goals>
-							<goal>build-image</goal>
-						</goals>
-						<configuration>
-							<image>
-								<name>jcpets.com/petadoption/pets</name>
-							</image>
-							<skip>${skipBuildImage}</skip>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 		</plugins>
